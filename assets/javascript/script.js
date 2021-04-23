@@ -31,8 +31,8 @@ show_card(card_index);
 
 
 //Color card
-function change_bg_solid() {
-  document.body.style.backgroundColor = "white";
+function solid_bg() {
+  document.body.style = "background-color: white";
   for (let i = 0; i < document.getElementsByClassName("grad_bg").length; i++) {
     document.getElementsByClassName("grad_bg")[i].style.display = "none";
   }
