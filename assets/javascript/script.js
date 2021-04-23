@@ -56,13 +56,13 @@ function grad_bg() {
   var grad_angle = parseInt(document.getElementById("grad_angle").value);
   var grad_bg = [grad_angle, document.getElementById("grad_color1").value, document.getElementById("grad_color2").value];
 
-  if (grad_angle != 0){
+  if (grad_angle != 0) {
     document.getElementById("grad_color1").disabled = false;
     document.getElementById("grad_color2").disabled = false;
   }
 
   switch (grad_angle) {
-    case 0: 
+    case 0:
       document.body.style = "background-color: white";
       document.getElementById("grad_color1").disabled = true;
       document.getElementById("grad_color2").disabled = true;
@@ -80,6 +80,21 @@ function grad_bg() {
       document.body.style = "background-image: linear-gradient(135deg," + grad_bg[1] + "," + grad_bg[2] + ");";
       break;
   }
+}
+
+function cards_bg() {
+  var card_bg = document.getElementById("card_bg").value;
+  var survey_cards = document.getElementsByClassName("survey_card");
+  console.log(survey_cards.length);
+  for (let i = 0; i < survey_cards.length; i++) {
+    survey_cards[i].style.backgroundColor = card_bg;
+  }
+}
+
+function textColor() {
+  alert("Hello");
+  var text_color= document.getElementById("text_color").value;
+  document.body.style = "color:" + text_color;
 }
 
 //reference for local storage
