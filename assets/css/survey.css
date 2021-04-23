@@ -19,18 +19,9 @@ body {
   width: 60vw;
   height: 70vh;
 
+  background-color: white;
   border: 2px solid black;
   border-radius: 2vw;
-}
-
-#intro > h1 {
-  margin-left: 10%;
-  margin-top: 10%;
-}
-#intro > p {
-  margin-left: 15%;
-  margin-right: 15% ;
-  margin-top: 10%;
 }
 
 button {
@@ -39,9 +30,40 @@ button {
   height: 3vw;
   width: 9vw;
 }
+
 #nxt_btn {
   margin-left: 10%;
 }
-#prev_btn{
+
+#prev_btn {
   margin-left: -10%;
+}
+
+
+/* Directions card */
+#intro>h1 {
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+#intro>p {
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 10%;
+}
+
+/* Color card */
+#color > h1 {
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+#color > form {
+  margin-left: 10%;
+}
+.grad_bg {
+  display: none;
+}
+.solid_bg_color {
+  display: none;
 }

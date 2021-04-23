@@ -33,9 +33,68 @@
     </div>
     <div class="survey_card" id="color">
       <h1>COLOR</h1>
-      <p>
-        R A I N B O W
-      </p>
+      <form action="#">
+        <h2>Background</h2>
+        <label for="solid">Solid</label>
+        <input type="radio" id="solid" name="bg_type" value="solid" onclick="change_bg_solid()">
+        <label for="solid_color" class="solid_bg_color">Pick a color</label>
+        <select name="solid_color" id="solid_color" class="solid_bg_color" onclick="change_bg_solid()">
+          <option value="">--Select a color--</option>
+          <option value="#2c3e50">Black</option>
+          <option value="#95a5a6">Grey</option>
+          <option value="#ecf0f1">White</option>
+          <option value="#e74c3c">Red</option>
+          <option value="#e67e22">Orange</option>
+          <option value="#f1c40f">Yellow</option>
+          <option value="#2ecc71">Green</option>
+          <option value="#3498db">Blue</option>
+          <option value="#3f51b5">Indigo</option>
+          <option value="#9b59b6">Violet</option>
+        </select>
+        <br>
+        <br>
+        <label for="gradient">Gradient</label>
+        <input type="radio" id="gradient" name="bg_type" value="gradient" onclick="grad_bg()">
+        <label for="grad_angle" class="grad_bg">Gradient Direction</label>
+        <select name="grad_angle" id="grad_angle" class="grad_bg" onclick="grad_bg()">
+          <option value="0">--Select a direction--</option>
+          <option value="1">Horizontal</option>
+          <option value="2">Vertical</option>
+          <option value="3">45&#176;</option>
+          <option value="4">135&#176;</option>
+        </select>
+        <label for="grad_color1" class="grad_bg">Color 1</label>
+        <select name="grad_color1" id="grad_color1" class="grad_bg" onclick="grad_bg()" disabled>
+          <option value="">--Select a color--</option>
+          <option value="#2c3e50">Black</option>
+          <option value="#95a5a6">Grey</option>
+          <option value="#ecf0f1">White</option>
+          <option value="#e74c3c">Red</option>
+          <option value="#e67e22">Orange</option>
+          <option value="#f1c40f">Yellow</option>
+          <option value="#2ecc71">Green</option>
+          <option value="#3498db">Blue</option>
+          <option value="#3f51b5">Indigo</option>
+          <option value="#9b59b6">Violet</option>
+        </select>
+        <label for="grad_color2" class="grad_bg">Color 2</label>
+        <select name="grad_color2" id="grad_color2" class="grad_bg" onclick="grad_bg()" disabled>
+          <option value="">--Select a color--</option>
+          <option value="#2c3e50">Black</option>
+          <option value="#95a5a6">Grey</option>
+          <option value="#ecf0f1">White</option>
+          <option value="#e74c3c">Red</option>
+          <option value="#e67e22">Orange</option>
+          <option value="#f1c40f">Yellow</option>
+          <option value="#2ecc71">Green</option>
+          <option value="#3498db">Blue</option>
+          <option value="#3f51b5">Indigo</option>
+          <option value="#9b59b6">Violet</option>
+        </select>
+
+
+
+      </form>
     </div>
   </div>
 
