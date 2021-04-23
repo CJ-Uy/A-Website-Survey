@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+
+  <link rel="stylesheet" href="../css/survey.css">
+
+  <title>The Survey</title>
 </head>
+
 <body>
-  <div class="survey_card" id="animation">
-    
+
+  <button id="nxt_btn" onclick="change_card(1)">NEXT</button>
+  <button id="prev_btn" onclick="change_card(-1)">BACK</button>
+
+  <div class="survey">
+    <div class="survey_card" id="intro">
+      <h1>DIRECTIONS</h1>
+      <p>
+        This is a simply survey taking information about what people like most in websites i.e. what
+        makes a website look good for them.
+        <br>
+        <br>
+        Please answer all the question in the survey card and when read click next.
+        <br>
+        <br>
+        At the end of the survey you will be able to see a summary of all of your preevious choices.
+        Thats all and have fun!
+      </p>
+    </div>
+    <div class="survey_card" id="color">
+      <h1>COLOR</h1>
+      <p>
+        R A I N B O W
+      </p>
+    </div>
   </div>
+
+  <script src="../javascript/script.js"></script>
 </body>
+
 </html>
