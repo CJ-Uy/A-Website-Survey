@@ -26,11 +26,19 @@ body {
 }
 
 h1 {
-  font-size: 70px;
+  font-size: 3.5vw;
   position: absolute;
   margin-left: 10%;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+h2 {
+  font-size: 1.5vw;
+}
+
+h3 {
+  font-size: 0.75vw;
 }
 
 button {
@@ -48,9 +56,15 @@ button {
   margin-left: -10%;
 }
 
-.survey_card form {
+.card_content form {
   margin-left: 10%;
+  font-size: 1vw;
 }
+
+select, label, input {
+  font-size: 1vw;
+}
+
 .card_content {
   margin-top: 15%;
 }
@@ -82,29 +96,26 @@ button {
   text-align: right;
   padding: 0.25vw;
 }
-#color > h1 {
+
+#color>h1 {
   margin-bottom: 0.75vw;
-  font-size: 3.5vw;
 }
+
 #color h2 {
   margin-top: 0.5vw;
   margin-bottom: 0.25vw;
-  font-size: 1.5vw;
 }
-#color form {
-  font-size: 1vw;
-}
-#color select {
-  font-size: 1vw;
-}
+
 #border_width {
   font-size: 1vw;
   width: 5vw;
   text-align: center;
 }
+
 .grad_bg {
   display: none;
 }
+
 .solid_bg_color {
   display: none;
 }
@@ -112,9 +123,10 @@ button {
 
 
 /* Fonts card */
-#font_card > .card_content {
+#font_card>.card_content {
   margin-left: 10%;
 }
+
 .label_cont {
   text-align: right;
 }

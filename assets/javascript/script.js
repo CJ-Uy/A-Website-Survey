@@ -36,9 +36,11 @@ var color_styling = {
   body: {},
   card: {}
 };
-var survey_cards = document.getElementsByClassName("survey_card");
 
-//Color card
+
+
+var survey_cards = document.getElementsByClassName("survey_card");
+//Color styling functions
 function solid_bg() {
   document.body.style = "background-color: white";
   for (let i = 0; i < document.getElementsByClassName("grad_bg").length; i++) {
@@ -136,8 +138,16 @@ function color_card_clear() {
 }
 
 
+
+
+
 var h1_elements = document.getElementsByTagName("h1");
-//Fonts styling
+var h2_elements = document.getElementsByTagName("h2");
+var h3_elements = document.getElementsByTagName("h3");
+var label_elements = document.getElementsByTagName("label");
+var form_elemetns = document.getElementsByTagName("form"); 
+var p_elements = document.getElementsByTagName("p");
+//Fonts styling functions
 function h1_change_fontfam() {
   var head_font_family = document.getElementById("h1_font_family").value;
   for (let i = 0; i < h1_elements.length; i++) {
@@ -157,4 +167,30 @@ function letter_space_head() {
   for (let i = 0; i < h1_elements.length; i++) {
     h1_elements[i].style.letterSpacing = head_letter_space + "px";
   }
+}
+
+function fonts_card_reset() {
+  for (let i = 0; i < h1_elements.length; i++){
+    h1_elements[i].style.fontFamily = "serif";
+    h1_elements[i].style.fontSize = "3.5vw";
+    h1_elements[i].style.letterSpacing = "2px";
+  } 
+    
+  for (let i = 0; i < h2_elements.length; i++){
+    h2_elements[i].style.fontFamily = "serif";
+    h2_elements[i].style.fontSize = "1.5vw";
+    h2_elements[i].style.letterSpacing = "2px";
+  }
+  
+  for (let i = 0; i < h3_elements.length; i++){
+    h3_elements[i].style.fontFamily = "serif";
+    h3_elements[i].style.fontSize = "70";
+    h3_elements[i].style.letterSpacing = "2px";
+  } 
+
+  for (let i = 0; i < label_elements.length; i++) 
+    label_elements[i].style.fontFamily = "serif";
+
+  for (let i = 0; i < form_elements.length; i++) 
+    form_elements[i].style.fontFamily = "serif";  
 }
