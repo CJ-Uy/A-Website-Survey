@@ -29,6 +29,8 @@ function show_card(n) {
 
 show_card(card_index);
 
+
+
 //DO THISSS maybe
 var color_styling = {body: {}, card: {}};
 var survey_cards = document.getElementsByClassName("survey_card");
@@ -107,7 +109,7 @@ function color_border() {
 }
 
 function color_card_clear() {
-  document.body.style = "background-image: none";
+  document.body.style.backgroundImage = "none";
   document.body.style.backgroundColor = "white";
   document.body.style.color = "black";
   for (let i = 0; i < survey_cards.length; i++) {
@@ -121,6 +123,17 @@ function color_card_clear() {
     document.getElementsByClassName("grad_bg")[i].style.display = "none";
   }
 }
+
+
+
+//Fonts styling
+
+
+
+
+
+
+
 //reference for local storage
 
 function text() {

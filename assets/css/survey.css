@@ -14,9 +14,10 @@ body {
   place-items: center;
 }
 
+/* General styling for survey cards */
 .survey_card {
   position: absolute;
-  width: 60vw;
+  width: 50vw;
   height: 70vh;
 
   background-color: white;
@@ -43,6 +44,24 @@ button {
   margin-left: -10%;
 }
 
+.survey_card>h1 {
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.survey_card>form {
+  margin-left: 10%;
+}
+
+.reset_btn {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3vw;
+  width: 9vw;
+}
 
 /* Directions card */
 #intro>h1 {
@@ -56,28 +75,14 @@ button {
   margin-top: 10%;
 }
 
-.reset_btn {
-  position: absolute;
-  bottom: 1vh;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 3vw;
-  width: 9vw;
-}
-
-.survey_card>h1 {
-  margin-left: 10%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
-.survey_card>form {
-  margin-left: 10%;
-}
 
 /* Color card */
 #color td {
   text-align: right;
+  padding: 0.5em;
+}
+#color > h1 {
+  margin-bottom: 0.75em;
 }
 
 .grad_bg {
@@ -88,3 +93,5 @@ button {
   display: none;
 }
 
+
+/* Fonts card */
