@@ -32,7 +32,10 @@ show_card(card_index);
 
 
 //DO THISSS maybe
-var color_styling = {body: {}, card: {}};
+var color_styling = {
+  body: {},
+  card: {}
+};
 var survey_cards = document.getElementsByClassName("survey_card");
 
 //Color card
@@ -103,8 +106,15 @@ function color_text() {
 
 function color_border() {
   var border_color = document.getElementById("border_color").value;
-  for (var i = 0; i < survey_cards.length; i++){
+  for (var i = 0; i < survey_cards.length; i++) {
     survey_cards[i].style.borderColor = border_color;
+  }
+}
+
+function change_border_width() {
+  var border_width = document.getElementById("border_width").value;
+  for (var i = 0; i < survey_cards.length; i++) {
+    survey_cards[i].style.borderWidth = border_width + "px";
   }
 }
 
@@ -115,6 +125,7 @@ function color_card_clear() {
   for (let i = 0; i < survey_cards.length; i++) {
     survey_cards[i].style.backgroundColor = "white";
     survey_cards[i].style.borderColor = "black";
+    survey_cards[i].style.borderWidth = "2px";
   }
   for (let i = 0; i < document.getElementsByClassName("solid_bg_color").length; i++) {
     document.getElementsByClassName("solid_bg_color")[i].style.display = "none";
