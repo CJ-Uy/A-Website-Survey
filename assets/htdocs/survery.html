@@ -64,6 +64,8 @@
                 <option value="#3f51b5">Indigo</option>
                 <option value="#9b59b6">Violet</option>
               </select>
+              <br>
+              <br>
             </td>
           </tr>
           <tr>
@@ -131,6 +133,7 @@
               <label for="card_bg">Question Card Background Color</label> 
             </td>
             <td>
+              <!--Note to self dont make the name and the function the same; doesnt work-->
               <select name="card_bg" id="card_bg" onclick="cards_bg()">
                 <option value="">--Select a color--</option>
                 <option value="#2c3e50">Black</option>
@@ -144,6 +147,8 @@
                 <option value="#3f51b5">Indigo</option>
                 <option value="#9b59b6">Violet</option>
               </select>
+              <br>
+              <br>
             </td>
           </tr>
           <tr>
@@ -151,9 +156,31 @@
               <label for="text_color">Text Color</label>
             </td>
             <td>
-              <select name="text_color" id="text_color" onclick="text_color()">
+              <select name="text_colored" id="text_color" onclick="color_text()">
                 <option value="">--Select a color--</option>
-                <option value="#2c3e50">Black</option>
+                <option value="#000000">Black</option>
+                <option value="#95a5a6">Grey</option>
+                <option value="#ffffff">White</option>
+                <option value="#e74c3c">Red</option>
+                <option value="#e67e22">Orange</option>
+                <option value="#f1c40f">Yellow</option>
+                <option value="#2ecc71">Green</option>
+                <option value="#3498db">Blue</option>
+                <option value="#3f51b5">Indigo</option>
+                <option value="#9b59b6">Violet</option>
+              </select>
+              <br>
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="border_color">Border Color</label>
+            </td>
+            <td>
+              <select name="border_colored" id="border_color" onclick="color_border()">
+                <option value="">--Select a color--</option>
+                <option value="#000000">Black</option>
                 <option value="#95a5a6">Grey</option>
                 <option value="#ffffff">White</option>
                 <option value="#e74c3c">Red</option>
@@ -168,7 +195,7 @@
           </tr>
         </table>
 
-        <input type="reset" class="reset_btn" id="color_reset" value="CLEAR">
+        <input type="reset" class="reset_btn" id="color_reset" value="CLEAR" onclick="color_card_clear()">
       </form>
     </div>
   </div>

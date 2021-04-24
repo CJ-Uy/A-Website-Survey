@@ -29,6 +29,9 @@ function show_card(n) {
 
 show_card(card_index);
 
+//DO THISSS maybe
+var color_styling = {body: {}, card: {}};
+var survey_cards = document.getElementsByClassName("survey_card");
 
 //Color card
 function solid_bg() {
@@ -85,17 +88,39 @@ function grad_bg() {
 function cards_bg() {
   var card_bg = document.getElementById("card_bg").value;
   var survey_cards = document.getElementsByClassName("survey_card");
-  console.log(survey_cards.length);
+
   for (let i = 0; i < survey_cards.length; i++) {
     survey_cards[i].style.backgroundColor = card_bg;
   }
 }
 
-function text_color() {
-  var text_colors = document.getElementById("text_color").value;
-  document.body.style.color = text_colors;
+function color_text() {
+  var text_color = document.getElementById("text_color").value;
+  document.body.style.color = text_color;
 }
 
+function color_border() {
+  var border_color = document.getElementById("border_color").value;
+  for (var i = 0; i < survey_cards.length; i++){
+    survey_cards[i].style.borderColor = border_color;
+  }
+}
+
+function color_card_clear() {
+  document.body.style = "background-image: none";
+  document.body.style.backgroundColor = "white";
+  document.body.style.color = "black";
+  for (let i = 0; i < survey_cards.length; i++) {
+    survey_cards[i].style.backgroundColor = "white";
+    survey_cards[i].style.borderColor = "black";
+  }
+  for (let i = 0; i < document.getElementsByClassName("solid_bg_color").length; i++) {
+    document.getElementsByClassName("solid_bg_color")[i].style.display = "none";
+  }
+  for (let i = 0; i < document.getElementsByClassName("grad_bg").length; i++) {
+    document.getElementsByClassName("grad_bg")[i].style.display = "none";
+  }
+}
 //reference for local storage
 
 function text() {
