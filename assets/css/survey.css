@@ -26,7 +26,11 @@ body {
 }
 
 h1 {
-  font-size: 65px;
+  font-size: 70px;
+  position: absolute;
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 button {
@@ -44,14 +48,11 @@ button {
   margin-left: -10%;
 }
 
-.survey_card>h1 {
+.survey_card form {
   margin-left: 10%;
-  margin-top: 5%;
-  margin-bottom: 5%;
 }
-
-.survey_card>form {
-  margin-left: 10%;
+.card_content {
+  margin-top: 15%;
 }
 
 .reset_btn {
@@ -69,10 +70,10 @@ button {
   margin-top: 10%;
 }
 
-#intro>p {
+#intro p {
   margin-left: 15%;
   margin-right: 15%;
-  margin-top: 10%;
+  margin-top: 25%;
 }
 
 
@@ -96,7 +97,6 @@ button {
 #color select {
   font-size: 1vw;
 }
-
 #border_width {
   font-size: 1vw;
   width: 5vw;
@@ -110,4 +110,11 @@ button {
 }
 
 
+
 /* Fonts card */
+#font_card > .card_content {
+  margin-left: 10%;
+}
+.label_cont {
+  text-align: right;
+}

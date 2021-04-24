@@ -136,25 +136,25 @@ function color_card_clear() {
 }
 
 
-
+var h1_elements = document.getElementsByTagName("h1");
 //Fonts styling
+function h1_change_fontfam() {
+  var head_font_family = document.getElementById("h1_font_family").value;
+  for (let i = 0; i < h1_elements.length; i++) {
+    h1_elements[i].style.fontFamily = head_font_family;
+  }
+}
 
+function size_head_font() {
+  var head_font_size = document.getElementById("h1_font_size").value;
+  for (let i = 0; i < h1_elements.length; i++) {
+    h1_elements[i].style.fontSize = head_font_size + "px";
+  }
+}
 
-
-
-
-
-
-//reference for local storage
-
-function text() {
-  var text = document.getElementById("press");
-  var style = {
-    color: "red",
-  };
-
-  style["background-color"] = "blue";
-
-
-  Object.assign(text.style, style);
+function letter_space_head() {
+  var head_letter_space = document.getElementById("h1_letter_spacing").value;
+  for (let i = 0; i < h1_elements.length; i++) {
+    h1_elements[i].style.letterSpacing = head_letter_space + "px";
+  }
 }

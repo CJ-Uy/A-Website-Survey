@@ -12,6 +12,7 @@
 </head>
 
 <body>
+  <!--Add note to not use chrome the layout messes up-->
 
   <button id="nxt_btn" onclick="change_card(1)">NEXT</button>
   <button id="prev_btn" onclick="change_card(-1)">BACK</button>
@@ -20,205 +21,256 @@
     <!--Intro-->
     <div class="survey_card" id="intro">
       <h1>DIRECTIONS</h1>
-      <p>
-        This is a simply survey taking information about what people like most in websites i.e. what
-        makes a website look good for them.
-        <br>
-        <br>
-        Please answer all the question in the survey card and when read click next.
-        <br>
-        <br>
-        At the end of the survey you will be able to see a summary of all of your preevious choices.
-        Thats all and have fun!
-      </p>
+      <div class="card_content">
+        <p>
+          This is a simply survey taking information about what people like most in websites i.e. what
+          makes a website look good for them.
+          <br>
+          <br>
+          Please answer all the question in the survey card and when read click next.
+          <br>
+          <br>
+          At the end of the survey you will be able to see a summary of all of your preevious choices.
+          Thats all and have fun!
+        </p>
+      </div>
     </div>
 
     <!--Color-->
     <div class="survey_card" id="color">
       <h1>COLOR</h1>
-      <form action="#">
-        <!--Background color chnage-->
-        <h2>Background</h2>
-        <table>
-          <tr class="question">
-            What type of background do you prefer?
-            <br>
-          </tr>
-          <tr>
-            <td>
-              <label for="solid"> Solid</label>
-            </td>
-            <td>
-              <input type="radio" id="solid" name="bg_type" value="solid" onclick="solid_bg()">
-            </td>
-            <td>
-              <label for="solid_color" class="solid_bg_color">Pick a color</label>
-            </td>
-            <td>
-              <select name="solid_color" id="solid_color" class="solid_bg_color" onclick="solid_bg()">
-                <option value="">--Select a color--</option>
-                <option value="#141414">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ecf0f1">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="gradient">Gradient</label>
-            </td>
-            <td>
-              <input type="radio" id="gradient" name="bg_type" value="gradient" onclick="grad_bg()">
-            </td>
-            <td>
-              <label for="grad_angle" class="grad_bg">Gradient Direction</label>
-            </td>
-            <td>
-              <select name="grad_angle" id="grad_angle" class="grad_bg" onclick="grad_bg()">
-                <option value="0">--Select a direction--</option>
-                <option value="1">Horizontal</option>
-                <option value="2">Vertical</option>
-                <option value="3">45&#176;</option>
-                <option value="4">135&#176;</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td>
-              <label for="grad_color1" class="grad_bg">Color 1</label>
-            </td>
-            <td>
-              <select name="grad_color1" id="grad_color1" class="grad_bg" onclick="grad_bg()" disabled>
-                <option value="">--Select a color--</option>
-                <option value="#141414">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ecf0f1">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-            <td>
-              <label for="grad_color2" class="grad_bg">Color 2</label>
-            </td>
-            <td>
-              <select name="grad_color2" id="grad_color2" class="grad_bg" onclick="grad_bg()" disabled>
-                <option value="">--Select a color--</option>
-                <option value="#141414">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ecf0f1">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-          </tr>
-        </table>
+      <div class="card_content">
+        <form action="#">
+          <!--Background color chnage-->
+          <h2>Background</h2>
+          <table>
+            <tr class="question">
+              What type of background do you prefer?
+              <br>
+            </tr>
+            <tr>
+              <td>
+                <label for="solid"> Solid</label>
+              </td>
+              <td>
+                <input type="radio" id="solid" name="bg_type" value="solid" onclick="solid_bg()">
+              </td>
+              <td>
+                <label for="solid_color" class="solid_bg_color">Pick a color</label>
+              </td>
+              <td>
+                <select name="solid_color" id="solid_color" class="solid_bg_color" onclick="solid_bg()">
+                  <option value="">--Select a color--</option>
+                  <option value="#141414">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ecf0f1">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="gradient">Gradient</label>
+              </td>
+              <td>
+                <input type="radio" id="gradient" name="bg_type" value="gradient" onclick="grad_bg()">
+              </td>
+              <td>
+                <label for="grad_angle" class="grad_bg">Gradient Direction</label>
+              </td>
+              <td>
+                <select name="grad_angle" id="grad_angle" class="grad_bg" onclick="grad_bg()">
+                  <option value="0">--Select a direction--</option>
+                  <option value="1">Horizontal</option>
+                  <option value="2">Vertical</option>
+                  <option value="3">45&#176;</option>
+                  <option value="4">135&#176;</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td>
+                <label for="grad_color1" class="grad_bg">Color 1</label>
+              </td>
+              <td>
+                <select name="grad_color1" id="grad_color1" class="grad_bg" onclick="grad_bg()" disabled>
+                  <option value="">--Select a color--</option>
+                  <option value="#141414">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ecf0f1">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+              <td>
+                <label for="grad_color2" class="grad_bg">Color 2</label>
+              </td>
+              <td>
+                <select name="grad_color2" id="grad_color2" class="grad_bg" onclick="grad_bg()" disabled>
+                  <option value="">--Select a color--</option>
+                  <option value="#141414">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ecf0f1">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+            </tr>
+          </table>
 
-        <h2>Question Cards</h2>
-        <table>
-          <tr>
-            What colors would you prefer for the question cards?
-            <br>
-          </tr>
-          <tr>
-            <td>
-              <label for="card_bg">Background Color</label>
-            </td>
-            <td>
-              <!--Note to self dont make the name and the function the same; doesnt work-->
-              <select name="card_bg" id="card_bg" onclick="cards_bg()">
-                <option value="">--Select a color--</option>
-                <option value="#141414">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ffffff">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="text_color">Text Color</label>
-            </td>
-            <td>
-              <select name="text_colored" id="text_color" onclick="color_text()">
-                <option value="">--Select a color--</option>
-                <option value="#000000">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ffffff">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="border_color">Border Color</label>
-            </td>
-            <td>
-              <select name="border_colored" id="border_color" onclick="color_border()">
-                <option value="">--Select a color--</option>
-                <option value="#000000">Black</option>
-                <option value="#95a5a6">Grey</option>
-                <option value="#ffffff">White</option>
-                <option value="#e74c3c">Red</option>
-                <option value="#e67e22">Orange</option>
-                <option value="#f1c40f">Yellow</option>
-                <option value="#2ecc71">Green</option>
-                <option value="#3498db">Blue</option>
-                <option value="#3f51b5">Indigo</option>
-                <option value="#9b59b6">Violet</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="border_width">Border Width (px)</label>
-            </td>
-            <td style="text-align: left;">
-              <input type="number" id="border_width" name="border_width" value="2" min="0" onchange="change_border_width()">
-            </td>
-          </tr>
-        </table>
-        <input type="reset" class="reset_btn" id="color_reset" value="CLEAR" onclick="color_card_clear()">
-      </form>
+          <h2>Question Cards</h2>
+          <table>
+            <tr>
+              What colors would you prefer for the question cards?
+              <br>
+            </tr>
+            <tr>
+              <td>
+                <label for="card_bg">Background Color</label>
+              </td>
+              <td>
+                <!--Note to self dont make the name and the function the same; doesnt work-->
+                <select name="card_bg" id="card_bg" onclick="cards_bg()">
+                  <option value="">--Select a color--</option>
+                  <option value="#141414">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ffffff">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="text_color">Text Color</label>
+              </td>
+              <td>
+                <select name="text_colored" id="text_color" onclick="color_text()">
+                  <option value="">--Select a color--</option>
+                  <option value="#000000">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ffffff">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="border_color">Border Color</label>
+              </td>
+              <td>
+                <select name="border_colored" id="border_color" onclick="color_border()">
+                  <option value="">--Select a color--</option>
+                  <option value="#000000">Black</option>
+                  <option value="#95a5a6">Grey</option>
+                  <option value="#ffffff">White</option>
+                  <option value="#e74c3c">Red</option>
+                  <option value="#e67e22">Orange</option>
+                  <option value="#f1c40f">Yellow</option>
+                  <option value="#2ecc71">Green</option>
+                  <option value="#3498db">Blue</option>
+                  <option value="#3f51b5">Indigo</option>
+                  <option value="#9b59b6">Violet</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="border_width">Border Width (px)</label>
+              </td>
+              <td style="text-align: left;">
+                <input type="number" id="border_width" name="border_width" value="2" min="0"
+                  onchange="change_border_width()">
+              </td>
+            </tr>
+          </table>
+          <input type="reset" class="reset_btn" id="color_reset" value="CLEAR" onclick="color_card_clear()">
+        </form>
+      </div>
     </div>
   </div>
 
   <!--Fonts-->
-  <div class="survey_card">
+  <div class="survey_card" id="font_card">
     <h1>FONTS</h1>
-    <table>
-
-    </table>
+    <div class="card_content">
+      <h4>(use up and down arrows to see real time adjustments)</h4>
+      <h2>Main Headings</h2>
+      <table>
+        <form action="#">
+          <tr>
+            What are the font settings you prefer for headings?
+          </tr>
+          <br>
+          <br>
+          <tr>
+            <td class="label_cont">
+              <label for="h1_font_family">Font Family</label>
+            </td>
+            <td>
+              <select name="h1_font_family" id="h1_font_family" onclick="h1_change_fontfam()">
+                <option value="">--Select a font--</option>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label_cont">
+              <label for="h1_font_size">Font Size</label>
+            </td>
+            <td>
+              <input type="number" name="h1_font_size" id="h1_font_size" min="0" max="100" value="70" onchange="size_head_font()">
+            </td>
+          </tr>
+          <tr>
+            <td class="label_cont">
+              <label for="h1_letter_spacing">Letter Spacing (px)</label>
+            </td>
+            <td>
+              <input type="number" name="h1_letter_spacing" id="h1_letter_spacing" 
+              min="-20" max="200" value="2" onchange="letter_space_head()"> 
+            </td>
+          </tr>
+          <input type="reset" class="reset_btn" id="font_reset" value="CLEAR" onclick="">
+        </form>
+      </table>
+    </div>
   </div>
 
   <script src="../javascript/script.js"></script>
