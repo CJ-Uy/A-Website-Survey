@@ -91,10 +91,9 @@ function cards_bg() {
   }
 }
 
-function textColor() {
-  alert("Hello");
-  var text_color= document.getElementById("text_color").value;
-  document.body.style = "color:" + text_color;
+function text_color() {
+  var text_colors = document.getElementById("text_color").value;
+  document.body.style.color = text_colors;
 }
 
 //reference for local storage
