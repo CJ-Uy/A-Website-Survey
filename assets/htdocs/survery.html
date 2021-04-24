@@ -224,14 +224,19 @@
     <h1>FONTS</h1>
     <div class="card_content">
       <h3>(use up and down arrows to see real time adjustments)</h3>
-      <h2>Main Headings</h2>
-      <table>
-        <form action="#">
+      <form action="#">
+        <table>
           <tr>
-            What are the font settings you prefer for headings?
+            What font setting do you prefer for your: 
           </tr>
-          <br>
-          <br>
+          <tr>
+            <td colspan="2">
+              <h2>Headings</h2>
+            </td>
+            <td colspan="2">
+              <h2>Contents</h2>
+            </td>
+          </tr>
           <tr>
             <td class="label_cont">
               <label for="h1_font_family">Font Family</label>
@@ -249,13 +254,39 @@
                 <option value="Brush Script MT">Brush Script MT</option>
               </select>
             </td>
+
+            <td class="label_cont">
+              <label for="content_font_family">Font Family</label>
+            </td>
+            <td>
+              <select name="content_font_family" id="content_font_family" onclick="content_change_fontfam()">
+                <option value="">--Select a font--</option>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+              </select>
+            </td>
           </tr>
           <tr>
             <td class="label_cont">
-              <label for="h1_font_size">Font Size</label>
+              <label for="h1_font_size">Main Heading Font Size</label>
             </td>
             <td>
-              <input type="number" name="h1_font_size" id="h1_font_size" min="0" max="100" value="70" onchange="size_head_font()">
+              <input type="number" name="h1_font_size" id="h1_font_size" min="10" max="100" value="70"
+                onchange="size_head_font()">
+            </td>
+
+            <td class = "label_cont">
+              <label for="content_font_size">Font Size</label>
+            </td>
+            <td>
+              <input type="number" name="content_font_size" id="content_font_size" min="10" max="100" value=""
+                onchange="size_content_font()">
             </td>
           </tr>
           <tr>
@@ -263,13 +294,22 @@
               <label for="h1_letter_spacing">Letter Spacing (px)</label>
             </td>
             <td>
-              <input type="number" name="h1_letter_spacing" id="h1_letter_spacing" 
-              min="-20" max="200" value="2" onchange="letter_space_head()"> 
+              <input type="number" name="h1_letter_spacing" id="h1_letter_spacing" min="-20" max="200" value="2"
+                onchange="letter_space_head()">
             </td>
           </tr>
-          <input type="reset" class="reset_btn" id="font_reset" value="CLEAR" onclick="fonts_card_reset()">
-        </form>
-      </table>
+          <tr>
+            <td class="label_cont">
+              <label for="h2_font_size">Sub Heading Font Size</label>
+            </td>
+            <td>
+              <input type="number" name="h2_font_size" id="h2_font_size" min="10" max="50" value="30"
+                onchange="size_subhead_font()">
+            </td>
+          </tr>
+        </table>
+        <input type="reset" class="reset_btn" id="font_reset" value="CLEAR" onclick="fonts_card_reset()">
+      </form>
     </div>
   </div>
 

@@ -34,7 +34,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5vw;
+  font-size: 30px;
 }
 
 h3 {
@@ -123,10 +123,12 @@ select, label, input {
 
 
 /* Fonts card */
-#font_card>.card_content {
+h3 {
   margin-left: 10%;
 }
 
 .label_cont {
-  text-align: right;
+  text-align: left;
 }
+
+

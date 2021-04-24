@@ -169,6 +169,21 @@ function letter_space_head() {
   }
 }
 
+function size_subhead_font() {
+  var subhead_font_size = document.getElementById("h2_font_size").value;
+  for (let i = 0; i < h2_elements.length; i++) {
+    h2_elements[i].style.fontSize = subhead_font_size + "px";
+  }
+}
+
+function content_change_fontfam() {
+  //make code
+}
+
+function size_content_font() {
+  //make code
+}
+
 function fonts_card_reset() {
   for (let i = 0; i < h1_elements.length; i++){
     h1_elements[i].style.fontFamily = "serif";
