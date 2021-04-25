@@ -34,11 +34,12 @@ h1 {
 }
 
 h2 {
-  font-size: 30px;
+  font-size: 2vw;
 }
 
 h3 {
-  font-size: 0.75vw;
+  margin-left: 10%;
+  font-size: 1vw;
 }
 
 button {
@@ -123,12 +124,20 @@ select, label, input {
 
 
 /* Fonts card */
-h3 {
-  margin-left: 10%;
-}
-
 .label_cont {
   text-align: left;
 }
 
+#font_card input {
+  text-align: center;
+  width: 7vw;
+}
+
+#font_card select {
+  width: 8.5vw;
+}
+
+#font_table_space {
+  width: 2vw;
+}
 
