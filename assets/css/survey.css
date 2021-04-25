@@ -62,7 +62,9 @@ button {
   font-size: 1vw;
 }
 
-select, label, input {
+select,
+label,
+input {
   font-size: 1vw;
 }
 
@@ -140,4 +142,3 @@ select, label, input {
 #font_table_space {
   width: 2vw;
 }
-

@@ -184,7 +184,7 @@ function content_change_fontfam() {
   for (let i = 0; i < label_elements.length; i++) {
     label_elements[i].style.fontFamily = content_font_family;
   }
-  for (let i = 0; i < form_elements.length; i++){
+  for (let i = 0; i < form_elements.length; i++) {
     form_elements[i].style.fontFamily = content_font_family;
   }
 }
@@ -197,8 +197,8 @@ function size_content_font() {
   for (let i = 0; i < label_elements.length; i++) {
     label_elements[i].style.fontSize = content_font_size + "px";
   }
-  for (let i = 0; i < form_elements.length; i++){
-    form_elements[i].style.fontSize = content_font_size+ "px";
+  for (let i = 0; i < form_elements.length; i++) {
+    form_elements[i].style.fontSize = content_font_size + "px";
   }
 }
 
