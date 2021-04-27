@@ -153,6 +153,9 @@ function h1_change_fontfam() {
   for (let i = 0; i < h1_elements.length; i++) {
     h1_elements[i].style.fontFamily = head_font_family;
   }
+  for (let i = 0; i < h2_elements.length; i++) {
+    h2_elements[i].style.fontFamily = head_font_family;
+  }
 }
 
 function size_head_font() {
