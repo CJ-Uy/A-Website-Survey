@@ -5,10 +5,6 @@ function change_card(n) {
   show_card(card_index += n);
 }
 
-function current_card(n) {
-  show_card(card_index = n);
-}
-
 function show_card(n) {
   var cards = document.getElementsByClassName("survey_card");
 
