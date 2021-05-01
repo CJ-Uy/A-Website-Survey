@@ -27,6 +27,52 @@ function show_card(n) {
 show_card(card_index);
 
 
+/*
+Local storage variables:
+
+<color card>
+bg_solid
+bg_solid_color
+
+bg_grad
+bg_grad_angle
+bg_grad_color1
+bg_grad_color2
+
+card_bg_color
+text_color
+border_color
+
+border_width
+
+
+<font card>
+heading_fontsize
+heading_font
+
+*/
+
+
+//Local Storage Initalization
+/*
+
+if(typeof(Storage) !== "undefined") {
+  if (localStorage.clickcount) {
+    localStorage.clickcount = Number(localStorage.clickcount)+1;
+  } else {
+    localStorage.clickcount = 1;
+  }
+
+} else {
+  alert("Your browser does not yet support local storage the graphs may not work!");
+}
+
+*/
+
+
+
+
+
 var survey_cards = document.getElementsByClassName("survey_card");
 //Color styling functions
 function solid_bg() {
@@ -218,10 +264,22 @@ function fonts_card_reset() {
 }
 
 
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
+var slider = document.getElementById("like_range");
+var output = document.getElementById("emoji");
 
 slider.oninput = function() {
-  output.innerHTML = this.value;
+  
+  if(this.value == 1){
+    output.innerHTML = "😓";
+   } else if (this.value == 2) {
+     output.innerHTML = "😅";
+   } else if (this.value == 3) {
+    output.innerHTML = "😐";
+   } else if (this.value == 4) {
+     output.innerHTML = "😄" ;
+   } else if (this.value == 5){
+     output.innerHTML = "🤩";
+   }
+   
 }
+

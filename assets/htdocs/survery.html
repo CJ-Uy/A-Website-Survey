@@ -318,12 +318,14 @@
   <div class="survey_card" id="final">
     <h1>CONCLUSION</h1>
     <div class="survey_content" id="last_question">
-      <h2>How did You enjoy the survey?</h2>
-      <div class="slidecontainer">
-        <input type="range" min="1" max="10" value="50" class="slider" id="myRange">
-        <p>Value: <span id="demo"></span></p>
+      <h2>How did you enjoy the survey?</h2>
+      <div class="slider_container">
+        <input type="range" min="1" max="5" value="3" class="slider" id="like_range">
+        <p id="emoji">😐</p>
       </div>
     </div>
+
+    <button class="reset_btn">Submit</button>
   </div>
 
   <script src="../javascript/script.js"></script>
