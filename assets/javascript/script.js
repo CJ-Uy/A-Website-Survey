@@ -2,14 +2,15 @@
 var card_index = 1;
 
 function change_card(n) {
-  show_card(card_index += n);
+  card_index += n;
+  show_card(card_index);
 }
 
 function show_card(n) {
   var cards = document.getElementsByClassName("survey_card");
 
   if (n > cards.length) {
-    alert("Insert Graphs");
+    card_index = 4;
   }
   if (n < 1) {
     card_index = 1;
@@ -24,15 +25,6 @@ function show_card(n) {
 
 
 show_card(card_index);
-
-
-
-//DO THISSS maybe
-var color_styling = {
-  body: {},
-  card: {}
-};
-
 
 
 var survey_cards = document.getElementsByClassName("survey_card");
@@ -223,4 +215,13 @@ function fonts_card_reset() {
 
   for (let i = 0; i < form_elements.length; i++)
     form_elements[i].style.fontFamily = "serif";
+}
+
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
 }

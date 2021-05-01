@@ -54,14 +54,14 @@
                 <label for="solid">Solid</label>
               </td>
               <td>
-                <input type="radio" id="solid" name="bg_type" value="solid" onclick="solid_bg()">
+                <input type="radio" id="solid" name="bg_type" onclick="solid_bg()">
               </td>
               <td>
                 <label for="solid_color" class="solid_bg_color">Pick a color</label>
               </td>
               <td>
                 <select name="solid_color" id="solid_color" class="solid_bg_color" onclick="solid_bg()">
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#141414">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ecf0f1">White</option>
@@ -312,6 +312,17 @@
         </table>
         <input type="reset" class="reset_btn" id="font_reset" value="CLEAR" onclick="fonts_card_reset()">
       </form>
+    </div>
+  </div>
+
+  <div class="survey_card" id="final">
+    <h1>CONCLUSION</h1>
+    <div class="survey_content" id="last_question">
+      <h2>How did You enjoy the survey?</h2>
+      <div class="slidecontainer">
+        <input type="range" min="1" max="10" value="50" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>
     </div>
   </div>
 
