@@ -28,8 +28,6 @@ show_card(card_index);
 
 
 
-var trial_data = JSON.parse(localStorage.getItem("trial_data"));
-alert(trial_data[0]);
 
 var c = document.getElementById("trial");
 var ctx = c.getContext("2d");

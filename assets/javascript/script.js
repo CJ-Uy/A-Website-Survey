@@ -228,32 +228,30 @@ function fonts_card_reset() {
 var slider = document.getElementById("like_range");
 var output = document.getElementById("emoji");
 
-slider.oninput = function() {
-  
-  if(this.value == 1){
+slider.oninput = function () {
+
+  if (this.value == 1) {
     output.innerHTML = "😓";
-   } else if (this.value == 2) {
-     output.innerHTML = "😅";
-   } else if (this.value == 3) {
+  } else if (this.value == 2) {
+    output.innerHTML = "😅";
+  } else if (this.value == 3) {
     output.innerHTML = "😐";
-   } else if (this.value == 4) {
-     output.innerHTML = "😄" ;
-   } else if (this.value == 5){
-     output.innerHTML = "🤩";
-   }
-   
+  } else if (this.value == 4) {
+    output.innerHTML = "😄";
+  } else if (this.value == 5) {
+    output.innerHTML = "🤩";
+  }
+
 }
 
 
 
-
-
 /*
-
-
 var trial_data = [1,2,3,4,5];
 localStorage.setItem("trial_data", JSON.stringify(trial_data));
 
+var trial_data = JSON.parse(localStorage.getItem("trial_data"));
+alert(trial_data[0]);
 
 Local storage variables:
 
@@ -284,10 +282,10 @@ heading_letterspacing
 */
 
 
-var empty_color_set = [0,0,0,0,0,0,0,0,0,0];
-var empty_font_set = [0,0,0,0,0,0,0,0];
+var empty_color_set = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var empty_font_set = [0, 0, 0, 0, 0, 0, 0, 0];
 
-if(typeof(Storage) !== "undefined") {
+if (typeof (Storage) !== "undefined") {
   if (localStorage.has_been_here_before == null) {
     localStorage.setItem("has_been_here_before", true);
 
@@ -296,7 +294,7 @@ if(typeof(Storage) !== "undefined") {
     localStorage.setItem("bg_solid_color", JSON.stringify(empty_color_set));
 
     localStorage.setItem("bg_grad", 0);
-    localStorage.setItem("bg_grad_angle", JSON.stringify([0,0,0,0]));
+    localStorage.setItem("bg_grad_angle", JSON.stringify([0, 0, 0, 0]));
     localStorage.setItem("bg_grad_color1", JSON.stringify(empty_color_set));
     localStorage.setItem("bg_grad_color2", JSON.stringify(empty_color_set));
 
@@ -304,7 +302,7 @@ if(typeof(Storage) !== "undefined") {
     localStorage.setItem("text_color", JSON.stringify(empty_color_set));
     localStorage.setItem("border_color", JSON.stringify(empty_color_set));
     localStorage.setItem("border_width", 2);
-    
+
 
     //font card
     localStorage.setItem("heading_fontfamily", JSON.stringify(empty_font_set));
@@ -321,22 +319,53 @@ if(typeof(Storage) !== "undefined") {
 }
 
 
-
-
-function set_local_storage() {
-
+function color_check(x){
+  switch (n) {
+    case ("#000000"):
+      return 0;
+    case ("#95a5a6"):
+      return 1;
+    case ("#ffffff"):
+      return 2;
+    case ("#e74c3c"):
+      return 3;
+    case ("#e67e22"):
+      return 4;
+    case ("#f1c40f"):
+      return 5;
+    case ("#2ecc71"):
+      return 6;
+    case ("#3498db"):
+      return 7;
+    case ("#3f51b5"):
+      return 8;
+    case ("#9b59b6"):
+      return 9;
+  }
 }
 
+//Local storgae incrementation
+function set_local_storage() {
+  //bg color
+  if(document.getElementById("solid_color").value != "0"){
+    localStorage.bg_solid = Number(localStorage.bg_solid)+1;
 
+    var temp = color_check(document.getElementById("solid_color").value);
+    //test
+  } else {
+
+  }
+}
+
+//User validation
 function final_submit() {
-  if(
+  if (
     document.getElementById("solid_color").value != "0" ||
-    (document.getElementById("grad_color1").value != "0" && document.getElementById("grad_color2").value != "0") 
-    &&
+    (document.getElementById("grad_color1").value != "0" && document.getElementById("grad_color2").value != "0") &&
     document.getElementById("card_bg").value != "0" &&
     document.getElementById("text_color").value != "0" &&
     document.getElementById("border_color").value != "0"
-  ){
+  ) {
     if (
       document.getElementById("head_font_family").value != "0" &&
       document.getElementById("content_font_family").value != "0"
