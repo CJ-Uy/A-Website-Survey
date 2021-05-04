@@ -439,12 +439,20 @@ function set_local_storage() {
   //Border width average
   temp = (parseInt(localStorage.border_width) + parseInt(document.getElementById("border_width").value))/2;
   localStorage.setItem("border_width", temp);
-  alert(localStorage.border_width);
   
   
   //FONTS card
-    //Heading 
+    //Heading font family incrementation
+  temp = font_check(document.getElementById("head_font_family").value);
+  temp_arr = JSON.parse(localStorage.getItem("heading_fontfamily"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("heading_fontfamily", JSON.stringify(temp_arr));
   
+  //Content font family incrementation
+  temp = font_check(document.getElementById("content_font_family").value);
+  temp_arr = JSON.parse(localStorage.getItem("content_fontfamily"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("content_fontfamily", JSON.stringify(temp_arr));
 }
 
 //User validation
