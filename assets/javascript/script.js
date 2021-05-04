@@ -356,6 +356,26 @@ function color_check(n){
   }
 }
 
+function font_check(n) {
+  switch (n) {
+    case ("Arial"):
+      return 0;
+    case ("Verdana"):
+      return 1;
+    case ("Helvetica"):
+      return 2;
+    case ("Tahoma"):
+      return 3;
+    case ("Times New Roman"):
+      return 4;
+    case ("Georgia"):
+      return 5;
+    case ("Courier New"):
+      return 6;
+    case ("Brush Script MT"):
+      return 7;
+  }
+}
 
 //Local storgae incrementation
 //NOTTT DONEEE FROM HERE DOWNNNNNNNNNNNN
