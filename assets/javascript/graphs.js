@@ -29,7 +29,7 @@ show_card(card_index);
 
 
 
-var temp_arr =  JSON.parse(localStorage.getItem("bg_solid_color"));
+var temp_arr =  JSON.parse(localStorage.getItem("bg_grad_angle"));
 alert(temp_arr);
 
 

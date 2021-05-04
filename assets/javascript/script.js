@@ -287,15 +287,7 @@ var empty_font_set = [0, 0, 0, 0, 0, 0, 0, 0];
 
 if (typeof (Storage) !== "undefined") {
 
-
-  /*
-  
-  Something may be wrong here with the localStorage.has_been_here_before != null for new users???
-  
-  */
-
-
-  if (localStorage.has_been_here_before != null) {
+  if (localStorage.has_been_here_before == null) {
     localStorage.setItem("has_been_here_before", true);
 
     //color card
@@ -338,6 +330,8 @@ function color_check(n){
       return 1;
     case ("#ffffff"):
       return 2;
+    case ("#ecf0f1"):
+      return 2;
     case ("#e74c3c"):
       return 3;
     case ("#e67e22"):
@@ -355,21 +349,45 @@ function color_check(n){
   }
 }
 
+
 //Local storgae incrementation
+//NOTTT DONEEE FROM HERE DOWNNNNNNNNNNNN
+
+var temp;
+var temp_arr;
+
 function set_local_storage() {
   //bg color
   if(document.getElementById("solid_color").value != "0"){
-    
+    //Solid color incrementation
     localStorage.bg_solid = Number(localStorage.bg_solid)+1;
 
-    var value = document.getElementById("solid_color").value;
-    var temp = color_check(value);
-    var temp_arr =  JSON.parse(localStorage.getItem("bg_solid_color"));
+    temp = color_check(document.getElementById("solid_color").value);
+    temp_arr = JSON.parse(localStorage.getItem("bg_solid_color"));
     temp_arr[temp] += 1;
     localStorage.setItem("bg_solid_color", JSON.stringify(temp_arr));
 
   } else {
-  
+    //Gradient color incrementation
+    localStorage.bg_grad = Number(localStorage.bg_grad)+1;
+
+    //Grad angle increment
+    temp = Number(document.getElementById("grad_angle").value) - 1;
+    temp_arr = JSON.parse(localStorage.getItem("bg_grad_angle"));
+    temp_arr[temp] += 1;
+    localStorage.setItem("bg_grad_angle", JSON.stringify(temp_arr));
+
+    //Grad color 1 increment
+    temp = color_check(document.getElementById("grad_color1").value);
+    temp_arr = JSON.parse(localStorage.getItem("bg_grad_color1"));
+    temp_arr[temp] += 1;
+    localStorage.setItem("bg_grad_color1", JSON.stringify(temp_arr));
+
+    //Grad color 2 increment
+    temp = color_check(document.getElementById("grad_color2").value);
+    temp_arr = JSON.parse(localStorage.getItem("bg_grad_color2"));
+    temp_arr[temp] += 1;
+    localStorage.setItem("bg_grad_color2", JSON.stringify(temp_arr));
   }
 }
 
