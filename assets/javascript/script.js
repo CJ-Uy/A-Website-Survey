@@ -279,6 +279,10 @@ main_heading_fontsize
 sub_heading_fontsize
 
 heading_letterspacing
+
+
+<Satisfaction>
+satisfaction [5]
 */
 
 
@@ -302,18 +306,21 @@ if (typeof (Storage) !== "undefined") {
     localStorage.setItem("card_bg_color", JSON.stringify(empty_color_set));
     localStorage.setItem("text_color", JSON.stringify(empty_color_set));
     localStorage.setItem("border_color", JSON.stringify(empty_color_set));
-    localStorage.setItem("border_width", 2);
+    localStorage.setItem("border_width", 0);
 
 
     //font card
     localStorage.setItem("heading_fontfamily", JSON.stringify(empty_font_set));
     localStorage.setItem("content_fontfamily", JSON.stringify(empty_font_set));
 
-    localStorage.setItem("main_heading_fontsize", 70);
-    localStorage.setItem("sub_heading_fontsize", 30);
-    localStorage.setItem("content_fontsize", 15);
+    localStorage.setItem("main_heading_fontsize", 0);
+    localStorage.setItem("sub_heading_fontsize", 0);
+    localStorage.setItem("content_fontsize", 0);
 
-    localStorage.setItem("heading_letterspacing", 2);
+    localStorage.setItem("heading_letterspacing", 0);
+
+    //satisfaction
+    localStorage.setItem("satisfaction", JSON.stringify([0,0,0,0,0]));
   }
 } else {
   alert("Your browser does not yet support local storage the graphs may not work!");
@@ -357,7 +364,8 @@ var temp;
 var temp_arr;
 
 function set_local_storage() {
-  //bg color
+  //COLOR CARD
+    //Background color
   if(document.getElementById("solid_color").value != "0"){
     //Solid color incrementation
     localStorage.bg_solid = Number(localStorage.bg_solid)+1;
@@ -389,6 +397,34 @@ function set_local_storage() {
     temp_arr[temp] += 1;
     localStorage.setItem("bg_grad_color2", JSON.stringify(temp_arr));
   }
+
+  //Card background color incrementation 
+  temp = color_check(document.getElementById("card_bg").value);
+  temp_arr = JSON.parse(localStorage.getItem("card_bg_color"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("card_bg_color", JSON.stringify(temp_arr));
+
+  //Card text color incrementation
+  temp = color_check(document.getElementById("text_color").value);
+  temp_arr = JSON.parse(localStorage.getItem("text_color"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("text_color", JSON.stringify(temp_arr));
+
+  //Card border color incrementation
+  temp = color_check(document.getElementById("border_color").value);
+  temp_arr = JSON.parse(localStorage.getItem("border_color"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("border_color", JSON.stringify(temp_arr));
+
+  //Border width average
+  temp = (parseInt(localStorage.border_width) + parseInt(document.getElementById("border_width").value))/2;
+  localStorage.setItem("border_width", temp);
+  alert(localStorage.border_width);
+  
+  
+  //FONTS card
+    //Heading 
+  
 }
 
 //User validation
