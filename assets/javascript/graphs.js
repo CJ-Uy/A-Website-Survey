@@ -29,6 +29,16 @@ show_card(card_index);
 
 
 
+var temp_arr =  JSON.parse(localStorage.getItem("bg_solid_color"));
+alert(temp_arr);
+
+
+
+
+
+
+
+
 var c = document.getElementById("trial");
 var ctx = c.getContext("2d");
 

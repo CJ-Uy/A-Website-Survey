@@ -286,7 +286,16 @@ var empty_color_set = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var empty_font_set = [0, 0, 0, 0, 0, 0, 0, 0];
 
 if (typeof (Storage) !== "undefined") {
-  if (localStorage.has_been_here_before == null) {
+
+
+  /*
+  
+  Something may be wrong here with the localStorage.has_been_here_before != null for new users???
+  
+  */
+
+
+  if (localStorage.has_been_here_before != null) {
     localStorage.setItem("has_been_here_before", true);
 
     //color card
@@ -319,9 +328,11 @@ if (typeof (Storage) !== "undefined") {
 }
 
 
-function color_check(x){
+function color_check(n){
   switch (n) {
     case ("#000000"):
+      return 0;
+    case ("#141414"):
       return 0;
     case ("#95a5a6"):
       return 1;
@@ -348,12 +359,17 @@ function color_check(x){
 function set_local_storage() {
   //bg color
   if(document.getElementById("solid_color").value != "0"){
+    
     localStorage.bg_solid = Number(localStorage.bg_solid)+1;
 
-    var temp = color_check(document.getElementById("solid_color").value);
-    //test
-  } else {
+    var value = document.getElementById("solid_color").value;
+    var temp = color_check(value);
+    var temp_arr =  JSON.parse(localStorage.getItem("bg_solid_color"));
+    temp_arr[temp] += 1;
+    localStorage.setItem("bg_solid_color", JSON.stringify(temp_arr));
 
+  } else {
+  
   }
 }
 
