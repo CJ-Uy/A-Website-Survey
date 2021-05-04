@@ -8,4 +8,13 @@ footer {
   height: 10%;
   bottom: 0;
   background-color: darkblue;
+
+  text-align: center;
+}
+
+button {
+  font-size: 1vw;
+  margin-top: 1vw;
+  height: 3vw;
+  width: 5vw;
 }
