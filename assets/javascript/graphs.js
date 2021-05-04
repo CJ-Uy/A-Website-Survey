@@ -1,9 +1,35 @@
+//Card changeing
+var card_index = 1;
+
+function change_card(n) {
+  card_index += n;
+  show_card(card_index);
+}
+
+function show_card(n) {
+  var cards = document.getElementsByClassName("graphs_section");
+
+  if (n > cards.length) {
+    card_index = 3;
+  }
+  if (n < 1) {
+    card_index = 1;
+  }
+
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].style.display = "none";
+  }
+  cards[card_index - 1].style.display = "block";
+}
 
 
 
+show_card(card_index);
 
 
 
+var trial_data = JSON.parse(localStorage.getItem("trial_data"));
+alert(trial_data[0]);
 
 var c = document.getElementById("trial");
 var ctx = c.getContext("2d");

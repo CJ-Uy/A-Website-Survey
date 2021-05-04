@@ -103,7 +103,7 @@
               </td>
               <td>
                 <select name="grad_color1" id="grad_color1" class="grad_bg" onclick="grad_bg()" disabled>
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#141414">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ecf0f1">White</option>
@@ -121,7 +121,7 @@
               </td>
               <td>
                 <select name="grad_color2" id="grad_color2" class="grad_bg" onclick="grad_bg()" disabled>
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#141414">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ecf0f1">White</option>
@@ -150,7 +150,7 @@
               <td>
                 <!--Note to self dont make the name and the function the same; doesnt work-->
                 <select name="card_bg" id="card_bg" onclick="cards_bg()">
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#141414">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ffffff">White</option>
@@ -170,7 +170,7 @@
               </td>
               <td>
                 <select name="text_colored" id="text_color" onclick="color_text()">
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#000000">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ffffff">White</option>
@@ -190,7 +190,7 @@
               </td>
               <td>
                 <select name="border_colored" id="border_color" onclick="color_border()">
-                  <option value="">--Select a color--</option>
+                  <option value="0">--Select a color--</option>
                   <option value="#000000">Black</option>
                   <option value="#95a5a6">Grey</option>
                   <option value="#ffffff">White</option>
@@ -240,11 +240,11 @@
             </tr>
             <tr>
               <td class="label_cont">
-                <label for="h1_font_family">Font Family</label>
+                <label for="head_font_family">Font Family</label>
               </td>
               <td>
-                <select name="h1_font_family" id="h1_font_family" onclick="h1_change_fontfam()">
-                  <option value="">--Select a font--</option>
+                <select name="head_font_family" id="head_font_family" onclick="head_change_fontfam()">
+                  <option value="0">--Select a font--</option>
                   <option value="Arial">Arial</option>
                   <option value="Verdana">Verdana</option>
                   <option value="Helvetica">Helvetica</option>
@@ -261,7 +261,7 @@
               </td>
               <td>
                 <select name="content_font_family" id="content_font_family" onclick="content_change_fontfam()">
-                  <option value="">--Select a font--</option>
+                  <option value="0">--Select a font--</option>
                   <option value="Arial">Arial</option>
                   <option value="Verdana">Verdana</option>
                   <option value="Helvetica">Helvetica</option>
@@ -324,7 +324,7 @@
         </div>
       </div>
 
-      <button class="reset_btn">Submit</button>
+      <button class="reset_btn" onclick="final_submit()">Submit</button>
     </div>
   </div>
 

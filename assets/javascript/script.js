@@ -27,55 +27,14 @@ function show_card(n) {
 show_card(card_index);
 
 
-/*
-Local storage variables:
-
-<color card>
-bg_solid
-bg_solid_color
-
-bg_grad
-bg_grad_angle
-bg_grad_color1
-bg_grad_color2
-
-card_bg_color
-text_color
-border_color
-
-border_width
-
-
-<font card>
-heading_fontsize
-heading_font
-
-*/
-
-
-//Local Storage Initalization
-/*
-
-if(typeof(Storage) !== "undefined") {
-  if (localStorage.clickcount) {
-    localStorage.clickcount = Number(localStorage.clickcount)+1;
-  } else {
-    localStorage.clickcount = 1;
-  }
-
-} else {
-  alert("Your browser does not yet support local storage the graphs may not work!");
-}
-
-*/
-
-
-
-
 
 var survey_cards = document.getElementsByClassName("survey_card");
 //Color styling functions
 function solid_bg() {
+  document.getElementById("grad_color1").value = "0";
+  document.getElementById("grad_color2").value = "0";
+  document.getElementById("grad_angle").value = "0"
+
   document.body.style = "background-color: white";
   for (let i = 0; i < document.getElementsByClassName("grad_bg").length; i++) {
     document.getElementsByClassName("grad_bg")[i].style.display = "none";
@@ -89,6 +48,8 @@ function solid_bg() {
 }
 
 function grad_bg() {
+  document.getElementById("solid_color").value = "0";
+
   document.body.style.backgroundColor = "white";
   for (let i = 0; i < document.getElementsByClassName("grad_bg").length; i++) {
     document.getElementsByClassName("grad_bg")[i].style.display = "inline-block";
@@ -182,8 +143,8 @@ var label_elements = document.getElementsByTagName("label");
 var form_elemetns = document.getElementsByTagName("form");
 var p_elements = document.getElementsByTagName("p");
 //Fonts styling functions
-function h1_change_fontfam() {
-  var head_font_family = document.getElementById("h1_font_family").value;
+function head_change_fontfam() {
+  var head_font_family = document.getElementById("head_font_family").value;
   for (let i = 0; i < h1_elements.length; i++) {
     h1_elements[i].style.fontFamily = head_font_family;
   }
@@ -283,3 +244,111 @@ slider.oninput = function() {
    
 }
 
+
+
+
+
+/*
+
+
+var trial_data = [1,2,3,4,5];
+localStorage.setItem("trial_data", JSON.stringify(trial_data));
+
+
+Local storage variables:
+
+<color card>
+bg_solid
+bg_solid_color [10]
+
+bg_grad 
+bg_grad_angle [4]
+bg_grad_color1 [10]
+bg_grad_color2 [10]
+
+card_bg_color [10]
+text_color [10]
+border_color [10]
+
+border_width
+
+
+<font card>
+heading_fontfamily [8]
+content_fontfamily [8]
+
+main_heading_fontsize
+sub_heading_fontsize
+
+heading_letterspacing
+*/
+
+
+var empty_color_set = [0,0,0,0,0,0,0,0,0,0];
+var empty_font_set = [0,0,0,0,0,0,0,0];
+
+if(typeof(Storage) !== "undefined") {
+  if (localStorage.has_been_here_before == null) {
+    localStorage.setItem("has_been_here_before", true);
+
+    //color card
+    localStorage.setItem("bg_solid", 0);
+    localStorage.setItem("bg_solid_color", JSON.stringify(empty_color_set));
+
+    localStorage.setItem("bg_grad", 0);
+    localStorage.setItem("bg_grad_angle", JSON.stringify([0,0,0,0]));
+    localStorage.setItem("bg_grad_color1", JSON.stringify(empty_color_set));
+    localStorage.setItem("bg_grad_color2", JSON.stringify(empty_color_set));
+
+    localStorage.setItem("card_bg_color", JSON.stringify(empty_color_set));
+    localStorage.setItem("text_color", JSON.stringify(empty_color_set));
+    localStorage.setItem("border_color", JSON.stringify(empty_color_set));
+    localStorage.setItem("border_width", 2);
+    
+
+    //font card
+    localStorage.setItem("heading_fontfamily", JSON.stringify(empty_font_set));
+    localStorage.setItem("content_fontfamily", JSON.stringify(empty_font_set));
+
+    localStorage.setItem("main_heading_fontsize", 70);
+    localStorage.setItem("sub_heading_fontsize", 30);
+    localStorage.setItem("content_fontsize", 15);
+
+    localStorage.setItem("heading_letterspacing", 2);
+  }
+} else {
+  alert("Your browser does not yet support local storage the graphs may not work!");
+}
+
+
+
+
+function set_local_storage() {
+
+}
+
+
+function final_submit() {
+  if(
+    document.getElementById("solid_color").value != "0" ||
+    (document.getElementById("grad_color1").value != "0" && document.getElementById("grad_color2").value != "0") 
+    &&
+    document.getElementById("card_bg").value != "0" &&
+    document.getElementById("text_color").value != "0" &&
+    document.getElementById("border_color").value != "0"
+  ){
+    if (
+      document.getElementById("head_font_family").value != "0" &&
+      document.getElementById("content_font_family").value != "0"
+    ) {
+
+      set_local_storage();
+
+      window.open('graphs.html')
+    } else {
+      alert("You have not filled out all of the questions in FONTS card!");
+    }
+  } else {
+    alert("You have not filled out all of the questions in COLOR card!");
+  }
+}

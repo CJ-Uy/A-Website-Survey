@@ -18,3 +18,9 @@ button {
   height: 3vw;
   width: 5vw;
 }
+
+h1 {
+  font-family: helvetica;
+  text-align: center;
+  font-size: 3vw;
+}
