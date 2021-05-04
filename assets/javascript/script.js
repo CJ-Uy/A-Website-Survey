@@ -306,18 +306,18 @@ if (typeof (Storage) !== "undefined") {
     localStorage.setItem("card_bg_color", JSON.stringify(empty_color_set));
     localStorage.setItem("text_color", JSON.stringify(empty_color_set));
     localStorage.setItem("border_color", JSON.stringify(empty_color_set));
-    localStorage.setItem("border_width", 0);
+    localStorage.setItem("border_width", 2);
 
 
     //font card
     localStorage.setItem("heading_fontfamily", JSON.stringify(empty_font_set));
     localStorage.setItem("content_fontfamily", JSON.stringify(empty_font_set));
 
-    localStorage.setItem("main_heading_fontsize", 0);
-    localStorage.setItem("sub_heading_fontsize", 0);
-    localStorage.setItem("content_fontsize", 0);
+    localStorage.setItem("main_heading_fontsize", 70);
+    localStorage.setItem("sub_heading_fontsize", 30);
+    localStorage.setItem("content_fontsize", 15);
 
-    localStorage.setItem("heading_letterspacing", 0);
+    localStorage.setItem("heading_letterspacing", 2);
 
     //satisfaction
     localStorage.setItem("satisfaction", JSON.stringify([0,0,0,0,0]));
@@ -453,6 +453,22 @@ function set_local_storage() {
   temp_arr = JSON.parse(localStorage.getItem("content_fontfamily"));
   temp_arr[temp] += 1;
   localStorage.setItem("content_fontfamily", JSON.stringify(temp_arr));
+
+  //Main Heading Font-size average
+  temp = (parseInt(localStorage.main_heading_fontsize) + parseInt(document.getElementById("h1_font_size").value))/2;
+  localStorage.setItem("main_heading_fontsize", temp);
+
+  //Sub Heading Font-size average
+  temp = (parseInt(localStorage.sub_heading_fontsize) + parseInt(document.getElementById("h2_font_size").value))/2;
+  localStorage.setItem("sub_heading_fontsize", temp);
+
+  //Content Font-size Average
+  temp = (parseInt(localStorage.content_fontsize) + parseInt(document.getElementById("content_font_size").value))/2;
+  localStorage.setItem("content_fontsize", temp);
+
+  //Letter Spacing Average
+  temp = (parseInt(localStorage.heading_letterspacing) + parseInt(document.getElementById("h1_letter_spacing").value))/2;
+  localStorage.setItem("heading_letterspacing", temp);
 }
 
 //User validation
