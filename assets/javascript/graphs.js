@@ -27,7 +27,7 @@ function show_card(n) {
 show_card(card_index);
 
 
-var colors = ["#141414", "#95a5a6", "#ecf0f1", "#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#3498db", "#3f51b5", "#9b59b6"];
+
 /*
 var trial_data = [1,2,3,4,5];
 localStorage.setItem("trial_data", JSON.stringify(trial_data));
@@ -99,6 +99,9 @@ function get_2d_context(n) {
 }
 
 var ctx;
+
+Chart.defaults.font.family = "verdana";
+var colors = ["#141414", "#95a5a6", "#ecf0f1", "#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#3498db", "#3f51b5", "#9b59b6"];
 
 ctx = get_2d_context(document.getElementById("bg_color"));
 var chart = new Chart(ctx, {
@@ -394,3 +397,5 @@ var chart = new Chart(ctx, {
     },
   },
 });
+
+document.getElementById("avrg_border_width_value").innerHTML = border_width + "px"; 

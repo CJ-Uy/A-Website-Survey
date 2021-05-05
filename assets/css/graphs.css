@@ -3,6 +3,7 @@ body {
   height: 95vh;
   width: 100vw;
   background-image: linear-gradient( 45deg, #e74c3c, #3f51b5);
+  font-family: verdana;
 }
 
 canvas {
@@ -46,7 +47,7 @@ h1 {
 #bg_color_solid_container{
   position: absolute;
   z-index: 3;
-  width: 27vw;
+  width: 25.755vw;
   right: 2vw;
   top: 2vw;
 }
@@ -76,7 +77,6 @@ h1 {
 .misc_color {
   position: absolute;
   top: 29.25vw;
-  right: 2vw;
   width: 15vw;
 }
 
@@ -89,3 +89,21 @@ h1 {
 #border_color_container {
   left: 50vw;
 }
+#avrg_border_width{
+  background-color: white;
+  height: 15vw;
+  left: 68vw;
+  text-align: center;
+}
+  #avrg_border_width > h2 {
+    color: grey;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 10px;
+  }
+  #avrg_border_width > p {
+    font-size: 3vw;
+    margin-top: 3.5vw;
+    color: grey;
+
+  }
