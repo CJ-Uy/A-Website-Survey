@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
 
   <title>Survey Graphs</title>
 </head>
+
 <body>
   <div id="graphs">
 
@@ -18,7 +20,31 @@
       <div id="bg_color_container">
         <canvas id="bg_color"></canvas>
       </div>
-      
+      <div id="bg_color_solid_container">
+        <canvas id="bg_color_solid"></canvas>
+      </div>
+      <div class="grad_info_container" id="grad_angle_container">
+        <canvas id="grad_angle"></canvas>
+      </div>
+      <div class="grad_info_container" id="grad_color1_container">
+        <canvas id="grad_color1"></canvas>
+      </div>
+      <div class="grad_info_container" id="grad_color2_container">
+        <canvas id="grad_color2"></canvas>
+      </div>
+
+      <div class="misc_color" id="card_bg_color_container">
+        <canvas id="card_bg_color"></canvas>
+      </div>
+      <div class="misc_color" id="text_color_container">
+        <canvas id="text_color"></canvas>
+      </div>
+      <div class="misc_color" id="border_color_container">
+        <canvas id="border_color"></canvas>
+      </div>
+      <div id="avrg_border_width">
+        <p></p>
+      </div>
     </div>
 
     <div class="graphs_section" id="fonts_graphs">
@@ -36,7 +62,7 @@
     <button onclick="change_card(1)">NEXT</button>
   </footer>
 
-<!--  
+  <!--  
   <div id="container" width="100px">
     <canvas id="trial"></canvas>
   </div>
@@ -44,4 +70,5 @@
 
   <script src="../javascript/graphs.js"></script>
 </body>
+
 </html>

@@ -83,8 +83,8 @@ var border_color = JSON.parse(localStorage.getItem("border_color"));
 var border_width = JSON.parse(localStorage.getItem("border_width"));
 
 //Font card
-var heading_fontfamily = JSON.parse(localStorage.getItem("heading_fontfamily")); 
-var content_fontfamily = JSON.parse(localStorage.getItem("content_fontfamily")); 
+var heading_fontfamily = JSON.parse(localStorage.getItem("heading_fontfamily"));
+var content_fontfamily = JSON.parse(localStorage.getItem("content_fontfamily"));
 
 var main_heading_fontsize = JSON.parse(localStorage.getItem("main_heading_fontsize"));
 var sub_heading_fontsize = JSON.parse(localStorage.getItem("sub_heading_fontsize"));
