@@ -140,7 +140,6 @@ var h1_elements = document.getElementsByTagName("h1");
 var h2_elements = document.getElementsByTagName("h2");
 var h3_elements = document.getElementsByTagName("h3");
 var label_elements = document.getElementsByTagName("label");
-var form_elemetns = document.getElementsByTagName("form");
 var p_elements = document.getElementsByTagName("p");
 //Fonts styling functions
 function head_change_fontfam() {
@@ -181,10 +180,7 @@ function content_change_fontfam() {
   }
   for (let i = 0; i < label_elements.length; i++) {
     label_elements[i].style.fontFamily = content_font_family;
-  }
-  for (let i = 0; i < form_elements.length; i++) {
-    form_elements[i].style.fontFamily = content_font_family;
-  }
+  }   
 }
 
 function size_content_font() {
@@ -219,9 +215,6 @@ function fonts_card_reset() {
 
   for (let i = 0; i < label_elements.length; i++)
     label_elements[i].style.fontFamily = "serif";
-
-  for (let i = 0; i < form_elements.length; i++)
-    form_elements[i].style.fontFamily = "serif";
 }
 
 
@@ -449,7 +442,11 @@ function final_submit() {
 
       set_local_storage();
 
-      window.open('graphs.html')
+      color_card_clear();
+      fonts_card_reset();
+      location.replace("../../index.html");
+      window.open('graphs.html');
+
     } else {
       alert("You have not filled out all of the questions in FONTS card!");
     }

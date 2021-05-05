@@ -107,10 +107,10 @@ ctx = get_2d_context(document.getElementById("bg_color"));
 var chart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Solid Background', 'Gradient Background'],
+    labels: ['Gradient Background', 'Solid Background'],
     datasets: [{
       label: "# of times picked",
-      data: [bg_solid, bg_grad],
+      data: [bg_grad, bg_solid],
       backgroundColor: [
         'rgba(255, 99, 132)',
         'rgba(54, 162, 235)'
