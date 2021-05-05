@@ -8,6 +8,7 @@ body {
 
 canvas {
   background-color: white;
+  border: 2px solid black;
 }
 
 footer {
@@ -41,7 +42,6 @@ h1 {
   left: 50%;
   transform: translateX(-50%);
   width: 35vw;
-  border: 2px solid black;
 } 
 
 #bg_color_solid_container{
@@ -94,6 +94,7 @@ h1 {
   height: 15vw;
   left: 68vw;
   text-align: center;
+  border: 2px solid black;
 }
   #avrg_border_width > h2 {
     color: grey;
@@ -104,6 +105,5 @@ h1 {
   #avrg_border_width > p {
     font-size: 3vw;
     margin-top: 3.5vw;
-    color: grey;
-
+    color: grey;  
   }
