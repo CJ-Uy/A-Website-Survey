@@ -42,3 +42,50 @@ h1 {
   width: 35vw;
   border: 2px solid black;
 } 
+
+#bg_color_solid_container{
+  position: absolute;
+  z-index: 3;
+  width: 27vw;
+  right: 2vw;
+  top: 2vw;
+}
+
+.grad_info_container {
+  position: absolute;
+  z-index: 3;
+}
+
+#grad_angle_container {
+  top: 2vw;
+  left: 3vw;
+  width: 25vw;
+}
+
+#grad_color1_container, #grad_color2_container {
+  top: 16vw;
+  width: 12vw;
+}
+#grad_color1_container {
+  left: 3vw;
+}
+#grad_color2_container {
+  left: 16vw;
+}
+
+.misc_color {
+  position: absolute;
+  top: 29.25vw;
+  right: 2vw;
+  width: 15vw;
+}
+
+#card_bg_color_container {
+  left: 14vw;
+}
+#text_color_container {
+  left: 32vw;
+}
+#border_color_container {
+  left: 50vw;
+}

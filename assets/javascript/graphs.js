@@ -27,7 +27,7 @@ function show_card(n) {
 show_card(card_index);
 
 
-
+var colors = ["#141414", "#95a5a6", "#ecf0f1", "#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#3498db", "#3f51b5", "#9b59b6"];
 /*
 var trial_data = [1,2,3,4,5];
 localStorage.setItem("trial_data", JSON.stringify(trial_data));
@@ -98,8 +98,9 @@ function get_2d_context(n) {
   return n.getContext("2d");
 }
 
-var ctx = get_2d_context(document.getElementById("bg_color"));
+var ctx;
 
+ctx = get_2d_context(document.getElementById("bg_color"));
 var chart = new Chart(ctx, {
   type: 'bar',
   data: {
@@ -108,8 +109,8 @@ var chart = new Chart(ctx, {
       label: "# of times picked",
       data: [bg_solid, bg_grad],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)'
+        'rgba(255, 99, 132)',
+        'rgba(54, 162, 235)'
       ],
       borderColor: [
         'rgba(255, 99, 132, 1)',
@@ -121,6 +122,10 @@ var chart = new Chart(ctx, {
     }]
   },
   options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    indexAxis: "x",
     scales: {
       y: {
         beginAtZero: true
@@ -140,6 +145,252 @@ var chart = new Chart(ctx, {
       }
     },
   },
+});
 
 
+ctx = get_2d_context(document.getElementById("bg_color_solid"))
+var chart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      data: bg_solid_color,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Colors Chosen for Solid backgrounds",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 20,
+        },
+      },
+      legend: {
+        display: true,
+        position: "right",
+      }
+    },
+  },
+});
+
+
+ctx = get_2d_context(document.getElementById("grad_angle"));
+var chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Horizontal', 'Vertical', '45', '135'],
+    datasets: [{
+      label: "# picked",
+      data: bg_grad_angle,
+      backgroundColor: "#3498db",
+      borderWidth: 1,
+
+    }]
+  },
+  options: {
+    indexAxis: "y",
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+    },
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Gradient Background Angle",
+        padding: {
+          top: 12,
+          bottom: 10,
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+  },
+});
+
+ctx = get_2d_context(document.getElementById("grad_color1"));
+var chart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      label: "# of times picked",
+      data: bg_grad_color1,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Gradient Color 1",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 18,
+        },
+      },
+      legend: {
+        display: false,
+      }
+    },
+  },
+});
+
+ctx = get_2d_context(document.getElementById("grad_color2"));
+var chart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      data: bg_grad_color2,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Gradient Color 2",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 18,
+        },
+      },
+      legend: {
+        display: false,
+      }
+    },
+  },
+});
+
+
+ctx = get_2d_context(document.getElementById("card_bg_color"));
+var chart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      data: card_bg_color,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Card Background Color",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 20,
+        },
+      },
+      legend: {
+        display: false,
+      }
+    },
+  },
+});
+
+ctx = get_2d_context(document.getElementById("text_color"));
+var chart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      data: text_color,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Text Color",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 20,
+        },
+      },
+      legend: {
+        display: false,
+      }
+    },
+  },
+});
+
+ctx = get_2d_context(document.getElementById("border_color"))
+var chart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Black', 'Grey', 'White', 'Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
+    datasets: [{
+      data: border_color,
+      backgroundColor: colors,
+      hoverOffset: 5,
+    }]
+  },    
+  options: {
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Border Color",
+        padding: {
+          top: 12,
+          bottom: 10
+        },
+        font: {
+          size: 20,
+        },
+      },
+      legend: {
+        display: false,
+      }
+    },
+  },
 });

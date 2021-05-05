@@ -246,44 +246,6 @@ slider.oninput = function () {
 
 
 
-/*
-var trial_data = [1,2,3,4,5];
-localStorage.setItem("trial_data", JSON.stringify(trial_data));
-
-var trial_data = JSON.parse(localStorage.getItem("trial_data"));
-alert(trial_data[0]);
-
-Local storage variables:
-
-<color card>
-bg_solid
-bg_solid_color [10]
-
-bg_grad 
-bg_grad_angle [4]
-bg_grad_color1 [10]
-bg_grad_color2 [10]
-
-card_bg_color [10]
-text_color [10]
-border_color [10]
-
-border_width
-
-
-<font card>
-heading_fontfamily [8]
-content_fontfamily [8]
-
-main_heading_fontsize
-sub_heading_fontsize
-
-heading_letterspacing
-
-
-<Satisfaction>
-satisfaction [5]
-*/
 
 
 var empty_color_set = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
