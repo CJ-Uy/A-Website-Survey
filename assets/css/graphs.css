@@ -24,3 +24,13 @@ h1 {
   text-align: center;
   font-size: 3vw;
 }
+
+/* Color card graphs */
+#bg_color_container {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 35vw;
+  border: 2px solid black;
+} 
