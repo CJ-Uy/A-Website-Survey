@@ -59,6 +59,7 @@ content_fontfamily [8]
 
 main_heading_fontsize
 sub_heading_fontsize
+content_fontsize
 
 heading_letterspacing
 
@@ -88,6 +89,7 @@ var content_fontfamily = JSON.parse(localStorage.getItem("content_fontfamily"));
 
 var main_heading_fontsize = JSON.parse(localStorage.getItem("main_heading_fontsize"));
 var sub_heading_fontsize = JSON.parse(localStorage.getItem("sub_heading_fontsize"));
+var content_fontsize = JSON.parse(localStorage.getItem("content_fontsize"));
 
 var heading_letterspacing = JSON.parse(localStorage.getItem("heading_letterspacing"));
 
@@ -398,4 +400,93 @@ var chart = new Chart(ctx, {
   },
 });
 
-document.getElementById("avrg_border_width_value").innerHTML = border_width + "px"; 
+document.getElementById("avrg_border_width_value").innerHTML = border_width + "px";
+
+
+//Font Graphs
+
+var font_families = ["Arial", "Verdana", "Helvetica", "Tahoma", "Times New Roman", "Georgia", "Courier New", "Brush Script MT"];
+
+ctx = get_2d_context(document.getElementById("heading_font_fam"));
+var chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: font_families,
+    datasets: [{
+      label: "# picked",
+      data: heading_fontfamily,
+      backgroundColor: "#3498db",
+      borderWidth: 1,
+
+    }]
+  },
+  options: {
+    indexAxis: "x",
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+    },
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Heading Font Famly",
+        padding: {
+          top: 12,
+          bottom: 10,
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+  },
+});
+
+ctx = get_2d_context(document.getElementById("content_font_fam"));
+var chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: font_families,
+    datasets: [{
+      label: "# picked",
+      data: content_fontfamily,
+      backgroundColor: "#e74c3c",
+      borderWidth: 1,
+
+    }]
+  },
+  options: {
+    indexAxis: "x",
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+    },
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Content Font Famly",
+        padding: {
+          top: 12,
+          bottom: 10,
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+  },
+});
+
+
+document.getElementById("avrg_heading_font_size").innerHTML = main_heading_fontsize + "px";
+document.getElementById("avrg_subheading_font_size").innerHTML = sub_heading_fontsize + "px";
+document.getElementById("avrg_content_fontsize").innerHTML = content_fontsize + "px";
+document.getElementById("avrg_heading_letter_spacing").innerHTML = content_fontsize + "px";

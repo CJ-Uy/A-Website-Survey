@@ -130,3 +130,39 @@ h1 {
     top: 37vw;
     width: 100vw;
   }
+
+/* Font Graphs */
+.font_fam_graph_container {
+  z-index: 3;
+  position: absolute;
+  width: 40vw;
+}
+#heading_font_fam_container {
+  left: 8vw;
+}
+#content_font_fam_container {
+  right: 8vw;
+}
+
+.misc_font {
+  background-color: white;
+  height: 10vw;
+  width: 15vw;
+  border: 2px solid black;
+  position: absolute;
+  z-index: 3;
+  color: grey;
+  text-align: center;
+  font-weight: bold;
+
+  top: 30vw;
+}
+  .misc_font > p {
+    margin-top: -0.2vw;
+    font-size: 2vw;
+  }
+
+#avrg_head_font_size {left: 8vw;}
+#avrg_head_letter_space {left: 31vw;}
+#avrg_content_font_size {right: 8vw;}
+#avrg_subhead_font_size {right: 31vw;}

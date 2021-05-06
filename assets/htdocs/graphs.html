@@ -54,10 +54,39 @@
 
     <div class="graphs_section" id="fonts_graphs">
       <h1>FONTS</h1>
+      <div class="font_fam_graph_container" id="heading_font_fam_container">
+        <canvas id="heading_font_fam"></canvas>
+      </div>
+      <div class="font_fam_graph_container" id="content_font_fam_container">
+        <canvas id="content_font_fam"></canvas>
+      </div>
+
+      <div class="misc_font" id="avrg_head_font_size">
+        <h2>Average Heading Font Size</h2>
+        <p id="avrg_heading_font_size"></p>
+      </div>
+
+      <div class="misc_font" id="avrg_subhead_font_size">
+        <h2>Average Subheading Font Size</h2>
+        <p id="avrg_subheading_font_size"></p>
+      </div>
+
+      <div class="misc_font" id="avrg_content_font_size">
+        <h2>Average Content Font Size</h2>
+        <p id="avrg_content_fontsize"></p>
+      </div>
+
+      <div class="misc_font" id="avrg_head_letter_space">
+        <h2>Average Heading Letter Spacing</h2>
+        <p id="avrg_heading_letter_spacing"></p>
+      </div>
     </div>
 
     <div class="graphs_section" id="satisfaction_graphs">
       <h1>SATISFACTION</h1>
+      <div id="satisfaction_graph_container">
+        <canvas id="satisfaction_graph"></canvas>
+      </div>
     </div>
 
   </div>
@@ -67,11 +96,6 @@
     <button onclick="change_card(1)">NEXT</button>
   </footer>
 
-  <!--  
-  <div id="container" width="100px">
-    <canvas id="trial"></canvas>
-  </div>
--->
 
   <script src="../javascript/graphs.js"></script>
 </body>
