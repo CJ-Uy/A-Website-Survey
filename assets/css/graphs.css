@@ -166,3 +166,13 @@ h1 {
 #avrg_head_letter_space {left: 31vw;}
 #avrg_content_font_size {right: 8vw;}
 #avrg_subhead_font_size {right: 31vw;}
+
+/* Satisfaction Graph */
+#satisfaction_graph_container {
+  width: 60vw;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+}

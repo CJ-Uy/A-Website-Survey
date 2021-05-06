@@ -424,6 +424,13 @@ function set_local_storage() {
   //Letter Spacing Average
   temp = (parseInt(localStorage.heading_letterspacing) + parseInt(document.getElementById("h1_letter_spacing").value))/2;
   localStorage.setItem("heading_letterspacing", temp);
+
+
+  //Satisfaction Level
+  temp = parseInt(document.getElementById("like_range").value) - 1;
+  temp_arr = JSON.parse(localStorage.getItem("satisfaction"));
+  temp_arr[temp] += 1;
+  localStorage.setItem("satisfaction", JSON.stringify(temp_arr));
 }
 
 //User validation
@@ -444,8 +451,7 @@ function final_submit() {
 
       color_card_clear();
       fonts_card_reset();
-      location.replace("../../index.html");
-      window.open('graphs.html');
+      location.replace("graphs.html");
 
     } else {
       alert("You have not filled out all of the questions in FONTS card!");

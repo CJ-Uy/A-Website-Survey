@@ -10,7 +10,7 @@ function show_card(n) {
   var cards = document.getElementsByClassName("graphs_section");
 
   if (n > cards.length) {
-    card_index = 3;
+    location.replace("../../index.html");
   }
   if (n < 1) {
     card_index = 1;
@@ -490,3 +490,43 @@ document.getElementById("avrg_heading_font_size").innerHTML = main_heading_fonts
 document.getElementById("avrg_subheading_font_size").innerHTML = sub_heading_fontsize + "px";
 document.getElementById("avrg_content_fontsize").innerHTML = content_fontsize + "px";
 document.getElementById("avrg_heading_letter_spacing").innerHTML = content_fontsize + "px";
+
+
+//satisfaction
+ctx = get_2d_context(document.getElementById("satisfaction_graph"));
+var chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ["😓", "😅", "😐", "😄", "🤩"],
+    datasets: [{
+      label: "# picked",
+      data: satisfaction,
+      backgroundColor: "#e74c3c",
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: "y", //wont work on x axis for some reason 
+    scales: {
+      y: {
+        beginAtZero: true
+      },
+    },
+    layout: {
+      padding: 20 // remeber heree
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "User Satisfaction",
+        padding: {
+          top: 12,
+          bottom: 10,
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+  },
+});
