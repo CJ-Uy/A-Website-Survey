@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/forms';
+
+button {
+	background-color: #e5e7eb;
+	color: #000000;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #9ca3af;
+	border-radius: 0.375rem;
+	background-color: #d1d5db;
+	outline-style: solid;
+	font-size: 20px;
+	line-height: 1.5rem;
+}
+
+button:focus {
+	outline-color: #3b82f6;
+}
+
+.cardTitle {
+	font-size: 30px;
+	margin-bottom: 16px;
+	font-weight: 700;
+}
+
+.cardSubSection {
+	border-bottom: 1px solid black;
+	padding-bottom: 8px;
+}
+
+.cardSubHeading {
+	margin-top: 1.25rem;
+	font-size: 18px;
+	margin-bottom: 8px;
+	font-weight: 600;
+}
+
+#surveyTitle {
+	font-size: 48px;
+	font-weight: 450;
+}
+
+input[type="range"] {
+  width: 300px;
+}
