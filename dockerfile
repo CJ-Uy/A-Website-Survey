@@ -34,6 +34,8 @@ RUN pnpm install --prod
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/drizzle ./drizzle
 
-EXPOSE $PORT
+EXPOSE 65000
+ENV NODE_ENV=production
+ENV PORT=65000
 
 CMD ["node", "build"]

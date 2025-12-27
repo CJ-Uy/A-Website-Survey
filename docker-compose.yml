@@ -3,16 +3,13 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    restart: unless-stopped
-    container_name: A_Website_Survey
+    restart: always
+    ports:
+      - "65000:65000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
     networks:
       - app-network
-    ports:
-      - "${PORT:-3000}:${PORT:-3000}"
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
-      - PORT=${PORT}
 
 networks:
   app-network:
