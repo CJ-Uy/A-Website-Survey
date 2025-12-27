@@ -4,94 +4,34 @@
 	import Chart from "chart.js/auto";
 
 	// Props
-	let { data, title, xLabel, yLabel, labels } = $props();
-	let backgroundColor = $state([]); // Colors for bars
-	let borderColor = $state([]); // Border colors
-	let beginAtZero = $state(true);
-	let stepSize = $state(undefined);
-	let datasetLabel = $state(""); // Label for the dataset
-	let showLegend = $state(false);
-	let customOptions = $state({}); // Additional Chart.js options
+	let { data, title, xLabel, yLabel, labels, height = 300, datasetLabel = "" } = $props();
 
 	// State
 	let chartCanvas = $state(null);
 	let barChart = $state(null);
 
-	// Default colors if none provided
-	const defaultColors = [
-		"rgba(75, 192, 192, 0.7)",
-		"rgba(255, 99, 132, 0.7)",
-		"rgba(255, 159, 64, 0.7)",
-		"rgba(255, 205, 86, 0.7)",
-		"rgba(54, 162, 235, 0.7)",
-		"rgba(153, 102, 255, 0.7)",
-		"rgba(201, 203, 207, 0.7)"
+	// Beautiful gradient color palette matching the theme
+	const colors = [
+		{ bg: "rgba(102, 126, 234, 0.7)", border: "rgba(102, 126, 234, 1)" },
+		{ bg: "rgba(118, 75, 162, 0.7)", border: "rgba(118, 75, 162, 1)" },
+		{ bg: "rgba(34, 197, 94, 0.7)", border: "rgba(34, 197, 94, 1)" },
+		{ bg: "rgba(249, 115, 22, 0.7)", border: "rgba(249, 115, 22, 1)" },
+		{ bg: "rgba(236, 72, 153, 0.7)", border: "rgba(236, 72, 153, 1)" },
+		{ bg: "rgba(14, 165, 233, 0.7)", border: "rgba(14, 165, 233, 1)" },
+		{ bg: "rgba(168, 85, 247, 0.7)", border: "rgba(168, 85, 247, 1)" }
 	];
-
-	const defaultBorders = defaultColors.map((color) => color.replace("0.7)", "1)"));
 
 	function createOrUpdateChart() {
 		if (!browser || !chartCanvas) return;
 
-		// Destroy existing chart if it exists
 		if (barChart) {
 			barChart.destroy();
 		}
 
 		const ctx = chartCanvas.getContext("2d");
+		const bgColors = labels.map((_, i) => colors[i % colors.length].bg);
+		const borderColors = labels.map((_, i) => colors[i % colors.length].border);
 
-		// Use provided colors or defaults
-		const bgColors = backgroundColor.length
-			? backgroundColor
-			: labels.map((_, i) => defaultColors[i % defaultColors.length]);
-
-		const borderColors = borderColor.length
-			? borderColor
-			: labels.map((_, i) => defaultBorders[i % defaultBorders.length]);
-
-		// Default chart options
-		const defaultOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				title: {
-					display: !!title,
-					text: title
-				},
-				legend: {
-					display: showLegend
-				},
-				tooltip: {
-					callbacks: {
-						label: (context) => `${datasetLabel || 'Value'}: ${context.parsed.y}`
-					}
-				}
-			},
-			scales: {
-				x: {
-					title: {
-						display: !!xLabel,
-						text: xLabel
-					}
-				},
-				y: {
-					beginAtZero,
-					title: {
-						display: !!yLabel,
-						text: yLabel
-					},
-					ticks: {
-						precision: 0, // Show integer values only
-						stepSize: stepSize
-					}
-				}
-			}
-		};
-
-		// Merge with custom options
-		const mergedOptions = { ...defaultOptions, ...customOptions };
-
-		// Create new chart
 		barChart = new Chart(ctx, {
 			type: "bar",
 			data: {
@@ -102,11 +42,59 @@
 						data,
 						backgroundColor: bgColors,
 						borderColor: borderColors,
-						borderWidth: 1
+						borderWidth: 2,
+						borderRadius: 6,
+						borderSkipped: false
 					}
 				]
 			},
-			options: mergedOptions
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					title: {
+						display: !!title,
+						text: title,
+						font: { size: 16, weight: "600" },
+						color: "#1f2937",
+						padding: { bottom: 16 }
+					},
+					legend: { display: false },
+					tooltip: {
+						backgroundColor: "rgba(0, 0, 0, 0.8)",
+						padding: 12,
+						cornerRadius: 8,
+						titleFont: { size: 14, weight: "600" },
+						bodyFont: { size: 13 },
+						callbacks: {
+							label: (ctx) => `${datasetLabel || "Count"}: ${ctx.parsed.y}`
+						}
+					}
+				},
+				scales: {
+					x: {
+						title: {
+							display: !!xLabel,
+							text: xLabel,
+							font: { size: 12, weight: "500" },
+							color: "#6b7280"
+						},
+						grid: { display: false },
+						ticks: { color: "#6b7280" }
+					},
+					y: {
+						beginAtZero: true,
+						title: {
+							display: !!yLabel,
+							text: yLabel,
+							font: { size: 12, weight: "500" },
+							color: "#6b7280"
+						},
+						grid: { color: "rgba(0, 0, 0, 0.05)" },
+						ticks: { precision: 0, color: "#6b7280" }
+					}
+				}
+			}
 		});
 	}
 
@@ -121,26 +109,21 @@
 			barChart.destroy();
 		}
 	});
+
+	$effect(() => {
+		if (data && labels && chartCanvas && browser) {
+			createOrUpdateChart();
+		}
+	});
 </script>
 
-<div class="chart-container">
+<div class="chart-container" style="height: {height}px;">
 	<canvas bind:this={chartCanvas}></canvas>
-	{#if !chartCanvas}
-		<div class="loading">Loading chart...</div>
-	{/if}
 </div>
 
 <style>
 	.chart-container {
 		position: relative;
-		min-height: 300px;
-	}
-
-	.loading {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: #666;
+		width: 100%;
 	}
 </style>

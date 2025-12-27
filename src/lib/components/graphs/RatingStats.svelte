@@ -6,7 +6,7 @@
 
 <h3 class="mb-3 text-center text-3xl">Rating</h3>
 <div>
-	<BarChart 
+	<BarChart
 		title="Ratings"
 		xLabel="Rating"
 		yLabel="Frequency"

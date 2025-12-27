@@ -51,7 +51,7 @@
 			zoom="2.5"
 		/>
 	</div>
-	<div class="border border-gray-300 flex justify-center">
+	<div class="flex justify-center border border-gray-300">
 		<div class="mr-3">
 			<Histogram
 				title="Card Title Size Distribution"

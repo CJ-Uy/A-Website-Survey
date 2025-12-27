@@ -4,74 +4,34 @@
 	import Chart from "chart.js/auto";
 
 	// Props
-	let { title, data, pieLabels } = $props();
-	let backgroundColor = []; // Colors for pie slices
-	let borderColor = []; // Border colors for pie slices
-	let customOptions = {}; // Additional Chart.js options
+	let { title, data, pieLabels, height = 300 } = $props();
 
 	// State
-	let chartCanvas = null;
-	let pieChart = null;
+	let chartCanvas = $state(null);
+	let pieChart = $state(null);
 
-	// Default colors if none provided
-	const defaultColors = [
-		"rgba(255, 99, 132, 0.7)",
-		"rgba(54, 162, 235, 0.7)",
-		"rgba(255, 206, 86, 0.7)",
-		"rgba(75, 192, 192, 0.7)",
-		"rgba(153, 102, 255, 0.7)",
-		"rgba(255, 159, 64, 0.7)"
+	// Beautiful color palette for charts
+	const colors = [
+		{ bg: "rgba(102, 126, 234, 0.7)", border: "rgba(102, 126, 234, 1)" },
+		{ bg: "rgba(118, 75, 162, 0.7)", border: "rgba(118, 75, 162, 1)" },
+		{ bg: "rgba(34, 197, 94, 0.7)", border: "rgba(34, 197, 94, 1)" },
+		{ bg: "rgba(249, 115, 22, 0.7)", border: "rgba(249, 115, 22, 1)" },
+		{ bg: "rgba(236, 72, 153, 0.7)", border: "rgba(236, 72, 153, 1)" },
+		{ bg: "rgba(14, 165, 233, 0.7)", border: "rgba(14, 165, 233, 1)" }
 	];
-
-	const defaultBorders = defaultColors.map((color) => color.replace("0.7)", "1)"));
 
 	function createOrUpdateChart() {
 		if (!browser || !chartCanvas) return;
 
-		// Destroy existing chart if it exists
 		if (pieChart) {
 			pieChart.destroy();
 		}
 
 		const ctx = chartCanvas.getContext("2d");
-
-		// Extract labels and values from the data object
-		const labels = Object.keys(data);
 		const values = Object.values(data);
+		const bgColors = values.map((_, i) => colors[i % colors.length].bg);
+		const borderColors = values.map((_, i) => colors[i % colors.length].border);
 
-		// Use provided colors or defaults
-		const bgColors = backgroundColor.length
-			? backgroundColor
-			: values.map((_, i) => defaultColors[i % defaultColors.length]);
-
-		const borderColors = borderColor.length
-			? borderColor
-			: values.map((_, i) => defaultBorders[i % defaultBorders.length]);
-
-		// Default chart options
-		const defaultOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				title: {
-					display: !!title,
-					text: title,
-					font: {
-						size: "20rem", 
-						weight: "normal",
-						color: "black",
-					}
-				},
-				legend: {
-					display: true
-				}
-			}
-		};
-
-		// Merge with custom options
-		const mergedOptions = { ...defaultOptions, ...customOptions };
-
-		// Create new chart
 		pieChart = new Chart(ctx, {
 			type: "pie",
 			data: {
@@ -81,13 +41,42 @@
 						data: values,
 						backgroundColor: bgColors,
 						borderColor: borderColors,
-						borderWidth: 1
+						borderWidth: 2
 					}
 				]
 			},
-			options: mergedOptions
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					title: {
+						display: !!title,
+						text: title,
+						font: { size: 16, weight: "600" },
+						color: "#1f2937",
+						padding: { bottom: 16 }
+					},
+					legend: {
+						display: true,
+						position: "bottom",
+						labels: {
+							padding: 16,
+							usePointStyle: true,
+							font: { size: 12 }
+						}
+					},
+					tooltip: {
+						backgroundColor: "rgba(0, 0, 0, 0.8)",
+						padding: 12,
+						cornerRadius: 8,
+						titleFont: { size: 14, weight: "600" },
+						bodyFont: { size: 13 }
+					}
+				}
+			}
 		});
 	}
+
 	onMount(() => {
 		if (browser) {
 			createOrUpdateChart();
@@ -99,14 +88,22 @@
 			pieChart.destroy();
 		}
 	});
+
+	// Reactively update chart when data changes
+	$effect(() => {
+		if (data && chartCanvas && browser) {
+			createOrUpdateChart();
+		}
+	});
 </script>
 
-<div class="chart-container">
+<div class="chart-container" style="height: {height}px;">
 	<canvas bind:this={chartCanvas}></canvas>
 </div>
 
 <style>
 	.chart-container {
 		position: relative;
+		width: 100%;
 	}
 </style>

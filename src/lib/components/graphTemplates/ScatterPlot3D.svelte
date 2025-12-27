@@ -86,7 +86,7 @@
 					aspectmode: "cube",
 					aspectratio: { x: 1, y: 1, z: 1 }
 				},
-				margin: { l: 0, r: 0, b: 0, t: 0 },
+				margin: { l: 0, r: 0, b: 0, t: 0 }
 			};
 
 			const config = {

@@ -1,338 +1,469 @@
 <script>
-	import { userStyles } from "$lib/state/userStyles.svelte";
+	import { userStyles, defaultValues } from "$lib/state/userStyles.svelte";
 
-	$effect(() => {
-		// Card Sizing Effects
-		document.getElementById("card").style.height = `${userStyles.sizes.card.height}px`;
-		document.getElementById("card").style.width = `${userStyles.sizes.card.width}px`;
-		document.getElementById("card").style.borderWidth = `${userStyles.sizes.card.border.width}px`;
-		document.getElementById("card").style.borderRadius =
-			`${userStyles.sizes.card.border.roundness}%`;
+	// Get value or default for display
+	function getValue(value, defaultValue) {
+		return value ?? defaultValue;
+	}
 
-		// Text Sizing Effects
-		document.getElementById("surveyTitle").style.fontSize =
-			`${userStyles.sizes.text.surveyTitle}px`;
-		for (const cardHeading of document.getElementsByClassName("cardTitle")) {
-			cardHeading.style.fontSize = `${userStyles.sizes.text.cardTitles}px`;
+	// Set value when user interacts
+	function setValue(path, value) {
+		const keys = path.split(".");
+		let obj = userStyles.sizes;
+		for (let i = 0; i < keys.length - 1; i++) {
+			obj = obj[keys[i]];
 		}
-		for (const cardHeading of document.getElementsByClassName("cardSubHeading")) {
-			cardHeading.style.fontSize = `${userStyles.sizes.text.subheadings}px`;
-		}
-		document.body.style.fontSize = `${userStyles.sizes.text.content}px`;
-
-		// Button Sizing Effects
-		for (const navbtn of document.getElementsByClassName("navButton")) {
-			navbtn.style.fontSize = `${userStyles.sizes.button.text}px`;
-			navbtn.style.padding = `${userStyles.sizes.button.padding / 2}px ${userStyles.sizes.button.padding}px`;
-		}
-		document.getElementById("buttonSpace").style.width = `${userStyles.sizes.button.gap}px`;
-
-		// Form Sizing Effects
-		for (const slider of document.querySelectorAll('input[type="range"]')) {
-			slider.style.width = `${userStyles.sizes.form.rangeSlider.width}px`;
-			slider.style.height = `${userStyles.sizes.form.rangeSlider.height}px`;
-		}
-
-		for (const resetBtn of document.getElementsByClassName("resetBtn")) {
-			resetBtn.style.backgroundColor = userStyles.colors.button.reset.bg;
-			resetBtn.style.color = userStyles.colors.button.reset.text;
-		}
-	});
+		obj[keys[keys.length - 1]] = Number(value);
+	}
 
 	function resetSizes() {
 		userStyles.sizes = {
 			card: {
-				width: 1200,
-				height: 600,
+				width: null,
+				height: null,
 				border: {
-					width: 2,
-					roundness: 0
+					width: null,
+					roundness: null
 				}
 			},
 			text: {
-				surveyTitle: 48,
-				cardTitles: 30,
-				subheadings: 18,
-				content: 16
+				surveyTitle: null,
+				cardTitles: null,
+				subheadings: null,
+				content: null
 			},
 			button: {
-				gap: 16,
-				padding: 8,
-				text: 20
+				gap: null,
+				padding: null,
+				text: null
 			},
 			form: {
 				rangeSlider: {
-					height: 15,
-					width: 300
+					height: null,
+					width: null
 				}
 			}
 		};
 	}
 </script>
 
-<div class="w-full">
+<div class="sizes-card">
 	<h2 class="cardTitle">
-		<button class="resetBtn" onclick={resetSizes}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width={userStyles.sizes.text.cardTitles * 0.7}
-				height={userStyles.sizes.text.cardTitles * 0.7}
-				viewBox="0 0 21 21"
-				><!-- Icon from System UIcons by Corey Ginnivan - https://github.com/CoreyGinnivan/system-uicons/blob/master/LICENSE --><g
+		<button
+			class="resetBtn"
+			onclick={resetSizes}
+			title="Reset sizes to default"
+			aria-label="Reset sizes to default"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 21">
+				<g
 					fill="none"
 					fill-rule="evenodd"
 					stroke="currentColor"
 					stroke-linecap="round"
 					stroke-linejoin="round"
-					><path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" /><path d="M7.5 6.5h-4v-4" /></g
-				></svg
-			>
+				>
+					<path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" />
+					<path d="M7.5 6.5h-4v-4" />
+				</g>
+			</svg>
 		</button>
 		Sizes
 	</h2>
-	<div class="cardSubSection grid grid-cols-1 gap-x-20 gap-y-5 md:grid-cols-2">
-		<div>
-			<!-- I don't know why this is the only thing that works [hours waster: 2] -->
-			<h3 class="cardSubHeading" style="margin-top: 1px;">Card Sizing</h3>
-			<div class="grid grid-cols-[30%_70%] gap-y-3 md:grid-cols-[20%_80%]">
-				<label for="cardHeight" class="mr-5">Card Height</label>
-				<div>
-					<input
-						type="number"
-						name="cardHeight"
-						bind:value={userStyles.sizes.card.height}
-						class="h-[30px] w-[80px]"
-					/>
-					<input
-						type="range"
-						name="cardHeight"
-						bind:value={userStyles.sizes.card.height}
-						min="300"
-						max="1000"
-					/>
-				</div>
 
-				<label for="cardWidth" class="mr-5">Card Width</label>
-				<div>
-					<input
-						type="number"
-						name="cardWidth"
-						bind:value={userStyles.sizes.card.width}
-						class="h-[30px] w-[80px]"
-					/>
-					<input
-						type="range"
-						name="cardWidth"
-						onchange={(e) => (userStyles.sizes.card.width = Number(e.target.value))}
-						min="500"
-						max="1700"
-					/>
-				</div>
+	<div class="sections-grid">
+		<!-- Card Sizing -->
+		<div class="cardSubSection">
+			<h3 class="cardSubHeading">Card</h3>
+			<div class="controls-grid">
+				<label>
+					<span>Width</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.card.width, defaultValues.sizes.card.width)}
+							oninput={(e) => setValue("card.width", e.target.value)}
+							min="200"
+							max="2000"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.card.width, defaultValues.sizes.card.width)}
+							oninput={(e) => setValue("card.width", e.target.value)}
+							min="200"
+							max="1600"
+						/>
+					</div>
+				</label>
 
-				<label for="borderWidth" class="mr-5">Border Width</label>
-				<div>
-					<input
-						type="number"
-						name="borderWidth"
-						bind:value={userStyles.sizes.card.border.width}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="borderWidth"
-						bind:value={userStyles.sizes.card.border.width}
-						min="1"
-						max="99"
-					/>
-				</div>
+				<label>
+					<span>Height</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.card.height, defaultValues.sizes.card.height)}
+							oninput={(e) => setValue("card.height", e.target.value)}
+							min="200"
+							max="1200"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.card.height, defaultValues.sizes.card.height)}
+							oninput={(e) => setValue("card.height", e.target.value)}
+							min="200"
+							max="800"
+						/>
+					</div>
+				</label>
 
-				<label for="borderRoundness" class="mr-5 mb-3">Border Roundness</label>
-				<div>
-					<input
-						type="number"
-						name="borderRoundness"
-						bind:value={userStyles.sizes.card.border.roundness}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="borderRoundness"
-						bind:value={userStyles.sizes.card.border.roundness}
-						min="1"
-						max="50"
-					/>
-				</div>
+				<label>
+					<span>Border Width</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.card.border.width,
+								defaultValues.sizes.card.border.width
+							)}
+							oninput={(e) => setValue("card.border.width", e.target.value)}
+							min="0"
+							max="20"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.card.border.width,
+								defaultValues.sizes.card.border.width
+							)}
+							oninput={(e) => setValue("card.border.width", e.target.value)}
+							min="0"
+							max="20"
+						/>
+					</div>
+				</label>
+
+				<label>
+					<span>Border Radius</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.card.border.roundness,
+								defaultValues.sizes.card.border.roundness
+							)}
+							oninput={(e) => setValue("card.border.roundness", e.target.value)}
+							min="0"
+							max="50"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.card.border.roundness,
+								defaultValues.sizes.card.border.roundness
+							)}
+							oninput={(e) => setValue("card.border.roundness", e.target.value)}
+							min="0"
+							max="50"
+						/>
+					</div>
+				</label>
 			</div>
 		</div>
 
-		<div>
-			<h3 class="cardSubHeading" style="margin-top: 1px;">Text Sizing</h3>
-			<div class="grid grid-cols-[30%_70%] gap-y-3 md:grid-cols-[20%_80%]">
-				<label for="surveyTitleSize" class="mr-5">Survey Title</label>
-				<div>
-					<input
-						type="number"
-						name="surveyTitleSize"
-						bind:value={userStyles.sizes.text.surveyTitle}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="surveyTitleSize"
-						bind:value={userStyles.sizes.text.surveyTitle}
-						min="1"
-						max="99"
-					/>
-				</div>
+		<!-- Text Sizing -->
+		<div class="cardSubSection">
+			<h3 class="cardSubHeading">Text</h3>
+			<div class="controls-grid">
+				<label>
+					<span>Survey Title</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.text.surveyTitle,
+								defaultValues.sizes.text.surveyTitle
+							)}
+							oninput={(e) => setValue("text.surveyTitle", e.target.value)}
+							min="12"
+							max="72"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.text.surveyTitle,
+								defaultValues.sizes.text.surveyTitle
+							)}
+							oninput={(e) => setValue("text.surveyTitle", e.target.value)}
+							min="12"
+							max="72"
+						/>
+					</div>
+				</label>
 
-				<label for="cardTitleSize" class="mr-5">Card Titles</label>
-				<div>
-					<input
-						type="number"
-						name="cardTitleSize"
-						bind:value={userStyles.sizes.text.cardTitles}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="cardTitleSize"
-						bind:value={userStyles.sizes.text.cardTitles}
-						min="1"
-						max="99"
-					/>
-				</div>
+				<label>
+					<span>Card Titles</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.text.cardTitles,
+								defaultValues.sizes.text.cardTitles
+							)}
+							oninput={(e) => setValue("text.cardTitles", e.target.value)}
+							min="12"
+							max="48"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.text.cardTitles,
+								defaultValues.sizes.text.cardTitles
+							)}
+							oninput={(e) => setValue("text.cardTitles", e.target.value)}
+							min="12"
+							max="48"
+						/>
+					</div>
+				</label>
 
-				<label for="cardSubHeadingSize" class="mr-5">Subheadings</label>
-				<div>
-					<input
-						type="number"
-						name="cardSubHeadingSize"
-						bind:value={userStyles.sizes.text.subheadings}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="cardSubHeadingSize"
-						bind:value={userStyles.sizes.text.subheadings}
-						min="1"
-						max="99"
-					/>
-				</div>
+				<label>
+					<span>Subheadings</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.text.subheadings,
+								defaultValues.sizes.text.subheadings
+							)}
+							oninput={(e) => setValue("text.subheadings", e.target.value)}
+							min="10"
+							max="36"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.text.subheadings,
+								defaultValues.sizes.text.subheadings
+							)}
+							oninput={(e) => setValue("text.subheadings", e.target.value)}
+							min="10"
+							max="36"
+						/>
+					</div>
+				</label>
 
-				<label for="cardContentSize" class="mr-5">Content</label>
-				<div>
-					<input
-						type="number"
-						name="cardContentSize"
-						bind:value={userStyles.sizes.text.content}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="cardContentSize"
-						bind:value={userStyles.sizes.text.content}
-						min="1"
-						max="99"
-					/>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="mt-4 grid grid-cols-1 gap-x-20 gap-y-5 md:grid-cols-2">
-		<div>
-			<h3 class="cardSubHeading" style="margin-top: 1px;">Button Sizing</h3>
-			<div class="grid grid-cols-[30%_70%] gap-y-3 md:grid-cols-[20%_80%]">
-				<label for="buttonText" class="mr-5">Btn Text</label>
-				<div>
-					<input
-						type="number"
-						name="buttonText"
-						bind:value={userStyles.sizes.button.text}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="buttonText"
-						bind:value={userStyles.sizes.button.text}
-						min="1"
-						max="99"
-					/>
-				</div>
-
-				<label for="buttonGap" class="mr-5">Gap</label>
-				<div>
-					<input
-						type="number"
-						name="buttonGap"
-						bind:value={userStyles.sizes.button.gap}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="buttonGap"
-						bind:value={userStyles.sizes.button.gap}
-						min="0"
-						max="999"
-					/>
-				</div>
-
-				<label for="buttonPadding" class="mr-5">Btn Padding</label>
-				<div>
-					<input
-						type="number"
-						name="buttonPadding"
-						bind:value={userStyles.sizes.button.padding}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="buttonPadding"
-						bind:value={userStyles.sizes.button.padding}
-						min="1"
-						max="100"
-					/>
-				</div>
+				<label>
+					<span>Content</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.text.content, defaultValues.sizes.text.content)}
+							oninput={(e) => setValue("text.content", e.target.value)}
+							min="10"
+							max="24"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.text.content, defaultValues.sizes.text.content)}
+							oninput={(e) => setValue("text.content", e.target.value)}
+							min="10"
+							max="24"
+						/>
+					</div>
+				</label>
 			</div>
 		</div>
 
-		<div>
-			<h3 class="cardSubHeading" style="margin-top: 1px;">Form Element Sizing</h3>
-			<div class="grid grid-cols-[30%_70%] gap-y-3 md:grid-cols-[20%_80%]">
-				<label for="rangeBarWidth" class="mr-5">Range Bar Width</label>
-				<div>
-					<input
-						type="number"
-						name="rangeBarWidth"
-						bind:value={userStyles.sizes.form.rangeSlider.width}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="rangeBarWidth"
-						value={userStyles.sizes.form.rangeSlider.width}
-						onchange={(e) => (userStyles.sizes.form.rangeSlider.width = Number(e.target.value))}
-						min="50"
-						max="500"
-					/>
-				</div>
+		<!-- Button Sizing -->
+		<div class="cardSubSection">
+			<h3 class="cardSubHeading">Buttons</h3>
+			<div class="controls-grid">
+				<label>
+					<span>Text Size</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.button.text, defaultValues.sizes.button.text)}
+							oninput={(e) => setValue("button.text", e.target.value)}
+							min="10"
+							max="32"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.button.text, defaultValues.sizes.button.text)}
+							oninput={(e) => setValue("button.text", e.target.value)}
+							min="10"
+							max="32"
+						/>
+					</div>
+				</label>
 
-				<label for="rangeBarHeight" class="mr-5">Range Bar Height</label>
-				<div>
-					<input
-						type="number"
-						name="rangeBarHeight"
-						bind:value={userStyles.sizes.form.rangeSlider.height}
-						class="h-[30px] w-[70px]"
-					/>
-					<input
-						type="range"
-						name="rangeBarHeight"
-						bind:value={userStyles.sizes.form.rangeSlider.height}
-						min="1"
-						max="15"
-					/>
-				</div>
+				<label>
+					<span>Padding</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.button.padding, defaultValues.sizes.button.padding)}
+							oninput={(e) => setValue("button.padding", e.target.value)}
+							min="0"
+							max="32"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.button.padding, defaultValues.sizes.button.padding)}
+							oninput={(e) => setValue("button.padding", e.target.value)}
+							min="0"
+							max="32"
+						/>
+					</div>
+				</label>
+
+				<label>
+					<span>Gap</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(userStyles.sizes.button.gap, defaultValues.sizes.button.gap)}
+							oninput={(e) => setValue("button.gap", e.target.value)}
+							min="0"
+							max="64"
+						/>
+						<input
+							type="range"
+							value={getValue(userStyles.sizes.button.gap, defaultValues.sizes.button.gap)}
+							oninput={(e) => setValue("button.gap", e.target.value)}
+							min="0"
+							max="64"
+						/>
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<!-- Form Elements -->
+		<div class="cardSubSection">
+			<h3 class="cardSubHeading">Form Elements</h3>
+			<div class="controls-grid">
+				<label>
+					<span>Slider Width</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.form.rangeSlider.width,
+								defaultValues.sizes.form.rangeSlider.width
+							)}
+							oninput={(e) => setValue("form.rangeSlider.width", e.target.value)}
+							min="50"
+							max="400"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.form.rangeSlider.width,
+								defaultValues.sizes.form.rangeSlider.width
+							)}
+							oninput={(e) => setValue("form.rangeSlider.width", e.target.value)}
+							min="50"
+							max="400"
+						/>
+					</div>
+				</label>
+
+				<label>
+					<span>Slider Height</span>
+					<div class="input-group">
+						<input
+							type="number"
+							value={getValue(
+								userStyles.sizes.form.rangeSlider.height,
+								defaultValues.sizes.form.rangeSlider.height
+							)}
+							oninput={(e) => setValue("form.rangeSlider.height", e.target.value)}
+							min="4"
+							max="24"
+						/>
+						<input
+							type="range"
+							value={getValue(
+								userStyles.sizes.form.rangeSlider.height,
+								defaultValues.sizes.form.rangeSlider.height
+							)}
+							oninput={(e) => setValue("form.rangeSlider.height", e.target.value)}
+							min="4"
+							max="24"
+						/>
+					</div>
+				</label>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.sizes-card {
+		width: 100%;
+	}
+
+	.cardTitle {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+	}
+
+	.resetBtn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		cursor: pointer;
+	}
+
+	.sections-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5em;
+	}
+
+	.controls-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75em;
+	}
+
+	.controls-grid > label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25em;
+	}
+
+	.controls-grid > label > span {
+		font-weight: 500;
+	}
+
+	.input-group {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+	}
+
+	input[type="number"] {
+		width: 70px;
+		padding: 4px 8px;
+	}
+
+	input[type="range"] {
+		flex: 1;
+		min-width: 80px;
+	}
+
+	@media (max-width: 768px) {
+		.sections-grid {
+			grid-template-columns: 1fr;
+		}
+
+		input[type="number"] {
+			width: 60px;
+		}
+	}
+</style>

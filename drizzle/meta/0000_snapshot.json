@@ -1,380 +1,370 @@
 {
-  "id": "95afb0a6-8c8e-4e0a-a631-ea208a38c30a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "7",
-  "dialect": "postgresql",
-  "tables": {
-    "public.colors": {
-      "name": "colors",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "response_id": {
-          "name": "response_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "bg_type": {
-          "name": "bg_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'solid'"
-        },
-        "solid_color": {
-          "name": "solid_color",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "gradient_start_color": {
-          "name": "gradient_start_color",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "gradient_end_color": {
-          "name": "gradient_end_color",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "gradient_degrees": {
-          "name": "gradient_degrees",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "header_own_bg": {
-          "name": "header_own_bg",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "header_bg": {
-          "name": "header_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "header_text": {
-          "name": "header_text",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "footer_own_bg": {
-          "name": "footer_own_bg",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "footer_bg": {
-          "name": "footer_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_bg": {
-          "name": "card_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_text": {
-          "name": "card_text",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_border": {
-          "name": "card_border",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_next_bg": {
-          "name": "button_next_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_next_text": {
-          "name": "button_next_text",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_back_bg": {
-          "name": "button_back_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_back_text": {
-          "name": "button_back_text",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_reset_bg": {
-          "name": "button_reset_bg",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_reset_text": {
-          "name": "button_reset_text",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "colors_response_id_responses_id_fk": {
-          "name": "colors_response_id_responses_id_fk",
-          "tableFrom": "colors",
-          "tableTo": "responses",
-          "columnsFrom": [
-            "response_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.responses": {
-      "name": "responses",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "rating": {
-          "name": "rating",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.sizes": {
-      "name": "sizes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "response_id": {
-          "name": "response_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_width": {
-          "name": "card_width",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_height": {
-          "name": "card_height",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_border_width": {
-          "name": "card_border_width",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "card_border_roundness": {
-          "name": "card_border_roundness",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "text_survey_title": {
-          "name": "text_survey_title",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "text_card_titles": {
-          "name": "text_card_titles",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "text_subheadings": {
-          "name": "text_subheadings",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "text_content": {
-          "name": "text_content",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_gap": {
-          "name": "button_gap",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_padding": {
-          "name": "button_padding",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "button_text": {
-          "name": "button_text",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "form_range_slider_height": {
-          "name": "form_range_slider_height",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "form_range_slider_width": {
-          "name": "form_range_slider_width",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sizes_response_id_responses_id_fk": {
-          "name": "sizes_response_id_responses_id_fk",
-          "tableFrom": "sizes",
-          "tableTo": "responses",
-          "columnsFrom": [
-            "response_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.statistics": {
-      "name": "statistics",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "parameter_name": {
-          "name": "parameter_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "total_count": {
-          "name": "total_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
-        "sum": {
-          "name": "sum",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": false,
-          "default": 0
-        },
-        "values": {
-          "name": "values",
-          "type": "json",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'[]'::json"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "statistics_parameter_name_unique": {
-          "name": "statistics_parameter_name_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "parameter_name"
-          ]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    }
-  },
-  "enums": {},
-  "schemas": {},
-  "sequences": {},
-  "roles": {},
-  "policies": {},
-  "views": {},
-  "_meta": {
-    "columns": {},
-    "schemas": {},
-    "tables": {}
-  }
+	"id": "95afb0a6-8c8e-4e0a-a631-ea208a38c30a",
+	"prevId": "00000000-0000-0000-0000-000000000000",
+	"version": "7",
+	"dialect": "postgresql",
+	"tables": {
+		"public.colors": {
+			"name": "colors",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"response_id": {
+					"name": "response_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"bg_type": {
+					"name": "bg_type",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"default": "'solid'"
+				},
+				"solid_color": {
+					"name": "solid_color",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"gradient_start_color": {
+					"name": "gradient_start_color",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"gradient_end_color": {
+					"name": "gradient_end_color",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"gradient_degrees": {
+					"name": "gradient_degrees",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"header_own_bg": {
+					"name": "header_own_bg",
+					"type": "boolean",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"header_bg": {
+					"name": "header_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"header_text": {
+					"name": "header_text",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"footer_own_bg": {
+					"name": "footer_own_bg",
+					"type": "boolean",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"footer_bg": {
+					"name": "footer_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_bg": {
+					"name": "card_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_text": {
+					"name": "card_text",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_border": {
+					"name": "card_border",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_next_bg": {
+					"name": "button_next_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_next_text": {
+					"name": "button_next_text",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_back_bg": {
+					"name": "button_back_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_back_text": {
+					"name": "button_back_text",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_reset_bg": {
+					"name": "button_reset_bg",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_reset_text": {
+					"name": "button_reset_text",
+					"type": "jsonb",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"colors_response_id_responses_id_fk": {
+					"name": "colors_response_id_responses_id_fk",
+					"tableFrom": "colors",
+					"tableTo": "responses",
+					"columnsFrom": ["response_id"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.responses": {
+			"name": "responses",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"rating": {
+					"name": "rating",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "timestamp",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "now()"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.sizes": {
+			"name": "sizes",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"response_id": {
+					"name": "response_id",
+					"type": "uuid",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_width": {
+					"name": "card_width",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_height": {
+					"name": "card_height",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_border_width": {
+					"name": "card_border_width",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"card_border_roundness": {
+					"name": "card_border_roundness",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"text_survey_title": {
+					"name": "text_survey_title",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"text_card_titles": {
+					"name": "text_card_titles",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"text_subheadings": {
+					"name": "text_subheadings",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"text_content": {
+					"name": "text_content",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_gap": {
+					"name": "button_gap",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_padding": {
+					"name": "button_padding",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"button_text": {
+					"name": "button_text",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"form_range_slider_height": {
+					"name": "form_range_slider_height",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"form_range_slider_width": {
+					"name": "form_range_slider_width",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"sizes_response_id_responses_id_fk": {
+					"name": "sizes_response_id_responses_id_fk",
+					"tableFrom": "sizes",
+					"tableTo": "responses",
+					"columnsFrom": ["response_id"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		},
+		"public.statistics": {
+			"name": "statistics",
+			"schema": "",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "uuid",
+					"primaryKey": true,
+					"notNull": true,
+					"default": "gen_random_uuid()"
+				},
+				"parameter_name": {
+					"name": "parameter_name",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true
+				},
+				"total_count": {
+					"name": "total_count",
+					"type": "integer",
+					"primaryKey": false,
+					"notNull": false,
+					"default": 0
+				},
+				"sum": {
+					"name": "sum",
+					"type": "real",
+					"primaryKey": false,
+					"notNull": false,
+					"default": 0
+				},
+				"values": {
+					"name": "values",
+					"type": "json",
+					"primaryKey": false,
+					"notNull": false,
+					"default": "'[]'::json"
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {},
+			"compositePrimaryKeys": {},
+			"uniqueConstraints": {
+				"statistics_parameter_name_unique": {
+					"name": "statistics_parameter_name_unique",
+					"nullsNotDistinct": false,
+					"columns": ["parameter_name"]
+				}
+			},
+			"policies": {},
+			"checkConstraints": {},
+			"isRLSEnabled": false
+		}
+	},
+	"enums": {},
+	"schemas": {},
+	"sequences": {},
+	"roles": {},
+	"policies": {},
+	"views": {},
+	"_meta": {
+		"columns": {},
+		"schemas": {},
+		"tables": {}
+	}
 }

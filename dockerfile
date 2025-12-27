@@ -2,40 +2,43 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-RUN npm install -g pnpm
+# Copy package files (support both npm and pnpm lockfiles)
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
 
-COPY package.json pnpm-lock.yaml ./
-
-# Ensure devDependencies are installed
+# Install all dependencies for build
 ENV NODE_ENV=development
-
-RUN pnpm install
-RUN ls -l node_modules/vite/bin || echo "Vite not found"
-RUN pnpm list
+RUN npm install
 
 COPY . .
 
-# Increase memory for build step
-RUN NODE_OPTIONS="--max-old-space-size=2048" pnpm run build
+# Build the app (includes drizzle-kit generate)
+RUN NODE_OPTIONS="--max-old-space-size=2048" npm run build
 
 # Production stage
 FROM node:22-alpine
 WORKDIR /app
 
-RUN npm install -g pnpm
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
 
-COPY package.json pnpm-lock.yaml ./
-
-# Only install production dependencies
+# Install production dependencies + drizzle-kit for migrations
 ENV NODE_ENV=production
+RUN npm install --omit=dev
+RUN npm install -D drizzle-kit
 
-RUN pnpm install --prod
-
+# Copy built files and drizzle config
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/drizzle.config.js ./drizzle.config.js
+COPY --from=builder /app/src/lib/server/db ./src/lib/server/db
 
-EXPOSE 65000
+# Copy entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+EXPOSE 3000
 ENV NODE_ENV=production
-ENV PORT=65000
+ENV PORT=3000
 
+# Use entrypoint to run migrations before starting
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["node", "build"]

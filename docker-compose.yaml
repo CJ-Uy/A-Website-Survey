@@ -5,12 +5,7 @@ services:
       dockerfile: dockerfile
     restart: always
     ports:
-      - "65000:65000"
+      - "${PORT:-3000}:3000"
     environment:
       - DATABASE_URL=${DATABASE_URL}
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - NODE_ENV=production

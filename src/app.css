@@ -1,50 +1,122 @@
 @import "tailwindcss";
-@plugin '@tailwindcss/forms';
+@plugin "@tailwindcss/forms";
 
-button {
-	background-color: #e5e7eb;
-	color: #000000;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #9ca3af;
-	border-radius: 0.375rem;
-	background-color: #d1d5db;
-	outline-style: solid;
-	font-size: 20px;
-	line-height: 1.5rem;
+/* CSS Custom Properties for real-time survey styling */
+/* These start as browser defaults/unset - the survey page will set them as users make choices */
+:root {
+	/* Background - starts transparent/white (browser default) */
+	--survey-bg-color: transparent;
+	--survey-bg-gradient: none;
+
+	/* Card - starts with no styling */
+	--survey-card-bg: transparent;
+	--survey-card-text: inherit;
+	--survey-card-border: transparent;
+	--survey-card-width: auto;
+	--survey-card-height: auto;
+	--survey-card-border-width: 0;
+	--survey-card-border-radius: 0;
+
+	/* Marginalia */
+	--survey-header-bg: transparent;
+	--survey-header-text: inherit;
+	--survey-footer-bg: transparent;
+
+	/* Buttons - browser defaults */
+	--survey-btn-next-bg: buttonface;
+	--survey-btn-next-text: buttontext;
+	--survey-btn-back-bg: buttonface;
+	--survey-btn-back-text: buttontext;
+	--survey-btn-reset-bg: buttonface;
+	--survey-btn-reset-text: buttontext;
+
+	/* Text sizes - browser defaults */
+	--survey-title-size: 2em;
+	--survey-card-title-size: 1.5em;
+	--survey-subheading-size: 1.17em;
+	--survey-content-size: 1em;
+
+	/* Button sizes */
+	--survey-btn-text-size: 1em;
+	--survey-btn-padding: 1px 6px;
+	--survey-btn-gap: 0;
+
+	/* Form elements */
+	--survey-range-width: 129px;
+	--survey-range-height: auto;
+
+	/* Typography - starts as browser defaults */
+	--survey-font-family: inherit;
+	--survey-font-weight: normal;
+	--survey-line-height: normal;
+	--survey-letter-spacing: normal;
+
+	/* Animations - starts with no animations */
+	--survey-transition-duration: 0s;
+	--survey-transition-timing: ease;
+	--survey-hover-transform: none;
+
+	/* Layout */
+	--survey-content-max-width: none;
+	--survey-content-padding: 0;
 }
 
-button:focus {
-	outline-color: #3b82f6;
-}
-
+/* Base styles - minimal, close to browser defaults */
 .cardTitle {
-	font-size: 30px;
-	margin-bottom: 16px;
-	font-weight: 700;
+	font-size: var(--survey-card-title-size, 1.5em);
+	font-weight: bold;
+	margin-bottom: 0.5em;
 }
 
 .cardSubSection {
-	border-bottom: 1px solid black;
-	padding-bottom: 8px;
+	margin-bottom: 1em;
 }
 
 .cardSubHeading {
-	margin-top: 1.25rem;
-	font-size: 18px;
-	margin-bottom: 8px;
-	font-weight: 600;
+	font-size: var(--survey-subheading-size, 1.17em);
+	font-weight: bold;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
 }
 
-#surveyTitle {
-	font-size: 48px;
-	font-weight: 450;
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+	.cardTitle {
+		font-size: clamp(1.25rem, 4vw, var(--survey-card-title-size, 1.5em));
+	}
+
+	.cardSubHeading {
+		font-size: clamp(0.9rem, 3vw, var(--survey-subheading-size, 1.17em));
+	}
+
+	input[type="range"] {
+		width: min(var(--survey-range-width, 129px), 60vw);
+	}
+
+	input[type="number"] {
+		width: 60px;
+	}
+
+	input[type="color"] {
+		width: 40px;
+		height: 30px;
+	}
 }
 
-input[type="range"] {
-  width: 300px;
+@media (max-width: 480px) {
+	.cardTitle {
+		font-size: 1.1rem;
+	}
+
+	.cardSubHeading {
+		font-size: 0.85rem;
+	}
+
+	input[type="range"] {
+		width: min(var(--survey-range-width, 129px), 45vw);
+	}
+
+	input[type="number"] {
+		width: 50px;
+	}
 }

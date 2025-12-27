@@ -1,63 +1,147 @@
 /**
- * Original attempt was actually to use Tailwind classes in an array then use .join(" ") to
- * reactively change the styles. However, this was inconsistent and did not work with the
- * bind:value modifier since the value needs to be processed like adding a prefix before being
- * pushed into the corresponding global state's property's array. To do this attempts were made
- * with the $derived and $effect runes but that lead to infinite loops. It looked something like:
- * class = {userStyles.card.heading.h2.join(" ")}
+ * User styles state - starts with null/empty values representing "no choice made"
+ * As users make selections in the survey, these get populated and
+ * the CSS custom properties update to reflect their choices in real-time.
  */
 
 export const userStyles = $state({
 	colors: {
 		bg: {
-			type: "",
-			solidColor: "#808080", // Default solid color of gray
+			type: null, // null = no choice, "solid" or "gradient"
+			solidColor: null,
 			gradient: {
-				startColor: "#ffffff", // Default start color of white
-				endColor: "#111111", // Default end color of black
-				degrees: 45 // Default gradient direction
+				startColor: null,
+				endColor: null,
+				degrees: null
 			}
 		},
 		marginalia: {
 			header: {
 				ownBg: false,
-				bg: "#ffffff",
-				text: "#111111"
+				bg: null,
+				text: null
 			},
 			footer: {
 				ownBg: false,
-				bg: "#ffffff",
+				bg: null
 			}
 		},
 		card: {
-			bg: "#ffffff", // Default card bg of white
-			text: "#000000",
-			border: "#000000"
+			bg: null,
+			text: null,
+			border: null
 		},
 		button: {
 			next: {
-				bg: "#e5e7eb", // Default Button Gray
-				text: "#000000"
+				bg: null,
+				text: null
 			},
 			back: {
-				bg: "#e5e7eb", // Default Button Gray
-				text: "#000000"
+				bg: null,
+				text: null
 			},
 			reset: {
-				bg: "#e5e7eb", // Default Button Gray
-				text: "#000000"
+				bg: null,
+				text: null
 			}
 		}
 	},
 
 	sizes: {
 		card: {
-			width: 1200,
-			height: 600,
+			width: null,
+			height: null,
 			border: {
-				width: 2,
-				roundness: 0
+				width: null,
+				roundness: null
 			}
+		},
+		text: {
+			surveyTitle: null,
+			cardTitles: null,
+			subheadings: null,
+			content: null
+		},
+		button: {
+			gap: null,
+			padding: null,
+			text: null
+		},
+		form: {
+			rangeSlider: {
+				height: null,
+				width: null
+			}
+		}
+	},
+
+	typography: {
+		fontFamily: null,
+		headingFont: null,
+		bodyFont: null,
+		fontWeight: null,
+		lineHeight: null,
+		letterSpacing: null
+	},
+
+	animations: {
+		enabled: false,
+		transitionDuration: null,
+		transitionTiming: null,
+		hoverEffects: {
+			scale: null,
+			shadow: false,
+			colorShift: false
+		},
+		pageTransitions: null
+	},
+
+	layout: {
+		maxWidth: null,
+		contentPadding: null,
+		elementSpacing: null,
+		alignment: null
+	},
+
+	rating: null
+});
+
+// Default values to use when user makes a choice (starting points for sliders/pickers)
+export const defaultValues = {
+	colors: {
+		bg: {
+			solidColor: "#808080",
+			gradient: {
+				startColor: "#ffffff",
+				endColor: "#111111",
+				degrees: 45
+			}
+		},
+		marginalia: {
+			header: {
+				bg: "#ffffff",
+				text: "#111111"
+			},
+			footer: {
+				bg: "#ffffff"
+			}
+		},
+		card: {
+			bg: "#ffffff",
+			text: "#000000",
+			border: "#000000"
+		},
+		button: {
+			next: { bg: "#e5e7eb", text: "#000000" },
+			back: { bg: "#e5e7eb", text: "#000000" },
+			reset: { bg: "#e5e7eb", text: "#000000" }
+		}
+	},
+	sizes: {
+		card: {
+			width: 800,
+			height: 500,
+			border: { width: 2, roundness: 0 }
 		},
 		text: {
 			surveyTitle: 48,
@@ -68,15 +152,25 @@ export const userStyles = $state({
 		button: {
 			gap: 16,
 			padding: 8,
-			text: 20
+			text: 16
 		},
 		form: {
-			rangeSlider: {
-				height: 15,
-				width: 300
-			}
+			rangeSlider: { height: 15, width: 200 }
 		}
 	},
-
-	rating: 3
-});
+	typography: {
+		fontFamily: "system-ui",
+		fontWeight: 400,
+		lineHeight: 1.5,
+		letterSpacing: 0
+	},
+	animations: {
+		transitionDuration: 200,
+		transitionTiming: "ease"
+	},
+	layout: {
+		maxWidth: 1200,
+		contentPadding: 16,
+		elementSpacing: 16
+	}
+};

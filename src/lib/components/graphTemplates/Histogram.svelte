@@ -4,17 +4,15 @@
 	import Chart from "chart.js/auto";
 
 	// Props
-	let { data, bins, xLabel, yLabel, title } = $props();
-	let showLegend = $state(false);
-	let customOptions = $state({});
+	let { data, bins = 10, xLabel, yLabel, title, height = 300 } = $props();
 
 	// State
 	let chartCanvas = $state(null);
 	let histogramChart = $state(null);
 
-	// Default colors
-	const defaultColor = "rgba(75, 192, 192, 0.7)";
-	const defaultBorderColor = "rgba(75, 192, 192, 1)";
+	// Gradient color matching theme
+	const gradientColor = "rgba(102, 126, 234, 0.7)";
+	const gradientBorder = "rgba(102, 126, 234, 1)";
 
 	// Function to calculate the histogram values
 	function calculateHistogram(data, numBins) {
@@ -95,48 +93,7 @@
 			return;
 		}
 
-		// Default chart options
-		const defaultOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				title: {
-					display: !!title,
-					text: title
-				},
-				legend: {
-					display: showLegend
-				},
-				tooltip: {
-					callbacks: {
-						label: (context) => `Frequency: ${context.parsed.y}`
-					}
-				}
-			},
-			scales: {
-				x: {
-					title: {
-						display: !!xLabel,
-						text: xLabel
-					}
-				},
-				y: {
-					title: {
-						display: !!yLabel,
-						text: yLabel
-					},
-					beginAtZero: true,
-					ticks: {
-						precision: 0 // Show integer values only
-					}
-				}
-			}
-		};
-
-		// Merge with custom options
-		const mergedOptions = { ...defaultOptions, ...customOptions };
-
-		// Create new chart
+		// Create chart with improved styling
 		histogramChart = new Chart(ctx, {
 			type: "bar",
 			data: {
@@ -145,13 +102,64 @@
 					{
 						label: "Frequency",
 						data: binCounts,
-						backgroundColor: defaultColor,
-						borderColor: defaultBorderColor,
-						borderWidth: 1
+						backgroundColor: gradientColor,
+						borderColor: gradientBorder,
+						borderWidth: 2,
+						borderRadius: 4,
+						borderSkipped: false
 					}
 				]
 			},
-			options: mergedOptions
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					title: {
+						display: !!title,
+						text: title,
+						font: { size: 14, weight: "600" },
+						color: "#1f2937",
+						padding: { bottom: 12 }
+					},
+					legend: { display: false },
+					tooltip: {
+						backgroundColor: "rgba(0, 0, 0, 0.8)",
+						padding: 10,
+						cornerRadius: 6,
+						callbacks: {
+							label: (ctx) => `Frequency: ${ctx.parsed.y}`
+						}
+					}
+				},
+				scales: {
+					x: {
+						title: {
+							display: !!xLabel,
+							text: xLabel,
+							font: { size: 11, weight: "500" },
+							color: "#6b7280"
+						},
+						grid: { display: false },
+						ticks: {
+							color: "#6b7280",
+							font: { size: 10 },
+							maxRotation: 45,
+							minRotation: 0
+						}
+					},
+					y: {
+						title: {
+							display: !!yLabel,
+							text: yLabel,
+							font: { size: 11, weight: "500" },
+							color: "#6b7280"
+						},
+						beginAtZero: true,
+						grid: { color: "rgba(0, 0, 0, 0.05)" },
+						ticks: { precision: 0, color: "#6b7280" }
+					}
+				}
+			}
 		});
 	}
 
@@ -166,27 +174,21 @@
 			histogramChart.destroy();
 		}
 	});
+
+	$effect(() => {
+		if (data && chartCanvas && browser) {
+			createOrUpdateChart();
+		}
+	});
 </script>
 
-<div class="chart-container h-[100%] w-[100%]">
+<div class="chart-container" style="height: {height}px;">
 	<canvas bind:this={chartCanvas}></canvas>
-	{#if !chartCanvas}
-		<div class="loading">Loading chart...</div>
-	{/if}
 </div>
 
 <style>
 	.chart-container {
 		position: relative;
-		min-height: 300px;
-		overflow: hidden;
-	}
-
-	.loading {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: #666;
+		width: 100%;
 	}
 </style>
