@@ -36,14 +36,14 @@
 			<Histogram
 				title="Card Width Distribution"
 				data={chartData.cardWidth.values}
-				xLabel="Font Size"
+				xLabel="Width (px)"
 				yLabel="Frequency"
 				bins="10"
 			/>
 			<Histogram
 				title="Card Height Distribution"
 				data={chartData.cardHeight.values}
-				xLabel="Font Size"
+				xLabel="Height (px)"
 				yLabel="Frequency"
 				bins="10"
 			/>
@@ -54,14 +54,14 @@
 			<Histogram
 				title="Card Subheading Size Distribution"
 				data={chartData.textSubheadings.values}
-				xLabel="Font Size"
+				xLabel="Font Size (px)"
 				yLabel="Frequency"
 				bins="5"
 			/>
 			<Histogram
 				title="Card Content Size Distribution"
 				data={chartData.textContent.values}
-				xLabel="Font Size"
+				xLabel="Font Size (px)"
 				yLabel="Frequency"
 				bins="5"
 			/>
@@ -70,16 +70,16 @@
 	<div class="border border-gray-300">
 		<div class="mr-3">
 			<Histogram
-				title="Card Subheading Size Distribution"
+				title="Card Border Roundness Distribution"
 				data={chartData.cardBorderRoundness.values}
-				xLabel="Font Size"
+				xLabel="Border Radius (px)"
 				yLabel="Frequency"
 				bins="5"
 			/>
 			<Histogram
-				title="Card Content Size Distribution"
+				title="Card Border Width Distribution"
 				data={chartData.cardBorderWidth.values}
-				xLabel="Font Size"
+				xLabel="Border Width (px)"
 				yLabel="Frequency"
 				bins="5"
 			/>

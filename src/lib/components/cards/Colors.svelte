@@ -79,6 +79,30 @@
 			}
 		}
 	}
+
+	function randomize() {
+		const randHex = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+		const useGradient = Math.random() > 0.5;
+		userStyles.colors.bg.type = useGradient ? 'gradient' : 'solid';
+		userStyles.colors.bg.solidColor = randHex();
+		userStyles.colors.bg.gradient.startColor = randHex();
+		userStyles.colors.bg.gradient.endColor = randHex();
+		userStyles.colors.bg.gradient.degrees = Math.floor(Math.random() * 360);
+		userStyles.colors.marginalia.header.ownBg = Math.random() > 0.5;
+		userStyles.colors.marginalia.header.bg = randHex();
+		userStyles.colors.marginalia.header.text = randHex();
+		userStyles.colors.marginalia.footer.ownBg = Math.random() > 0.5;
+		userStyles.colors.marginalia.footer.bg = randHex();
+		userStyles.colors.card.bg = randHex();
+		userStyles.colors.card.text = randHex();
+		userStyles.colors.card.border = randHex();
+		userStyles.colors.button.next.bg = randHex();
+		userStyles.colors.button.next.text = randHex();
+		userStyles.colors.button.back.bg = randHex();
+		userStyles.colors.button.back.text = randHex();
+		userStyles.colors.button.reset.bg = randHex();
+		userStyles.colors.button.reset.text = randHex();
+	}
 </script>
 
 <div class="colors-card">
@@ -100,6 +124,16 @@
 					<path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" />
 					<path d="M7.5 6.5h-4v-4" />
 				</g>
+			</svg>
+		</button>
+		<button
+			class="randomizeBtn"
+			onclick={randomize}
+			title="Randomize values"
+			aria-label="Randomize values"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="1" y="1" width="8" height="8" rx="1" /><rect x="15" y="1" width="8" height="8" rx="1" /><rect x="1" y="15" width="8" height="8" rx="1" /><rect x="15" y="15" width="8" height="8" rx="1" /><circle cx="5" cy="5" r="1" fill="currentColor" /><circle cx="19" cy="5" r="1" fill="currentColor" /><circle cx="5" cy="19" r="1" fill="currentColor" /><circle cx="19" cy="19" r="1" fill="currentColor" />
 			</svg>
 		</button>
 		Colors
@@ -339,6 +373,14 @@
 	}
 
 	.resetBtn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		cursor: pointer;
+	}
+
+	.randomizeBtn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;

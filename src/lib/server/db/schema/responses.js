@@ -1,7 +1,9 @@
-import { pgTable, uuid, integer, timestamp } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
-export const responses = pgTable("responses", {
-	id: uuid("id").primaryKey().defaultRandom(),
+export const responses = sqliteTable("responses", {
+	id: text("id")
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
 	rating: integer("rating"), // Rating for the submission
-	createdAt: timestamp("created_at").defaultNow() // Timestamp of submission
+	createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()) // Timestamp of submission
 });

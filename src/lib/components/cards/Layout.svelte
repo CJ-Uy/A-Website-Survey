@@ -11,6 +11,14 @@
 		return value ?? defaultValue;
 	}
 
+	function randomize() {
+		const alignments = ['left', 'center', 'right'];
+		userStyles.layout.maxWidth = Math.floor(Math.random() * 5) * 200 + 600;
+		userStyles.layout.contentPadding = Math.floor(Math.random() * 16) * 4;
+		userStyles.layout.elementSpacing = Math.floor(Math.random() * 12) * 4;
+		userStyles.layout.alignment = alignments[Math.floor(Math.random() * alignments.length)];
+	}
+
 	function resetLayout() {
 		userStyles.layout = {
 			maxWidth: null,
@@ -40,6 +48,16 @@
 					<path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" />
 					<path d="M7.5 6.5h-4v-4" />
 				</g>
+			</svg>
+		</button>
+		<button
+			class="randomizeBtn"
+			onclick={randomize}
+			title="Randomize values"
+			aria-label="Randomize values"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="1" y="1" width="8" height="8" rx="1" /><rect x="15" y="1" width="8" height="8" rx="1" /><rect x="1" y="15" width="8" height="8" rx="1" /><rect x="15" y="15" width="8" height="8" rx="1" /><circle cx="5" cy="5" r="1" fill="currentColor" /><circle cx="19" cy="5" r="1" fill="currentColor" /><circle cx="5" cy="19" r="1" fill="currentColor" /><circle cx="19" cy="19" r="1" fill="currentColor" />
 			</svg>
 		</button>
 		Layout & Spacing
@@ -255,6 +273,14 @@
 	}
 
 	.resetBtn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		cursor: pointer;
+	}
+
+	.randomizeBtn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;

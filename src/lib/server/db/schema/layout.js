@@ -1,9 +1,11 @@
-import { pgTable, uuid, integer, text } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { responses } from "./responses";
 
-export const layout = pgTable("layout", {
-	id: uuid("id").primaryKey().defaultRandom(),
-	responseId: uuid("response_id").references(() => responses.id, {
+export const layout = sqliteTable("layout", {
+	id: text("id")
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	responseId: text("response_id").references(() => responses.id, {
 		onDelete: "cascade"
 	}),
 

@@ -20,6 +20,18 @@
 		return value ?? defaultValue;
 	}
 
+	function randomize() {
+		const timings = ['ease', 'linear', 'ease-in', 'ease-out', 'ease-in-out'];
+		const transitions = ['none', 'fade', 'slide', 'scale'];
+		userStyles.animations.enabled = true;
+		userStyles.animations.transitionDuration = Math.floor(Math.random() * 10) * 100;
+		userStyles.animations.transitionTiming = timings[Math.floor(Math.random() * timings.length)];
+		userStyles.animations.hoverEffects.scale = Math.round((1 + Math.random() * 0.2) * 100) / 100;
+		userStyles.animations.hoverEffects.shadow = Math.random() > 0.5;
+		userStyles.animations.hoverEffects.colorShift = Math.random() > 0.5;
+		userStyles.animations.pageTransitions = transitions[Math.floor(Math.random() * transitions.length)];
+	}
+
 	function resetAnimations() {
 		userStyles.animations = {
 			enabled: false,
@@ -67,6 +79,16 @@
 					<path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" />
 					<path d="M7.5 6.5h-4v-4" />
 				</g>
+			</svg>
+		</button>
+		<button
+			class="randomizeBtn"
+			onclick={randomize}
+			title="Randomize values"
+			aria-label="Randomize values"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="1" y="1" width="8" height="8" rx="1" /><rect x="15" y="1" width="8" height="8" rx="1" /><rect x="1" y="15" width="8" height="8" rx="1" /><rect x="15" y="15" width="8" height="8" rx="1" /><circle cx="5" cy="5" r="1" fill="currentColor" /><circle cx="19" cy="5" r="1" fill="currentColor" /><circle cx="5" cy="19" r="1" fill="currentColor" /><circle cx="19" cy="19" r="1" fill="currentColor" />
 			</svg>
 		</button>
 		Animations & Transitions
@@ -238,6 +260,14 @@
 	}
 
 	.resetBtn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		cursor: pointer;
+	}
+
+	.randomizeBtn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;

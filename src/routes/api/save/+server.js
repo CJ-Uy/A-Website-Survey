@@ -8,12 +8,6 @@ function isValidRating(rating) {
 	return typeof rating === "number" && rating >= 1 && rating <= 5 && Number.isInteger(rating);
 }
 
-function isValidRgb(color) {
-	if (!color || typeof color !== "object") return false;
-	const { r, g, b } = color;
-	return [r, g, b].every((v) => typeof v === "number" && v >= 0 && v <= 255);
-}
-
 function isValidNumber(value, min, max) {
 	return typeof value === "number" && !isNaN(value) && value >= min && value <= max;
 }
@@ -22,20 +16,14 @@ function validateColors(colors) {
 	if (!colors || typeof colors !== "object") {
 		throw new Error("Invalid colors data");
 	}
-
-	// Validate bg type
 	if (!["solid", "gradient"].includes(colors.bg?.type)) {
 		throw new Error("Invalid background type");
 	}
-
-	// Validate gradient degrees if gradient
 	if (colors.bg.type === "gradient") {
 		if (!isValidNumber(colors.bg.gradient?.degrees, 0, 360)) {
 			throw new Error("Invalid gradient angle");
 		}
 	}
-
-	// Validate rating exists in parent
 	return true;
 }
 
@@ -43,15 +31,12 @@ function validateSizes(sizes) {
 	if (!sizes || typeof sizes !== "object") {
 		throw new Error("Invalid sizes data");
 	}
-
-	// Card dimensions
 	if (!isValidNumber(sizes.card?.width, 100, 3000)) {
 		throw new Error("Invalid card width");
 	}
 	if (!isValidNumber(sizes.card?.height, 100, 2000)) {
 		throw new Error("Invalid card height");
 	}
-
 	return true;
 }
 
@@ -59,7 +44,6 @@ function validateTypography(typography) {
 	if (!typography || typeof typography !== "object") {
 		throw new Error("Invalid typography data");
 	}
-	// Typography fields are optional, so we just validate types if present
 	if (typography.fontWeight !== null && !isValidNumber(typography.fontWeight, 100, 900)) {
 		throw new Error("Invalid font weight");
 	}
@@ -76,7 +60,6 @@ function validateAnimations(animations) {
 	if (!animations || typeof animations !== "object") {
 		throw new Error("Invalid animations data");
 	}
-	// Animations fields are optional
 	if (
 		animations.transitionDuration !== null &&
 		!isValidNumber(animations.transitionDuration, 0, 5000)
@@ -96,7 +79,6 @@ function validateLayout(layout) {
 	if (!layout || typeof layout !== "object") {
 		throw new Error("Invalid layout data");
 	}
-	// Layout fields are optional
 	if (layout.maxWidth !== null && !isValidNumber(layout.maxWidth, 200, 3000)) {
 		throw new Error("Invalid max width");
 	}
@@ -113,7 +95,6 @@ export async function POST({ request }) {
 	try {
 		const requestBody = await request.json();
 
-		// Validate required fields
 		if (!requestBody) {
 			return json({ status: "error", message: "Request body is required" }, { status: 400 });
 		}
@@ -142,6 +123,13 @@ export async function POST({ request }) {
 		await saveTypography(responseId, requestBody.typography);
 		await saveAnimations(responseId, requestBody.animations);
 		await saveLayout(responseId, requestBody.layout);
+		await saveShadows(responseId, requestBody.shadows);
+		await saveBorders(responseId, requestBody.borders);
+		await saveSpacing(responseId, requestBody.spacing);
+		await saveMedia(responseId, requestBody.media);
+		await saveDarkMode(responseId, requestBody.darkMode);
+		await saveNavigation(responseId, requestBody.navigation);
+		await saveFormStyling(responseId, requestBody.formStyling);
 
 		// Update statistics properties
 		await updateColorStatistics(requestBody.colors);
@@ -149,6 +137,13 @@ export async function POST({ request }) {
 		await updateTypographyStatistics(requestBody.typography);
 		await updateAnimationsStatistics(requestBody.animations);
 		await updateLayoutStatistics(requestBody.layout);
+		await updateShadowsStatistics(requestBody.shadows);
+		await updateBordersStatistics(requestBody.borders);
+		await updateSpacingStatistics(requestBody.spacing);
+		await updateMediaStatistics(requestBody.media);
+		await updateDarkModeStatistics(requestBody.darkMode);
+		await updateNavigationStatistics(requestBody.navigation);
+		await updateFormStylingStatistics(requestBody.formStyling);
 		await upsertStatistic("rating", requestBody.rating, true, true);
 
 		return json({ status: "success" });
@@ -197,7 +192,6 @@ async function saveColors(responseId, colors) {
 	});
 }
 
-// Save sizes to the sizes table
 async function saveSizes(responseId, sizes) {
 	await db.insert(schema.sizes).values({
 		responseId,
@@ -217,7 +211,6 @@ async function saveSizes(responseId, sizes) {
 	});
 }
 
-// Save typography to the typography table
 async function saveTypography(responseId, typography) {
 	await db.insert(schema.typography).values({
 		responseId,
@@ -230,7 +223,6 @@ async function saveTypography(responseId, typography) {
 	});
 }
 
-// Save animations to the animations table
 async function saveAnimations(responseId, animations) {
 	await db.insert(schema.animations).values({
 		responseId,
@@ -244,7 +236,6 @@ async function saveAnimations(responseId, animations) {
 	});
 }
 
-// Save layout to the layout table
 async function saveLayout(responseId, layout) {
 	await db.insert(schema.layout).values({
 		responseId,
@@ -255,7 +246,89 @@ async function saveLayout(responseId, layout) {
 	});
 }
 
-// Update color-related statistics
+async function saveShadows(responseId, shadows) {
+	if (!shadows) return;
+	await db.insert(schema.shadows).values({
+		responseId,
+		cardShadowEnabled: shadows.cardShadow?.enabled ?? false,
+		cardShadowX: shadows.cardShadow?.x,
+		cardShadowY: shadows.cardShadow?.y,
+		cardShadowBlur: shadows.cardShadow?.blur,
+		cardShadowSpread: shadows.cardShadow?.spread,
+		cardShadowColor: shadows.cardShadow?.color,
+		buttonShadow: shadows.buttonShadow ?? false,
+		elevationLevel: shadows.elevationLevel
+	});
+}
+
+async function saveBorders(responseId, borders) {
+	if (!borders) return;
+	await db.insert(schema.borders).values({
+		responseId,
+		dividerStyle: borders.dividerStyle,
+		dividerColor: borders.dividerColor,
+		dividerThickness: borders.dividerThickness,
+		sectionGap: borders.sectionGap
+	});
+}
+
+async function saveSpacing(responseId, spacing) {
+	if (!spacing) return;
+	await db.insert(schema.spacing).values({
+		responseId,
+		density: spacing.density,
+		paragraphGap: spacing.paragraphGap,
+		sectionSpacing: spacing.sectionSpacing,
+		innerPadding: spacing.innerPadding
+	});
+}
+
+async function saveMedia(responseId, media) {
+	if (!media) return;
+	await db.insert(schema.media).values({
+		responseId,
+		imageBorderRadius: media.imageBorderRadius,
+		imageAspectRatio: media.imageAspectRatio,
+		mediaStyle: media.mediaStyle,
+		showPlaceholders: media.showPlaceholders ?? true
+	});
+}
+
+async function saveDarkMode(responseId, darkMode) {
+	if (!darkMode) return;
+	await db.insert(schema.darkMode).values({
+		responseId,
+		preference: darkMode.preference,
+		darkShade: darkMode.darkShade,
+		darkAccentColor: darkMode.darkAccentColor
+	});
+}
+
+async function saveNavigation(responseId, navigation) {
+	if (!navigation) return;
+	await db.insert(schema.navigation).values({
+		responseId,
+		position: navigation.position,
+		sticky: navigation.sticky,
+		mobileStyle: navigation.mobileStyle,
+		transparency: navigation.transparency
+	});
+}
+
+async function saveFormStyling(responseId, formStyling) {
+	if (!formStyling) return;
+	await db.insert(schema.formStyling).values({
+		responseId,
+		inputBorderStyle: formStyling.inputBorderStyle,
+		focusRingColor: formStyling.focusRingColor,
+		placeholderColor: formStyling.placeholderColor,
+		inputBorderRadius: formStyling.inputBorderRadius,
+		checkboxStyle: formStyling.checkboxStyle
+	});
+}
+
+// Statistics update functions
+
 function updateColorStatistics(colors) {
 	if (colors.bg.type === "solid") {
 		upsertStatistic("bgTypeSolid", 1, false, false);
@@ -290,7 +363,6 @@ function updateColorStatistics(colors) {
 	upsertStatistic("buttonResetTextColor", colors.button.reset.text, false, true);
 }
 
-// Update size-related statistics
 function updateSizeStatistics(sizes) {
 	upsertStatistic("cardWidth", sizes.card.width, true, true);
 	upsertStatistic("cardHeight", sizes.card.height, true, true);
@@ -310,7 +382,6 @@ function updateSizeStatistics(sizes) {
 	upsertStatistic("formRangeSliderWidth", sizes.form.rangeSlider.width, true, true);
 }
 
-// Update typography-related statistics
 function updateTypographyStatistics(typography) {
 	if (typography.fontFamily !== null) {
 		upsertStatistic("fontFamily", typography.fontFamily, false, true);
@@ -326,7 +397,6 @@ function updateTypographyStatistics(typography) {
 	}
 }
 
-// Update animations-related statistics
 function updateAnimationsStatistics(animations) {
 	upsertStatistic("animationsEnabled", animations.enabled ? 1 : 0, false, false);
 
@@ -352,7 +422,6 @@ function updateAnimationsStatistics(animations) {
 	}
 }
 
-// Update layout-related statistics
 function updateLayoutStatistics(layout) {
 	if (layout.maxWidth !== null) {
 		upsertStatistic("layoutMaxWidth", layout.maxWidth, true, true);
@@ -365,6 +434,108 @@ function updateLayoutStatistics(layout) {
 	}
 	if (layout.alignment !== null) {
 		upsertStatistic("layoutAlignment", layout.alignment, false, true);
+	}
+}
+
+function updateShadowsStatistics(shadows) {
+	if (!shadows) return;
+	upsertStatistic("shadowCardEnabled", shadows.cardShadow?.enabled ? 1 : 0, false, false);
+	upsertStatistic("shadowButtonEnabled", shadows.buttonShadow ? 1 : 0, false, false);
+	if (shadows.elevationLevel) {
+		upsertStatistic("elevationLevel", shadows.elevationLevel, false, true);
+	}
+	if (shadows.cardShadow?.enabled) {
+		if (shadows.cardShadow.blur !== null) {
+			upsertStatistic("shadowBlur", shadows.cardShadow.blur, true, true);
+		}
+		if (shadows.cardShadow.spread !== null) {
+			upsertStatistic("shadowSpread", shadows.cardShadow.spread, true, true);
+		}
+	}
+}
+
+function updateBordersStatistics(borders) {
+	if (!borders) return;
+	if (borders.dividerStyle) {
+		upsertStatistic("dividerStyle", borders.dividerStyle, false, true);
+	}
+	if (borders.dividerThickness !== null) {
+		upsertStatistic("dividerThickness", borders.dividerThickness, true, true);
+	}
+	if (borders.sectionGap !== null) {
+		upsertStatistic("sectionGap", borders.sectionGap, true, true);
+	}
+}
+
+function updateSpacingStatistics(spacing) {
+	if (!spacing) return;
+	if (spacing.density) {
+		upsertStatistic("spacingDensity", spacing.density, false, true);
+	}
+	if (spacing.paragraphGap !== null) {
+		upsertStatistic("paragraphGap", spacing.paragraphGap, true, true);
+	}
+	if (spacing.sectionSpacing !== null) {
+		upsertStatistic("sectionSpacing", spacing.sectionSpacing, true, true);
+	}
+	if (spacing.innerPadding !== null) {
+		upsertStatistic("innerPadding", spacing.innerPadding, true, true);
+	}
+}
+
+function updateMediaStatistics(media) {
+	if (!media) return;
+	if (media.mediaStyle) {
+		upsertStatistic("mediaStyle", media.mediaStyle, false, true);
+	}
+	if (media.imageAspectRatio) {
+		upsertStatistic("imageAspectRatio", media.imageAspectRatio, false, true);
+	}
+	if (media.imageBorderRadius !== null) {
+		upsertStatistic("imageBorderRadius", media.imageBorderRadius, true, true);
+	}
+	upsertStatistic("showPlaceholders", media.showPlaceholders ? 1 : 0, false, false);
+}
+
+function updateDarkModeStatistics(darkMode) {
+	if (!darkMode) return;
+	if (darkMode.preference) {
+		upsertStatistic("darkModePreference", darkMode.preference, false, true);
+	}
+	if (darkMode.darkShade) {
+		upsertStatistic("darkShade", darkMode.darkShade, false, true);
+	}
+	if (darkMode.darkAccentColor) {
+		upsertStatistic("darkAccentColor", darkMode.darkAccentColor, false, true);
+	}
+}
+
+function updateNavigationStatistics(navigation) {
+	if (!navigation) return;
+	if (navigation.position) {
+		upsertStatistic("navPosition", navigation.position, false, true);
+	}
+	if (navigation.sticky !== null) {
+		upsertStatistic("navSticky", navigation.sticky ? 1 : 0, false, false);
+	}
+	if (navigation.mobileStyle) {
+		upsertStatistic("navMobileStyle", navigation.mobileStyle, false, true);
+	}
+	if (navigation.transparency !== null) {
+		upsertStatistic("navTransparency", navigation.transparency, true, true);
+	}
+}
+
+function updateFormStylingStatistics(formStyling) {
+	if (!formStyling) return;
+	if (formStyling.inputBorderStyle) {
+		upsertStatistic("inputBorderStyle", formStyling.inputBorderStyle, false, true);
+	}
+	if (formStyling.inputBorderRadius !== null) {
+		upsertStatistic("inputBorderRadius", formStyling.inputBorderRadius, true, true);
+	}
+	if (formStyling.checkboxStyle) {
+		upsertStatistic("checkboxStyle", formStyling.checkboxStyle, false, true);
 	}
 }
 

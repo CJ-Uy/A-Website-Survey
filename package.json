@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && drizzle-kit generate",
+		"build": "vite build",
+		"db:generate": "drizzle-kit generate",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
@@ -41,10 +42,10 @@
 	},
 	"dependencies": {
 		"chart.js": "^4.4.8",
+		"@libsql/client": "^0.14.0",
 		"drizzle-orm": "^0.40.0",
 		"mathjs": "^14.4.0",
-		"plotly.js-dist-min": "^3.0.1",
-		"postgres": "^3.4.5"
+		"plotly.js-dist-min": "^3.0.1"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

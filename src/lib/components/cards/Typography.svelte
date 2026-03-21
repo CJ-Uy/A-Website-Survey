@@ -29,6 +29,13 @@
 		return value ?? defaultValue;
 	}
 
+	function randomize() {
+		userStyles.typography.fontFamily = fontFamilies[Math.floor(Math.random() * fontFamilies.length)].value;
+		userStyles.typography.fontWeight = fontWeights[Math.floor(Math.random() * fontWeights.length)].value;
+		userStyles.typography.lineHeight = Math.round((Math.random() * 2 + 1) * 10) / 10;
+		userStyles.typography.letterSpacing = Math.round((Math.random() * 6 - 2) * 10) / 10;
+	}
+
 	function resetTypography() {
 		userStyles.typography = {
 			fontFamily: null,
@@ -60,6 +67,16 @@
 					<path d="M3.578 6.487A8 8 0 1 1 2.5 10.5" />
 					<path d="M7.5 6.5h-4v-4" />
 				</g>
+			</svg>
+		</button>
+		<button
+			class="randomizeBtn"
+			onclick={randomize}
+			title="Randomize values"
+			aria-label="Randomize values"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="1" y="1" width="8" height="8" rx="1" /><rect x="15" y="1" width="8" height="8" rx="1" /><rect x="1" y="15" width="8" height="8" rx="1" /><rect x="15" y="15" width="8" height="8" rx="1" /><circle cx="5" cy="5" r="1" fill="currentColor" /><circle cx="19" cy="5" r="1" fill="currentColor" /><circle cx="5" cy="19" r="1" fill="currentColor" /><circle cx="19" cy="19" r="1" fill="currentColor" />
 			</svg>
 		</button>
 		Typography
@@ -198,6 +215,14 @@
 	}
 
 	.resetBtn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		cursor: pointer;
+	}
+
+	.randomizeBtn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;

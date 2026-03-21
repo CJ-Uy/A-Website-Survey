@@ -1,7 +1,21 @@
 <script>
 	import { goto } from "$app/navigation";
-	import { Colors, Size, Typography, Animations, Layout, Rating } from "$lib/components/cards";
-	import { userStyles } from "$lib/state/userStyles.svelte";
+	import {
+		Colors,
+		Size,
+		Typography,
+		Animations,
+		Layout,
+		Shadows,
+		Borders,
+		Spacing,
+		Media,
+		DarkMode,
+		Navigation,
+		FormStyling,
+		Rating
+	} from "$lib/components/cards";
+	import { userStyles, clearSavedState } from "$lib/state/userStyles.svelte";
 	import { onMount } from "svelte";
 
 	let currentSlide = $state(1);
@@ -10,13 +24,21 @@
 	let isSubmitting = $state(false);
 	let mounted = $state(false);
 
+	// Ordered from most to least noticeable design impact
 	const steps = [
-		{ num: 1, label: "Colors", icon: "1" },
-		{ num: 2, label: "Sizes", icon: "2" },
-		{ num: 3, label: "Typography", icon: "3" },
-		{ num: 4, label: "Animations", icon: "4" },
-		{ num: 5, label: "Layout", icon: "5" },
-		{ num: 6, label: "Rate", icon: "6" }
+		{ num: 1, label: "Colors" },
+		{ num: 2, label: "Dark Mode" },
+		{ num: 3, label: "Typography" },
+		{ num: 4, label: "Layout" },
+		{ num: 5, label: "Sizes" },
+		{ num: 6, label: "Shadows" },
+		{ num: 7, label: "Spacing" },
+		{ num: 8, label: "Borders" },
+		{ num: 9, label: "Animations" },
+		{ num: 10, label: "Navigation" },
+		{ num: 11, label: "Media" },
+		{ num: 12, label: "Forms" },
+		{ num: 13, label: "Rate" }
 	];
 
 	const totalSteps = steps.length;
@@ -177,6 +199,15 @@
 		if (userStyles.layout.contentPadding !== null) {
 			root.style.setProperty("--survey-content-padding", `${userStyles.layout.contentPadding}px`);
 		}
+
+		// Shadows
+		if (userStyles.shadows.cardShadow.enabled) {
+			const s = userStyles.shadows.cardShadow;
+			root.style.setProperty(
+				"--survey-card-shadow",
+				`${s.x ?? 0}px ${s.y ?? 4}px ${s.blur ?? 12}px ${s.spread ?? 0}px ${s.color ?? "#00000020"}`
+			);
+		}
 	});
 
 	$effect(() => {
@@ -190,6 +221,8 @@
 	function hexToRgb(hex) {
 		if (!hex || typeof hex !== "string") return null;
 		hex = hex.replace(/^#/, "");
+		// Handle 8-char hex (with alpha) by stripping alpha
+		if (hex.length === 8) hex = hex.substring(0, 6);
 		const bigint = parseInt(hex, 16);
 		const r = (bigint >> 16) & 255;
 		const g = (bigint >> 8) & 255;
@@ -278,6 +311,7 @@
 				"--survey-card-height",
 				"--survey-card-border-width",
 				"--survey-card-border-radius",
+				"--survey-card-shadow",
 				"--survey-header-bg",
 				"--survey-header-text",
 				"--survey-footer-bg",
@@ -306,6 +340,10 @@
 				"--survey-content-padding"
 			];
 			props.forEach((p) => root.style.removeProperty(p));
+
+			// Clear saved state from localStorage after successful submission
+			clearSavedState();
+
 			goto("/statistics");
 		} catch (error) {
 			console.error("Error submitting:", error);
@@ -333,8 +371,9 @@
 						class:active={currentSlide === step.num}
 						class:completed={currentSlide > step.num}
 						onclick={() => goToStep(step.num)}
+						title={step.label}
 					>
-						<span class="step-number">{step.icon}</span>
+						<span class="step-number">{step.num}</span>
 						<span class="step-label">{step.label}</span>
 					</button>
 				{/each}
@@ -358,14 +397,28 @@
 					{#if currentSlide === 1}
 						<Colors />
 					{:else if currentSlide === 2}
-						<Size />
+						<DarkMode />
 					{:else if currentSlide === 3}
 						<Typography />
 					{:else if currentSlide === 4}
-						<Animations />
-					{:else if currentSlide === 5}
 						<Layout />
+					{:else if currentSlide === 5}
+						<Size />
 					{:else if currentSlide === 6}
+						<Shadows />
+					{:else if currentSlide === 7}
+						<Spacing />
+					{:else if currentSlide === 8}
+						<Borders />
+					{:else if currentSlide === 9}
+						<Animations />
+					{:else if currentSlide === 10}
+						<Navigation />
+					{:else if currentSlide === 11}
+						<Media />
+					{:else if currentSlide === 12}
+						<FormStyling />
+					{:else if currentSlide === 13}
 						<Rating />
 					{/if}
 				</div>
@@ -407,19 +460,22 @@
 </div>
 
 <style>
+	/* Intentionally minimal — the whole point is that it starts unstyled/default
+	   and the user's choices populate the CSS custom properties to style it. */
+
 	.survey-container {
 		display: flex;
 		min-height: 100vh;
 		flex-direction: column;
 		opacity: 0;
 		transition: opacity 0.3s ease;
-		background-color: var(--survey-bg-color, transparent);
-		background-image: var(--survey-bg-gradient, none);
-		font-family: var(--survey-font-family, inherit);
-		font-weight: var(--survey-font-weight, normal);
-		line-height: var(--survey-line-height, normal);
-		letter-spacing: var(--survey-letter-spacing, normal);
-		font-size: var(--survey-content-size, 1em);
+		background-color: var(--survey-bg-color);
+		background-image: var(--survey-bg-gradient);
+		font-family: var(--survey-font-family);
+		font-weight: var(--survey-font-weight);
+		line-height: var(--survey-line-height);
+		letter-spacing: var(--survey-letter-spacing);
+		font-size: var(--survey-content-size);
 	}
 
 	.survey-container.mounted {
@@ -429,19 +485,19 @@
 	.survey-header {
 		padding: 1rem;
 		text-align: center;
-		background-color: var(--survey-header-bg, transparent);
-		color: var(--survey-header-text, inherit);
+		background-color: var(--survey-header-bg);
+		color: var(--survey-header-text);
 	}
 
 	.survey-header h1 {
-		font-size: var(--survey-title-size, 2em);
+		font-size: var(--survey-title-size);
 		margin: 0 0 1rem 0;
 	}
 
 	/* Progress indicator */
 	.progress-container {
 		width: 100%;
-		max-width: 600px;
+		max-width: 800px;
 		margin: 0 auto;
 		position: relative;
 		padding: 0 1rem;
@@ -475,13 +531,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.25rem;
+		gap: 0.15rem;
 		background: #fff;
 		border: 1px solid #ccc;
-		padding: 0.25rem 0.5rem;
+		padding: 0.15rem 0.3rem;
 		cursor: pointer;
-		transition: all 0.2s;
-		min-width: 50px;
+		min-width: 30px;
+		font-size: 0.7rem;
 	}
 
 	.step:hover {
@@ -501,10 +557,12 @@
 
 	.step-number {
 		font-weight: bold;
+		font-size: 0.75rem;
 	}
 
 	.step-label {
-		font-size: 0.7rem;
+		font-size: 0.55rem;
+		display: none;
 	}
 
 	/* Card area */
@@ -520,7 +578,7 @@
 
 	.card-wrapper {
 		width: 100%;
-		max-width: var(--survey-content-max-width, none);
+		max-width: var(--survey-content-max-width);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -530,14 +588,15 @@
 		display: flex;
 		width: var(--survey-card-width, 100%);
 		max-width: 100%;
-		min-height: var(--survey-card-height, auto);
+		min-height: var(--survey-card-height);
 		flex-direction: column;
 		border-width: var(--survey-card-border-width, 0);
 		border-style: solid;
-		border-color: var(--survey-card-border, transparent);
-		border-radius: var(--survey-card-border-radius, 0);
-		background: var(--survey-card-bg, transparent);
-		color: var(--survey-card-text, inherit);
+		border-color: var(--survey-card-border);
+		border-radius: var(--survey-card-border-radius);
+		background: var(--survey-card-bg);
+		color: var(--survey-card-text);
+		box-shadow: var(--survey-card-shadow);
 		overflow: hidden;
 	}
 
@@ -565,7 +624,7 @@
 	.survey-footer {
 		padding: 1rem;
 		text-align: center;
-		background-color: var(--survey-footer-bg, transparent);
+		background-color: var(--survey-footer-bg);
 	}
 
 	.nav-buttons {
@@ -581,25 +640,24 @@
 	}
 
 	.nav-btn {
-		padding: var(--survey-btn-padding, 0.5rem 1rem);
-		font-size: var(--survey-btn-text-size, 1em);
+		padding: var(--survey-btn-padding);
+		font-size: var(--survey-btn-text-size);
 		cursor: pointer;
-		transition: all var(--survey-transition-duration, 0.2s) var(--survey-transition-timing, ease);
 	}
 
 	.nextBtn {
-		background-color: var(--survey-btn-next-bg, buttonface);
-		color: var(--survey-btn-next-text, buttontext);
+		background-color: var(--survey-btn-next-bg);
+		color: var(--survey-btn-next-text);
 	}
 
 	.backBtn {
-		background-color: var(--survey-btn-back-bg, buttonface);
-		color: var(--survey-btn-back-text, buttontext);
+		background-color: var(--survey-btn-back-bg);
+		color: var(--survey-btn-back-text);
 	}
 
 	:global(.resetBtn) {
-		background-color: var(--survey-btn-reset-bg, buttonface);
-		color: var(--survey-btn-reset-text, buttontext);
+		background-color: var(--survey-btn-reset-bg);
+		color: var(--survey-btn-reset-text);
 	}
 
 	.nav-btn:hover:not(:disabled) {
@@ -616,7 +674,7 @@
 		pointer-events: none;
 	}
 
-	/* Mobile */
+	/* Mobile — with 13 steps we need compact layout */
 	@media (max-width: 768px) {
 		.survey-container {
 			min-height: 100vh;
@@ -629,20 +687,22 @@
 		.progress-container {
 			max-width: 100%;
 			padding: 0 0.25rem;
+			overflow-x: auto;
 		}
 
 		.progress-line {
-			left: 20px;
-			right: 20px;
+			left: 15px;
+			right: 15px;
 		}
 
 		.step {
-			padding: 0.2rem 0.3rem;
-			min-width: 40px;
+			padding: 0.1rem 0.2rem;
+			min-width: 22px;
+			font-size: 0.6rem;
 		}
 
-		.step-label {
-			display: none;
+		.step-number {
+			font-size: 0.65rem;
 		}
 
 		.survey-card {
@@ -655,11 +715,26 @@
 		}
 	}
 
+	@media (min-width: 769px) {
+		.step-label {
+			display: block;
+		}
+
+		.step {
+			padding: 0.2rem 0.35rem;
+			min-width: 40px;
+		}
+	}
+
 	@media (max-width: 480px) {
 		.step {
-			min-width: 30px;
-			padding: 0.15rem 0.2rem;
-			font-size: 0.9em;
+			min-width: 18px;
+			padding: 0.1rem;
+			font-size: 0.55rem;
+		}
+
+		.step-number {
+			font-size: 0.6rem;
 		}
 
 		.nav-btn {
