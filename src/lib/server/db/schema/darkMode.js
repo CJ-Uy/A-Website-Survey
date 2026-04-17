@@ -11,5 +11,5 @@ export const darkMode = sqliteTable("dark_mode", {
 
 	preference: text("preference"), // "light", "dark", "system"
 	darkShade: text("dark_shade"), // "pure-black", "dark-gray", "dark-blue", "dark-green"
-	darkAccentColor: text("dark_accent_color") // hex color
+	darkAccentColor: text("dark_accent_color", { mode: "json" })
 });

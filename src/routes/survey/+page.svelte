@@ -18,7 +18,7 @@
 	import { userStyles, clearSavedState } from "$lib/state/userStyles.svelte";
 	import { onMount } from "svelte";
 
-	let currentSlide = $state(1);
+	let currentSlide = $state(0);
 	let slideDirection = $state("next");
 	let isTransitioning = $state(false);
 	let isSubmitting = $state(false);
@@ -199,6 +199,12 @@
 		if (userStyles.layout.contentPadding !== null) {
 			root.style.setProperty("--survey-content-padding", `${userStyles.layout.contentPadding}px`);
 		}
+		if (userStyles.layout.alignment) {
+			root.style.setProperty("--survey-content-align", userStyles.layout.alignment);
+		}
+		if (userStyles.layout.elementSpacing !== null) {
+			root.style.setProperty("--survey-element-spacing", `${userStyles.layout.elementSpacing}px`);
+		}
 
 		// Shadows
 		if (userStyles.shadows.cardShadow.enabled) {
@@ -208,10 +214,97 @@
 				`${s.x ?? 0}px ${s.y ?? 4}px ${s.blur ?? 12}px ${s.spread ?? 0}px ${s.color ?? "#00000020"}`
 			);
 		}
+
+		// Spacing
+		const densityMap = /** @type {Record<string,string>} */({ compact: "8px", comfortable: "16px", spacious: "28px" });
+		if (userStyles.spacing.density) {
+			root.style.setProperty("--survey-density-padding", densityMap[userStyles.spacing.density]);
+		}
+		if (userStyles.spacing.paragraphGap !== null) {
+			root.style.setProperty("--survey-paragraph-gap", `${userStyles.spacing.paragraphGap}px`);
+		}
+		if (userStyles.spacing.sectionSpacing !== null) {
+			root.style.setProperty("--survey-section-spacing", `${userStyles.spacing.sectionSpacing}px`);
+		}
+		if (userStyles.spacing.innerPadding !== null) {
+			root.style.setProperty("--survey-inner-padding", `${userStyles.spacing.innerPadding}px`);
+		}
+
+		// Media
+		if (userStyles.media.mediaStyle === "circular") {
+			root.style.setProperty("--survey-image-border-radius", "50%");
+		} else if (userStyles.media.mediaStyle === "rounded") {
+			root.style.setProperty("--survey-image-border-radius", "8px");
+		} else if (userStyles.media.mediaStyle === "sharp") {
+			root.style.setProperty("--survey-image-border-radius", "0px");
+		} else if (userStyles.media.imageBorderRadius !== null) {
+			root.style.setProperty("--survey-image-border-radius", `${userStyles.media.imageBorderRadius}px`);
+		}
+		if (userStyles.media.imageAspectRatio) {
+			root.style.setProperty("--survey-image-aspect-ratio", userStyles.media.imageAspectRatio.replace(":", " / "));
+		}
+
+		// Dark mode
+		const shadeColors = /** @type {Record<string,string>} */({
+			"pure-black": "#050505",
+			"dark-gray": "#1a1a1a",
+			"dark-blue": "#0f172a",
+			"dark-green": "#0a1a0f"
+		});
+		if (userStyles.darkMode.preference === "dark") {
+			const darkBg = shadeColors[userStyles.darkMode.darkShade] ?? "#1a1a1a";
+			root.style.setProperty("--survey-bg-color", darkBg);
+			root.style.setProperty("--survey-bg-gradient", "none");
+			root.classList.add("survey-dark");
+		} else if (userStyles.darkMode.preference === "light") {
+			root.classList.remove("survey-dark");
+		} else if (userStyles.darkMode.preference === "system") {
+			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+				root.classList.add("survey-dark");
+			} else {
+				root.classList.remove("survey-dark");
+			}
+		}
+		if (userStyles.darkMode.darkAccentColor) {
+			root.style.setProperty("--survey-dark-accent", userStyles.darkMode.darkAccentColor);
+		}
+
+		// Borders
+		if (userStyles.borders.dividerStyle && userStyles.borders.dividerStyle !== "none") {
+			root.style.setProperty("--survey-divider-style", userStyles.borders.dividerStyle);
+			root.style.setProperty("--survey-divider-color", userStyles.borders.dividerColor ?? "#cccccc");
+			root.style.setProperty("--survey-divider-width", `${userStyles.borders.dividerThickness ?? 1}px`);
+		} else if (userStyles.borders.dividerStyle === "none") {
+			root.style.setProperty("--survey-divider-style", "none");
+			root.style.setProperty("--survey-divider-width", "0px");
+		}
+		if (userStyles.borders.sectionGap !== null) {
+			root.style.setProperty("--survey-section-gap", `${userStyles.borders.sectionGap}px`);
+		}
+
+		// Form styling
+		if (userStyles.formStyling.inputBorderStyle) {
+			const isUnderline = userStyles.formStyling.inputBorderStyle === "underline";
+			root.style.setProperty("--survey-input-border-style", isUnderline ? "solid" : userStyles.formStyling.inputBorderStyle);
+			root.style.setProperty("--survey-input-underline", isUnderline ? "1" : "0");
+		}
+		if (userStyles.formStyling.inputBorderRadius !== null) {
+			root.style.setProperty("--survey-input-border-radius", `${userStyles.formStyling.inputBorderRadius}px`);
+		}
+		if (userStyles.formStyling.focusRingColor) {
+			root.style.setProperty("--survey-focus-ring-color", userStyles.formStyling.focusRingColor);
+		}
+		if (userStyles.formStyling.placeholderColor) {
+			root.style.setProperty("--survey-placeholder-color", userStyles.formStyling.placeholderColor);
+		}
+		if (userStyles.formStyling.checkboxStyle) {
+			const cbRadius = /** @type {Record<string,string>} */({ square: "0px", rounded: "3px", circular: "50%" });
+			root.style.setProperty("--survey-checkbox-radius", cbRadius[userStyles.formStyling.checkboxStyle] ?? "2px");
+		}
 	});
 
 	$effect(() => {
-		if (currentSlide < 1) {
+		if (currentSlide < 0) {
 			goto("/");
 		} else if (currentSlide > totalSteps) {
 			goto("/statistics");
@@ -302,44 +395,34 @@
 			// Clean up CSS custom properties before navigating
 			const root = document.documentElement;
 			const props = [
-				"--survey-bg-color",
-				"--survey-bg-gradient",
-				"--survey-card-bg",
-				"--survey-card-text",
-				"--survey-card-border",
-				"--survey-card-width",
-				"--survey-card-height",
-				"--survey-card-border-width",
-				"--survey-card-border-radius",
-				"--survey-card-shadow",
-				"--survey-header-bg",
-				"--survey-header-text",
-				"--survey-footer-bg",
-				"--survey-btn-next-bg",
-				"--survey-btn-next-text",
-				"--survey-btn-back-bg",
-				"--survey-btn-back-text",
-				"--survey-btn-reset-bg",
-				"--survey-btn-reset-text",
-				"--survey-title-size",
-				"--survey-card-title-size",
-				"--survey-subheading-size",
-				"--survey-content-size",
-				"--survey-btn-text-size",
-				"--survey-btn-padding",
-				"--survey-btn-gap",
-				"--survey-range-width",
-				"--survey-range-height",
-				"--survey-font-family",
-				"--survey-font-weight",
-				"--survey-line-height",
-				"--survey-letter-spacing",
-				"--survey-transition-duration",
-				"--survey-transition-timing",
-				"--survey-content-max-width",
-				"--survey-content-padding"
+				"--survey-bg-color", "--survey-bg-gradient",
+				"--survey-card-bg", "--survey-card-text", "--survey-card-border",
+				"--survey-card-width", "--survey-card-height", "--survey-card-border-width",
+				"--survey-card-border-radius", "--survey-card-shadow",
+				"--survey-header-bg", "--survey-header-text", "--survey-footer-bg",
+				"--survey-btn-next-bg", "--survey-btn-next-text",
+				"--survey-btn-back-bg", "--survey-btn-back-text",
+				"--survey-btn-reset-bg", "--survey-btn-reset-text",
+				"--survey-title-size", "--survey-card-title-size",
+				"--survey-subheading-size", "--survey-content-size",
+				"--survey-btn-text-size", "--survey-btn-padding", "--survey-btn-gap",
+				"--survey-range-width", "--survey-range-height",
+				"--survey-font-family", "--survey-font-weight",
+				"--survey-line-height", "--survey-letter-spacing",
+				"--survey-transition-duration", "--survey-transition-timing",
+				"--survey-content-max-width", "--survey-content-padding",
+				"--survey-content-align", "--survey-element-spacing",
+				"--survey-density-padding", "--survey-paragraph-gap",
+				"--survey-section-spacing", "--survey-inner-padding", "--survey-section-gap",
+				"--survey-image-border-radius", "--survey-image-aspect-ratio",
+				"--survey-dark-accent",
+				"--survey-divider-style", "--survey-divider-color", "--survey-divider-width",
+				"--survey-input-border-style", "--survey-input-border-radius",
+				"--survey-input-underline", "--survey-focus-ring-color",
+				"--survey-placeholder-color", "--survey-checkbox-radius"
 			];
 			props.forEach((p) => root.style.removeProperty(p));
+			root.classList.remove("survey-dark");
 
 			// Clear saved state from localStorage after successful submission
 			clearSavedState();
@@ -356,29 +439,31 @@
 	<header class="survey-header">
 		<h1>A Website Survey</h1>
 
-		<!-- Progress Steps -->
-		<div class="progress-container">
-			<div class="progress-line">
-				<div
-					class="progress-fill"
-					style="width: {((currentSlide - 1) / (totalSteps - 1)) * 100}%"
-				></div>
+		<!-- Progress Steps — only shown after intro -->
+		{#if currentSlide >= 1}
+			<div class="progress-container">
+				<div class="progress-line">
+					<div
+						class="progress-fill"
+						style="width: {((currentSlide - 1) / (totalSteps - 1)) * 100}%"
+					></div>
+				</div>
+				<div class="steps">
+					{#each steps as step}
+						<button
+							class="step"
+							class:active={currentSlide === step.num}
+							class:completed={currentSlide > step.num}
+							onclick={() => goToStep(step.num)}
+							title={step.label}
+						>
+							<span class="step-number">{step.num}</span>
+							<span class="step-label">{step.label}</span>
+						</button>
+					{/each}
+				</div>
 			</div>
-			<div class="steps">
-				{#each steps as step}
-					<button
-						class="step"
-						class:active={currentSlide === step.num}
-						class:completed={currentSlide > step.num}
-						onclick={() => goToStep(step.num)}
-						title={step.label}
-					>
-						<span class="step-number">{step.num}</span>
-						<span class="step-label">{step.label}</span>
-					</button>
-				{/each}
-			</div>
-		</div>
+		{/if}
 	</header>
 
 	<section class="survey-section">
@@ -394,7 +479,29 @@
 						slideDirection === "back" &&
 						userStyles.animations.enabled}
 				>
-					{#if currentSlide === 1}
+					{#if currentSlide === 0}
+						<div class="intro-card">
+							<h2>Welcome.</h2>
+							<hr />
+							<p>
+								You are looking at an <strong>unstyled webpage</strong>. No colors have been chosen.
+								No fonts. No layout. Just raw HTML — the same skeleton every website starts with.
+							</p>
+							<p>
+								Over the next <strong>13 short questions</strong>, you will pick your visual
+								preferences: colors, typography, spacing, shadows, and more.
+							</p>
+							<p>
+								As you answer each question, <strong>this page will transform in real time</strong>
+								to reflect your choices. By the end, the page itself will look the way
+								<em>you</em> designed it.
+							</p>
+							<hr />
+							<p>
+								<em>Click <strong>Next</strong> to begin.</em>
+							</p>
+						</div>
+					{:else if currentSlide === 1}
 						<Colors />
 					{:else if currentSlide === 2}
 						<DarkMode />
@@ -430,14 +537,18 @@
 		<div class="nav-buttons">
 			<button
 				class="backBtn nav-btn"
-				class:disabled={currentSlide === 1}
-				disabled={currentSlide === 1}
-				onclick={() => navigateTo("back")}
+				onclick={() => (currentSlide === 0 ? goto("/") : navigateTo("back"))}
 			>
-				Back
+				{currentSlide === 0 ? "← Home" : "Back"}
 			</button>
 
-			<span class="step-indicator">{currentSlide} / {totalSteps}</span>
+			<span class="step-indicator">
+				{#if currentSlide === 0}
+					Introduction
+				{:else}
+					{currentSlide} / {totalSteps}
+				{/if}
+			</span>
 
 			{#if currentSlide !== totalSteps}
 				<button class="nextBtn nav-btn" onclick={() => navigateTo("next")}> Next </button>
@@ -476,6 +587,15 @@
 		line-height: var(--survey-line-height);
 		letter-spacing: var(--survey-letter-spacing);
 		font-size: var(--survey-content-size);
+		text-align: var(--survey-content-align);
+	}
+
+	:global(html.survey-dark) .survey-container {
+		color: #e5e5e5;
+	}
+	:global(html.survey-dark) .survey-card {
+		background: var(--survey-dark-bg-card, #252525) !important;
+		color: #e5e5e5 !important;
 	}
 
 	.survey-container.mounted {
@@ -664,7 +784,7 @@
 		opacity: 0.8;
 	}
 
-	.nav-btn.disabled {
+	.nav-btn:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
@@ -741,5 +861,47 @@
 			padding: 0.4rem 0.75rem;
 			font-size: 0.9em;
 		}
+	}
+
+	/* ── Spacing density ── */
+	.card-content {
+		padding: var(--survey-inner-padding, var(--survey-density-padding, 1rem));
+	}
+
+	:global(.cardSubSection) {
+		margin-bottom: var(--survey-section-gap, var(--survey-section-spacing, 1rem));
+	}
+
+	:global(.cardSubSection + .cardSubSection) {
+		border-top-width: var(--survey-divider-width, 0px);
+		border-top-style: var(--survey-divider-style, none);
+		border-top-color: var(--survey-divider-color, transparent);
+		padding-top: var(--survey-section-gap, 1rem);
+	}
+
+	/* ── Images ── */
+	:global(img) {
+		border-radius: var(--survey-image-border-radius, 0);
+		aspect-ratio: var(--survey-image-aspect-ratio);
+		object-fit: cover;
+	}
+
+	/* ── Form inputs ── */
+	:global(input[type="text"], input[type="email"], input[type="number"], select, textarea) {
+		border-style: var(--survey-input-border-style, solid);
+		border-radius: var(--survey-input-border-radius, 4px);
+	}
+	:global(input:focus, select:focus, textarea:focus) {
+		outline-color: var(--survey-focus-ring-color);
+	}
+	:global(input::placeholder, textarea::placeholder) {
+		color: var(--survey-placeholder-color);
+	}
+	:global(input[type="checkbox"]) {
+		border-radius: var(--survey-checkbox-radius, 2px);
+		accent-color: var(--survey-focus-ring-color);
+	}
+	:global(input[type="radio"]) {
+		accent-color: var(--survey-focus-ring-color);
 	}
 </style>

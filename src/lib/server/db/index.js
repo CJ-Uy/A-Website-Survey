@@ -1,8 +1,11 @@
 import { drizzle as drizzleD1 } from "drizzle-orm/d1";
 import { drizzle as drizzleProxy } from "drizzle-orm/sqlite-proxy";
+import { dev } from "$app/environment";
+import { env } from "$env/dynamic/private";
 import * as schema from "./schema";
 
-let _db = null;
+// Cached per isolate — safe to reuse across requests in the same Worker instance
+const globalForDb = /** @type {{ db: unknown }} */ (globalThis);
 
 async function d1Fetch(accountId, databaseId, token, sql, params, method) {
 	const response = await fetch(
@@ -39,13 +42,13 @@ async function d1Fetch(accountId, databaseId, token, sql, params, method) {
 }
 
 function createHttpClient() {
-	const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-	const databaseId = process.env.CLOUDFLARE_D1_DATABASE_ID;
-	const token = process.env.CLOUDFLARE_D1_TOKEN;
+	const accountId = env.CLOUDFLARE_ACCOUNT_ID;
+	const databaseId = env.CLOUDFLARE_D1_DATABASE_ID;
+	const token = env.CLOUDFLARE_D1_TOKEN;
 
 	if (!accountId || !databaseId || !token) {
 		throw new Error(
-			"D1 binding unavailable and CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_D1_DATABASE_ID, CLOUDFLARE_D1_TOKEN not set"
+			"Missing env vars: CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_D1_DATABASE_ID, CLOUDFLARE_D1_TOKEN"
 		);
 	}
 
@@ -56,16 +59,20 @@ function createHttpClient() {
 }
 
 /**
- * Call at the top of each request handler before touching `db`.
- * In production, uses the native D1 binding from SvelteKit's platform.env.
- * In dev, falls back to the D1 HTTP REST API via env vars.
+ * Call at the top of each request handler.
+ * Dev  → always HTTP client → remote D1 via REST API (vars in .env)
+ * Prod → native D1 binding from SvelteKit's platform.env
  * @param {App.Platform | undefined} platform
  */
 export function initDb(platform) {
-	if (platform?.env?.DB) {
-		_db = drizzleD1(platform.env.DB, { schema });
+	if (globalForDb.db) return;
+
+	if (dev) {
+		globalForDb.db = createHttpClient();
+	} else if (platform?.env?.DB) {
+		globalForDb.db = drizzleD1(platform.env.DB, { schema });
 	} else {
-		_db = createHttpClient();
+		globalForDb.db = createHttpClient();
 	}
 }
 
@@ -73,8 +80,10 @@ export const db = new Proxy(
 	{},
 	{
 		get(_, prop) {
-			if (!_db) _db = createHttpClient();
-			return _db[prop];
+			if (!globalForDb.db) {
+				globalForDb.db = createHttpClient();
+			}
+			return /** @type {any} */ (globalForDb.db)[prop];
 		}
 	}
 );

@@ -15,7 +15,7 @@ export const shadows = sqliteTable("shadows", {
 	cardShadowY: integer("card_shadow_y"),
 	cardShadowBlur: integer("card_shadow_blur"),
 	cardShadowSpread: integer("card_shadow_spread"),
-	cardShadowColor: text("card_shadow_color"),
+	cardShadowColor: text("card_shadow_color", { mode: "json" }),
 
 	// Button shadow
 	buttonShadow: integer("button_shadow", { mode: "boolean" }).default(false),

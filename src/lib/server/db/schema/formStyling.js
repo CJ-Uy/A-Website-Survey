@@ -10,8 +10,8 @@ export const formStyling = sqliteTable("form_styling", {
 	}),
 
 	inputBorderStyle: text("input_border_style"), // "solid", "dashed", "none", "underline"
-	focusRingColor: text("focus_ring_color"), // hex color
-	placeholderColor: text("placeholder_color"), // hex color
+	focusRingColor: text("focus_ring_color", { mode: "json" }),
+	placeholderColor: text("placeholder_color", { mode: "json" }),
 	inputBorderRadius: integer("input_border_radius"),
 	checkboxStyle: text("checkbox_style") // "square", "rounded", "circular"
 });
