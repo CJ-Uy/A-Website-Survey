@@ -80,28 +80,100 @@
 		}
 	}
 
+	function hslToHex(h, s, l) {
+		s /= 100;
+		l /= 100;
+		const a = s * Math.min(l, 1 - l);
+		const f = (n) => {
+			const k = (n + h / 30) % 12;
+			const c = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+			return Math.round(255 * c).toString(16).padStart(2, '0');
+		};
+		return `#${f(0)}${f(8)}${f(4)}`;
+	}
+
+	function clamp(v, min, max) {
+		return Math.max(min, Math.min(max, v));
+	}
+
 	function randomize() {
-		const randHex = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-		const useGradient = Math.random() > 0.5;
+		const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+		const baseHue = rand(0, 359);
+		const isDark = Math.random() > 0.5;
+
+		// Pick a color harmony scheme
+		const schemes = [
+			[baseHue, (baseHue + 180) % 360],
+			[baseHue, (baseHue + 30) % 360, (baseHue + 330) % 360],
+			[baseHue, (baseHue + 120) % 360, (baseHue + 240) % 360],
+			[baseHue, (baseHue + 150) % 360, (baseHue + 210) % 360]
+		];
+		const hues = schemes[rand(0, schemes.length - 1)];
+
+		// Background: low saturation, extreme lightness
+		const bgSat = rand(5, 20);
+		const bgLight = isDark ? rand(4, 14) : rand(88, 97);
+		const bgColor = hslToHex(hues[0], bgSat, bgLight);
+
+		// Card: slightly offset from bg
+		const cardOffset = isDark ? rand(6, 14) : -rand(6, 14);
+		const cardLight = clamp(bgLight + cardOffset, 5, 95);
+		const cardBg = hslToHex(hues[0], bgSat + 5, cardLight);
+
+		// Text: high contrast with its background
+		const textLight = isDark ? rand(82, 96) : rand(4, 18);
+		const cardText = hslToHex(hues[0], 15, textLight);
+
+		// Border: same hue family, mid-distance lightness
+		const borderLight = isDark ? clamp(cardLight + 20, 20, 60) : clamp(cardLight - 20, 40, 80);
+		const cardBorder = hslToHex(hues[0], 20, borderLight);
+
+		// Accent (primary button): harmony's second hue, vivid
+		const accentHue = hues[1] ?? hues[0];
+		const accentSat = rand(55, 85);
+		const accentLight = isDark ? rand(50, 65) : rand(35, 50);
+		const accentBg = hslToHex(accentHue, accentSat, accentLight);
+		const accentText = hslToHex(accentHue, 15, accentLight > 55 ? rand(5, 15) : rand(85, 95));
+
+		// Secondary buttons: muted, same base hue
+		const secLight = isDark ? rand(22, 35) : rand(62, 75);
+		const secBg = hslToHex(hues[0], 15, secLight);
+		const secText = hslToHex(hues[0], 10, secLight > 55 ? rand(5, 15) : rand(85, 95));
+
+		// Header/footer: close to card lightness
+		const headerLight = clamp(cardLight + (isDark ? 5 : -5), 5, 95);
+		const headerBg = hslToHex(hues[0], bgSat + 8, headerLight);
+
+		// Gradient: harmony hues with mid saturation
+		const gradHue2 = hues[2] ?? hues[1] ?? (baseHue + 60) % 360;
+		const gradSat = rand(50, 75);
+		const gradBase = isDark ? 30 : 70;
+		const gradStart = hslToHex(hues[0], gradSat, clamp(gradBase + rand(-8, 8), 15, 85));
+		const gradEnd = hslToHex(gradHue2, gradSat, clamp(gradBase + rand(-8, 8), 15, 85));
+
+		const useGradient = Math.random() > 0.6;
 		userStyles.colors.bg.type = useGradient ? 'gradient' : 'solid';
-		userStyles.colors.bg.solidColor = randHex();
-		userStyles.colors.bg.gradient.startColor = randHex();
-		userStyles.colors.bg.gradient.endColor = randHex();
-		userStyles.colors.bg.gradient.degrees = Math.floor(Math.random() * 360);
-		userStyles.colors.marginalia.header.ownBg = Math.random() > 0.5;
-		userStyles.colors.marginalia.header.bg = randHex();
-		userStyles.colors.marginalia.header.text = randHex();
+		userStyles.colors.bg.solidColor = bgColor;
+		userStyles.colors.bg.gradient.startColor = gradStart;
+		userStyles.colors.bg.gradient.endColor = gradEnd;
+		userStyles.colors.bg.gradient.degrees = rand(0, 359);
+
+		userStyles.colors.marginalia.header.ownBg = Math.random() > 0.4;
+		userStyles.colors.marginalia.header.bg = headerBg;
+		userStyles.colors.marginalia.header.text = cardText;
 		userStyles.colors.marginalia.footer.ownBg = Math.random() > 0.5;
-		userStyles.colors.marginalia.footer.bg = randHex();
-		userStyles.colors.card.bg = randHex();
-		userStyles.colors.card.text = randHex();
-		userStyles.colors.card.border = randHex();
-		userStyles.colors.button.next.bg = randHex();
-		userStyles.colors.button.next.text = randHex();
-		userStyles.colors.button.back.bg = randHex();
-		userStyles.colors.button.back.text = randHex();
-		userStyles.colors.button.reset.bg = randHex();
-		userStyles.colors.button.reset.text = randHex();
+		userStyles.colors.marginalia.footer.bg = headerBg;
+
+		userStyles.colors.card.bg = cardBg;
+		userStyles.colors.card.text = cardText;
+		userStyles.colors.card.border = cardBorder;
+
+		userStyles.colors.button.next.bg = accentBg;
+		userStyles.colors.button.next.text = accentText;
+		userStyles.colors.button.back.bg = secBg;
+		userStyles.colors.button.back.text = secText;
+		userStyles.colors.button.reset.bg = secBg;
+		userStyles.colors.button.reset.text = secText;
 	}
 </script>
 

@@ -1,8 +1,9 @@
 import { json } from "@sveltejs/kit";
-import { db } from "$lib/server/db"; // Import your database connection
-import * as schema from "$lib/server/db/schema"; // Import your schema
+import { db, initDb } from "$lib/server/db";
+import * as schema from "$lib/server/db/schema";
 
-export async function GET() {
+export async function GET({ platform }) {
+	initDb(platform);
 	try {
 		const stats = await db.select().from(schema.statistics);
 

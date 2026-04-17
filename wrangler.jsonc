@@ -1,0 +1,28 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "a-website-survey",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2024-12-01",
+	"compatibility_flags": ["nodejs_compat"],
+
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare/",
+		"not_found_handling": "single-page-application"
+	},
+
+	"observability": {
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		}
+	},
+
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "a-website-survey",
+			"database_id": "ad9b9759-98e6-49d9-b27b-71b6a372d0af"
+		}
+	]
+}

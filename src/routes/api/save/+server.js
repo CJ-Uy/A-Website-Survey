@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import { db } from "$lib/server/db";
+import { db, initDb } from "$lib/server/db";
 import * as schema from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -91,7 +91,8 @@ function validateLayout(layout) {
 	return true;
 }
 
-export async function POST({ request }) {
+export async function POST({ request, platform }) {
+	initDb(platform);
 	try {
 		const requestBody = await request.json();
 
